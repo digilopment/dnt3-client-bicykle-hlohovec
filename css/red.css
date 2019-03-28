@@ -1,0 +1,26 @@
+.blog-topbar {
+    border-bottom: 4px solid #da0809
+}
+.bg-color-darker {
+    /*border-top: 4px solid #da0809;*/
+}
+
+.footer-v8 .footer {
+    border-top: 4px solid #da0809;
+}
+/*
+.ms-wk .ms-slide {
+	border: 2px solid #da0809 !important;
+    border-bottom: 4px solid #da0809 !important;;
+}*/
+a:hover {
+    color: #da0809 !important;
+}
+.btn-u:hover, .btn-u:focus, .btn-u:active, .btn-u.active, .open .dropdown-toggle.btn-u {
+    background: #da0809 !important;
+}
+.header-v8 .navbar-nav > .active > a, 
+.header-v8 .navbar-nav > .active > a:hover, 
+.header-v8 .navbar-nav > .active > a:focus {
+    color: #da0809 !important;
+}
