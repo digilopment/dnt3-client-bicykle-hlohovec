@@ -23,6 +23,7 @@ $translate['priezvisko'] = MultyLanguage::translate($data, "priezvisko", "transl
 $translate['sprava'] = MultyLanguage::translate($data, "sprava", "translate");
 $translate['formular'] = MultyLanguage::translate($data, "formular", "translate");
 $translate['ico'] = MultyLanguage::translate($data, "ico", "translate");
+$translate['c_ziv_reg'] = MultyLanguage::translate($data, "c_ziv_reg", "translate");
 ?>
 
 
@@ -45,18 +46,20 @@ get_paralax($data['article']['img'], $data['title']);
 				   <h3><span class="sidlo-a-pobocka"><?php echo $translate["sidlo"]?>:</span><?php echo Frontend::getMetaSetting($data, "vendor_company");?></h3>
 				   <?php 
 					   $googleMapsUrl = $data['meta_settings']['keys']['google_map']['value'];
+					   $googleMapsToken = $data['meta_settings']['keys']['google_maps_token']['value'];
 					   $mapLocation = Dnt::getMapLocation($googleMapsUrl);
 					   $map_first = $mapLocation[0];
 					   $map_second = $mapLocation[1];
 					  $zoom = "12";
 					  ?>
-				   <iframe style="width: 100%; height: 400px; border: none; border-radius: 5px;" src="https://www.google.com/maps/embed/v1/place?q=<?php echo $map_first;?>%2C%20<?php echo $map_second;?>&key=AIzaSyDgCVlyp5VJW0VazAYxi70omj3Cv1UjNfk"></iframe>
+				   <iframe style="width: 100%; height: 400px; border: none; border-radius: 5px;" src="https://www.google.com/maps/embed/v1/place?q=<?php echo $map_first;?>%2C%20<?php echo $map_second;?>&key=<?php echo $googleMapsToken; ?>"></iframe>
 				   <br/><br/>
 				   <div class="col-xs-12 col-md-6">
 					   <h3><?php echo $translate["kontakt"]?></h3>
 					   <ul class="dnt_kontakt">
 						  <li><?php echo $translate["nazov"]?>: <b><?php echo Frontend::getMetaSetting($data, "vendor_company");?></b></li>
 						  <li><?php echo $translate["ico"]?>: <b><?php echo Frontend::getMetaSetting($data, "vendor_ico");?></b></li>
+						  <li><?php echo $translate["c_ziv_reg"]?>: <b><?php echo Frontend::getMetaSetting($data, "c_ziv_reg");?></b></li>
 						  <li><?php echo $translate["ulica"]?>: <b><?php echo Frontend::getMetaSetting($data, "vendor_street");?></b></li>
 						  <li><?php echo $translate["mesto"]?>: <b><?php echo Frontend::getMetaSetting($data, "vendor_psc");?> <?php echo Frontend::getMetaSetting($data, "vendor_city");?></b></li>
 						  <li><?php echo $translate["email"]?>: <b><?php echo Frontend::getMetaSetting($data, "vendor_email");?></b></li>
@@ -100,9 +103,6 @@ get_paralax($data['article']['img'], $data['title']);
 		 <div class="col-xs-12">
 		   <h3><?php echo $translate['formular']; ?></h3>
 		 <div class="overflow-h margin-bottom-10 article-view">
-		             <script src="http://bicykle-hlohovec.localhost/dnt3/dnt-view/layouts/company-web/js/jquery.min.js"></script>
-            <script src="http://bicykle-hlohovec.localhost/dnt3/dnt-view/layouts/company-web/js/jquery.validate.js"></script>
-            <script src="http://bicykle-hlohovec.localhost/dnt3/dnt-view/layouts/company-web/js/additional-methods.min.js"></script>
           <script type="text/javascript">
                   $(document).ready(function() {
                   	   $("#form-request").validate({

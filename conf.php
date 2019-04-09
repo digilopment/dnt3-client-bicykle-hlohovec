@@ -186,6 +186,26 @@ function websettings(){
 		'`show`' 			=> '0',
 		'`order`' 			=> '10',
 	);
+	$insertedData[] = array(
+		'`type`' 			=> "keys", 
+		'`key`' 			=> "google_maps_token", 
+		'`value`' 			=> "", 
+		'`content_type`' 	=> "text", 
+		'`description`' 	=> "Autorizačný token pre Google Maps", 
+		'`vendor_id`' 		=> Vendor::getId(), 
+		'`show`' 			=> '0',
+		'`order`' 			=> '10',
+	);
+	$insertedData[] = array(
+		'`type`' 			=> "vendor", 
+		'`key`' 			=> "c_ziv_reg", 
+		'`value`' 			=> "", 
+		'`content_type`' 	=> "text", 
+		'`description`' 	=> "Číslo živnostnenského registra", 
+		'`vendor_id`' 		=> Vendor::getId(), 
+		'`show`' 			=> '0',
+		'`order`' 			=> '10',
+	);
 	
 	return $insertedData;
 }
