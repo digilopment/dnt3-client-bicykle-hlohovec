@@ -718,25 +718,29 @@ function get_nav_menu($data) {
 
 function col_right($data) { ?>
     <!-- Blog Thumb v3 -->
+	
+	<?php 
+	$article = new ArticleView();
+	$posts = $article->getPosts(1156, false, "`order` DESC");
+	if(count($posts)>0){
+	?>
     <div class="margin-bottom-50 dalsie-info">
-        <h2 class="title-v4 ">Menu</h2>
+        <h2 class="title-v4 "><?php echo Multylanguage::translate($data, "partneri", "translate"); ?></h2>
         <div class="blog-thumb-v3">
-            <ul class="col-right pdc">
-                <?php
-                foreach ($data['menu_items'] as $item) {
-                    $name_url_1 = $item['name_url'];
-                    $name_1 = $item['name'];
-                    ?>
-                    <li>
-                        <a href="<?php echo $name_url_1; ?>"><?php echo $name_1; ?></a>
-                    </li>
-                <?php } ?>
-                <!-- vyskum a vyvoj --> 
-            </ul>
+			<?php foreach($posts as $post){?>
+				<?php if(Dnt::is_external_url($post['name_url'])){?>
+				<a target="_blank" href="<?php echo $post['name_url']; ?>">
+					<img  src="<?php echo $article->getPostImage($post['id_entity']); ?>" alt="<?php echo $post['name']?>" class="partners-logos" />
+				</a>
+				<?php }else{ ?>
+					<img  src="<?php echo $article->getPostImage($post['id_entity']); ?>" alt="<?php echo $post['name']?>" class="partners-logos" />
+				<?php } ?>
+			<?php } ?>
         </div>
         <hr class="hr-xs">
     </div>
-    <!-- nastrojaren -->
+	<?php } ?>
+	
     <div class="margin-bottom-50 dalsie-info">
 
         <h2 class="title-v4 "><?php echo Multylanguage::translate($data, "otvaracie_hodiny", "translate"); ?></h2>

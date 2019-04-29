@@ -840,3 +840,8 @@ body.header-fixed-space-v2 {
 p {
     font-size: 15px;
 }
+.partners-logos {
+	width: 50%;
+	float: left;
+	padding: 0px 7px;
+}
