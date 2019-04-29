@@ -724,7 +724,7 @@ function col_right($data) { ?>
 	$posts = $article->getPosts(1156, false, "`order` DESC");
 	if(count($posts)>0){
 	?>
-    <div class="margin-bottom-50 dalsie-info">
+    <div class="clearfix margin-bottom-50 dalsie-info">
         <h2 class="title-v4 "><?php echo Multylanguage::translate($data, "partneri", "translate"); ?></h2>
         <div class="blog-thumb-v3">
 			<?php foreach($posts as $post){?>
