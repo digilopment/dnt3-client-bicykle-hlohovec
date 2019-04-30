@@ -25,7 +25,7 @@ $webhook 		= new Webhook;
 				if($db->num_rows($query)>0){
 					
 					foreach($db->get_results($query) as $row){
-					   $img = Image::getPostImage($row['id'],"dnt_posts");
+					   $img = Image::getPostImage($row['id'],"dnt_posts", IMAGE::SMALL);
 					   $content = $row['content'];
 					   $perex = $row['perex'];
 					   $name = $row['name'];
