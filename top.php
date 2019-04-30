@@ -1,7 +1,3 @@
-<?php
-get_top($data);
-?>
-
 <body data-spy="scroll" data-target=".navbar" class="header-fixed header-fixed-space-v2 pages-id">
 
 <?php
