@@ -24,6 +24,8 @@ $translate['sprava'] = MultyLanguage::translate($data, "sprava", "translate");
 $translate['formular'] = MultyLanguage::translate($data, "formular", "translate");
 $translate['ico'] = MultyLanguage::translate($data, "ico", "translate");
 $translate['c_ziv_reg'] = MultyLanguage::translate($data, "c_ziv_reg", "translate");
+$translate['prevadzka'] = MultyLanguage::translate($data, "prevadzka", "translate");
+$translate['kde_nas_najdete'] = MultyLanguage::translate($data, "kde_nas_najdete", "translate");
 ?>
 
 
@@ -43,7 +45,7 @@ get_paralax($data['article']['img'], $data['title']);
             <div class="overflow-h margin-bottom-10 article-view">
 			<div class="row">
 				<div class="col-md-12" style="margin-bottom: 20px;">
-				   <h3><span class="sidlo-a-pobocka"><?php echo $translate["sidlo"]?>:</span><?php echo Frontend::getMetaSetting($data, "vendor_company");?></h3>
+				   <h4><span class="sidlo-a-pobocka"><?php echo $translate["kde_nas_najdete"]?>:</span> <?php echo Frontend::getMetaSetting($data, "vendor_company");?>, <?php echo Frontend::getMetaSetting($data, "vendor_street");?>, <?php echo Frontend::getMetaSetting($data, "vendor_city");?></h4>
 				   <?php 
 					   $googleMapsUrl = $data['meta_settings']['keys']['google_map']['value'];
 					   $googleMapsToken = $data['meta_settings']['keys']['google_maps_token']['value'];
@@ -54,20 +56,29 @@ get_paralax($data['article']['img'], $data['title']);
 					  ?>
 				   <iframe style="width: 100%; height: 400px; border: none; border-radius: 5px;" src="https://www.google.com/maps/embed/v1/place?q=<?php echo $map_first;?>%2C%20<?php echo $map_second;?>&key=<?php echo $googleMapsToken; ?>"></iframe>
 				   <br/><br/>
-				   <div class="col-xs-12 col-md-6">
-					   <h3><?php echo $translate["kontakt"]?></h3>
+				   <div class="col-xs-12 col-md-4">
+					   <h3><?php echo $translate["prevadzka"]?></h3>
 					   <ul class="dnt_kontakt">
 						  <li><?php echo $translate["nazov"]?>: <b><?php echo Frontend::getMetaSetting($data, "vendor_company");?></b></li>
-						  <li><?php echo $translate["ico"]?>: <b><?php echo Frontend::getMetaSetting($data, "vendor_ico");?></b></li>
-						  <li><?php echo $translate["c_ziv_reg"]?>: <b><?php echo Frontend::getMetaSetting($data, "c_ziv_reg");?></b></li>
 						  <li><?php echo $translate["ulica"]?>: <b><?php echo Frontend::getMetaSetting($data, "vendor_street");?></b></li>
 						  <li><?php echo $translate["mesto"]?>: <b><?php echo Frontend::getMetaSetting($data, "vendor_psc");?> <?php echo Frontend::getMetaSetting($data, "vendor_city");?></b></li>
 						  <li><?php echo $translate["email"]?>: <b><?php echo Frontend::getMetaSetting($data, "vendor_email");?></b></li>
 						  <li><?php echo $translate["tel_c"]?>: <b><?php echo Frontend::getMetaSetting($data, "vendor_tel");?></b></li>
 					   </ul>
 					</div>
+					
+					 <div class="col-xs-12 col-md-4">
+					   <h3><?php echo $translate["sidlo"]?></h3>
+					   <ul class="dnt_kontakt">
+						  <li><?php echo $translate["nazov"]?>: <b><?php echo Frontend::getMetaSetting($data, "vendor_company");?></b></li>
+						   <li><?php echo $translate["ulica"]?>: <b><?php echo Frontend::getMetaSetting($data, "vendor_sidlo_street");?></b></li>
+						   <li><?php echo $translate["mesto"]?>: <b><?php echo Frontend::getMetaSetting($data, "vendor_sidlo_psc");?> <?php echo Frontend::getMetaSetting($data, "vendor_sidlo_city");?></b></li>
+						  <li><?php echo $translate["ico"]?>: <b><?php echo Frontend::getMetaSetting($data, "vendor_ico");?></b></li>
+						  <li><?php echo $translate["c_ziv_reg"]?>: <b><?php echo Frontend::getMetaSetting($data, "c_ziv_reg");?></b></li>
+					   </ul>
+					</div>
 				   
-				    <div class="col-xs-12 col-md-6">
+				    <div class="col-xs-12 col-md-4">
 					   <h3><?php echo Multylanguage::translate($data, "otvaracie_hodiny", "translate"); ?></h3>
 					   <ul class="dnt_kontakt">
 							<li >
