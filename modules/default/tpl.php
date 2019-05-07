@@ -1,7 +1,9 @@
 <?php
-	$data = Frontend::get();
+
+   $data = Frontend::get();
    $layout = Vendor::getLayout();
    include "dnt-view/layouts/".$layout."/tpl_functions.php";
+   get_top($data);
    include "dnt-view/layouts/".$layout."/top.php"; 
    ?>
 <!-- End Header -->

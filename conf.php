@@ -206,6 +206,36 @@ function websettings(){
 		'`show`' 			=> '0',
 		'`order`' 			=> '10',
 	);
+	$insertedData[] = array(
+		'`type`' 			=> "vendor", 
+		'`key`' 			=> "vendor_sidlo_street", 
+		'`value`' 			=> "D. Jurkoviča 900/91", 
+		'`content_type`' 	=> "text", 
+		'`description`' 	=> "Sídlo firmy - ulica", 
+		'`vendor_id`' 		=> Vendor::getId(), 
+		'`show`' 			=> '1',
+		'`order`' 			=> '10',
+	);
+	$insertedData[] = array(
+		'`type`' 			=> "vendor", 
+		'`key`' 			=> "vendor_sidlo_psc", 
+		'`value`' 			=> "920 03", 
+		'`content_type`' 	=> "text", 
+		'`description`' 	=> "Sídlo firmy - psc", 
+		'`vendor_id`' 		=> Vendor::getId(), 
+		'`show`' 			=> '1',
+		'`order`' 			=> '10',
+	);
+	$insertedData[] = array(
+		'`type`' 			=> "vendor", 
+		'`key`' 			=> "vendor_sidlo_city", 
+		'`value`' 			=> "Hlohovec m.č. Šulekovo", 
+		'`content_type`' 	=> "text", 
+		'`description`' 	=> "Sídlo firmy - mesto", 
+		'`vendor_id`' 		=> Vendor::getId(), 
+		'`show`' 			=> '1',
+		'`order`' 			=> '10',
+	);
 	
 	return $insertedData;
 }
