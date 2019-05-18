@@ -1,5 +1,5 @@
 <?php
-class homepageModulController{
+class homepageModulController extends Client{
 	
 	private $posts;
 	private $gallery;
@@ -42,6 +42,7 @@ class homepageModulController{
 	}
 	
 	private function prepareSmallGallery($data){
+		$rest = new Rest();
 		$GALLERY = explode(",", $data['meta_tree']['keys']['gallery']['value']);
 		if(count($GALLERY>0)){
 			$this->gallery = $GALLERY;

@@ -1,6 +1,8 @@
 <?php
-function custom_modules(){
-	$webhook = new Webhook;
+function custom_modules($webhook = false){
+	if(!$webhook){
+		$webhook = new Webhook;
+	}
 	/*
 	custom modul listeners
 	*/
@@ -44,6 +46,24 @@ function custom_modules(){
 		),
 		"gallery_list" => array_merge(
 				array(), $webhook->getSitemapModules("gallery_list")
+		),
+		
+		//DETAIL
+		"article_view" => array_merge(
+			array(), array("{alphabet}/detail/{digit}/{alphabet}")
+		),
+		//AUTOREDIRECT
+		"auto_redirect" => array_merge(
+			array(), array("a/{digit}")
+		),			
+		//VIDEO EMBED
+		"video_embed" => array_merge(
+			array(), array("embed/video/{digit}")
+		),
+		
+		//RPC
+		"rpc" => array_merge(
+				array(), array("rpc/json/{alphabet}")
 		),
 	);
 	return $custom_modules;
