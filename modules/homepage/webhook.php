@@ -12,7 +12,7 @@ class homepageModulController extends Client{
 		$articleImage = $article->getPostImage($id);
 		
 		$custom_data = array(
-			"title" =>  $articleName ." | ".Settings::get("title") ,
+			"title" =>  "".Settings::get("title") ,
 			"meta" => array(
 				 '<meta name="keywords" content="'.$article->getPostParam("tags",  $id).'" />',
 				 '<meta name="description" content="'.Settings::get("description").'" />',

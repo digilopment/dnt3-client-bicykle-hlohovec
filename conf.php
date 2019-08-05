@@ -50,7 +50,7 @@ function custom_modules($webhook = false){
 		
 		//DETAIL
 		"article_view" => array_merge(
-			array(), array("{alphabet}/detail/{digit}/{alphabet}")
+			array(), array("{alphabet}/detail/{digit}/{eny}")
 		),
 		//AUTOREDIRECT
 		"auto_redirect" => array_merge(
