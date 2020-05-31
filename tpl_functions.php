@@ -1,6 +1,21 @@
 <?php
 
-function color_conf($data) {
+use DntLibrary\Base\AdminContent;
+use DntLibrary\Base\ArticleView;
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Frontend;
+use DntLibrary\Base\Image;
+use DntLibrary\Base\MultyLanguage;
+use DntLibrary\Base\Navigation;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Settings;
+use DntLibrary\Base\Url;
+use DntLibrary\Base\Vendor;
+use DntLibrary\Base\Webhook;
+
+function color_conf($data)
+{
     //$color = $data['']
     //var_dump($data['meta_settings']['keys']['color']['value']);
     //$colorInverse = Dnt::colorInverse($color);
@@ -302,7 +317,8 @@ function color_conf($data) {
 ?>
 <?php
 
-function get_top($data) {
+function get_top($data)
+{
     ?>
     <!DOCTYPE html>
     <!--[if IE 9]> 
@@ -320,7 +336,7 @@ function get_top($data) {
             }
             ?>
             <meta name="author" content="digilopment">
-			<meta name="robots" content="index,follow" />
+            <meta name="robots" content="index,follow" />
             <meta name="viewport" content="width=device-width" />
             <?php
             $favicon = Settings::getImage($data['meta_settings']['keys']['favicon']['value']);
@@ -348,14 +364,16 @@ function get_top($data) {
         </head>
     <?php } ?><?php
 
-    function get_bottom($data) {
+    function get_bottom($data)
+    {
         ?>
         <!-- JS Global Compulsory -->
         <script src="<?php echo $data['media_path']; ?>js/jquery-migrate.min.js"></script>
         <script src="<?php echo $data['media_path']; ?>js/bootstrap.min.js"></script>
         <!-- JS Implementing Plugins -->
         <script src="<?php echo $data['media_path']; ?>js/back-to-top.js"></script>
-        <script src="<?php echo $data['media_path']; ?>js/smoothScroll.js"></script>
+        <!--<script src="<?php echo $data['media_path']; ?>js/smoothScroll.js"></script>-->
+        
         <script src="<?php echo $data['media_path']; ?>js/waypoints.min.js"></script>
         <script src="<?php echo $data['media_path']; ?>js/jquery.counterup.min.js"></script>
         <script src="<?php echo $data['media_path']; ?>js/jquery.fancybox.pack.js"></script>
@@ -392,9 +410,10 @@ function get_top($data) {
     </html>
 <?php } ?><?php
 
-function get_top_lista($data) {
+function get_top_lista($data)
+{
     $multylanguage = new MultyLanguage;
-    $db = new Db;
+    $db = new DB;
     $webhook = new Webhook;
     $rest = new Rest;
     $searchUrl = $webhook->getSitemapModules("search");
@@ -425,18 +444,18 @@ function get_top_lista($data) {
                                         <a href="<?php echo $urlLg; ?>" >
                                             <img src="<?php echo WWW_PATH . "dnt-view/layouts/wp_tpl_2/images/flags/flag_" . $lg . ".png"; ?>" alt="<?php echo $lg; ?>"></a>
                                     </li>
-                                    <?php
-                                }
-                            }
-                            ?>
+            <?php
+        }
+    }
+    ?>
                         </ul>
                     </div>
                 </div>
                 <div class="col-sm-4 col-xs-4 clearfix">
                     <i class="fa fa-search search-btn pull-right"></i> 
-                    <?php /* <ul class="topbar-list topbar-log_reg pull-right visible-sm-block visible-md-block visible-lg-block">
-                      <li class="cd-log_reg home"><a class="cd-signin" href="javascript:void(0);"><?php echo $translate['prihlasit'];?></a></li>
-                      </ul> */ ?>
+    <?php /* <ul class="topbar-list topbar-log_reg pull-right visible-sm-block visible-md-block visible-lg-block">
+      <li class="cd-log_reg home"><a class="cd-signin" href="javascript:void(0);"><?php echo $translate['prihlasit'];?></a></li>
+      </ul> */ ?>
                 </div>
             </div>
             <!--/end row-->
@@ -446,11 +465,12 @@ function get_top_lista($data) {
     <!-- End Topbar blog -->
 <?php } ?><?php
 
-function get_nav_menu($data) {
+function get_nav_menu($data)
+{
     $multylanguage = new MultyLanguage;
     $article = new ArticleView;
     $rest = new Rest;
-    $db = new Db;
+    $db = new DB;
     ?>	
     <!-- Navbar -->
     <div class="navbar mega-menu" role="navigation">
@@ -483,11 +503,11 @@ function get_nav_menu($data) {
                             <img class="logo" src="<?php echo $logo_firmy_2; ?>" alt="Logo">
                         </a>
                     <?php } ?>
-                    <?php if ($data['meta_settings']['keys']['logo_firmy_3']['show'] == 1) { ?>
+    <?php if ($data['meta_settings']['keys']['logo_firmy_3']['show'] == 1) { ?>
                         <a target="_blank" href="<?php echo $logo_url_3; ?>">
                             <img class="logo" src="<?php echo $logo_firmy_3; ?>" alt="Logo">
                         </a>
-                    <?php } ?>
+    <?php } ?>
                 </div>
             </div>
             <!--/end responsive container-->
@@ -501,31 +521,32 @@ function get_nav_menu($data) {
                             $name_url_1 = Url::getPostUrl($row['name_url']);
                             ?>
                             <li class="dropdown home <?php
-                            if ($row['name_url'] == $rest->webhook(1)) {
-                                echo "active";
-                            }
+                        if ($row['name_url'] == $rest->webhook(1)) {
+                            echo "active";
+                        }
                             ?> ">
                                 <?php if ($row['name_url'] == "no_url") { ?>
                                     <a><?php echo $article->getPostParam("name", $row['id_entity']); ?></a>
-                                <?php } else { ?>
+                                    <?php } else { ?>
                                     <a  href="<?php echo $name_url_1; ?>"><?php echo $row['name']; ?></a>
                                     <?php } ?>
                                     <?php if (Navigation::hasChild($row['id_entity'])) { ?>
                                     <ul class="dropdown-menu">
                                         <?php
                                         foreach (Navigation::getChildren($row['id_entity']) as $row2) {
-                                            $name_url_2 = Url::getPostUrl($row2['name_url']);;
+                                            $name_url_2 = Url::getPostUrl($row2['name_url']);
+                                            ;
                                             ?>
                                             <li class="<?php
-                                                if ($row2['name_url'] == $rest->webhook(1)) {
-                                                    echo "active";
-                                                }
-                                                ?>"><a href="<?php echo $name_url_2; ?>"><?php echo $row2['name']; ?></a></li>
-                                            <?php } ?>
+                                        if ($row2['name_url'] == $rest->webhook(1)) {
+                                            echo "active";
+                                        }
+                                        ?>"><a href="<?php echo $name_url_2; ?>"><?php echo $row2['name']; ?></a></li>
+            <?php } ?>
                                     </ul>
-                                <?php } ?>
+        <?php } ?>
                             </li>
-                        <?php } ?>
+    <?php } ?>
                     </ul>
                 </div>
                 <!--/responsive container-->
@@ -536,8 +557,9 @@ function get_nav_menu($data) {
     </div>
     <!-- End Navbar -->
     <?php } ?><?php
-    
-    function get_footer($data) { ?>
+
+    function get_footer($data)
+    { ?>
     <!--=== Footer v8 ===-->
     <div class="footer-v8">
         <?php
@@ -584,29 +606,29 @@ function get_nav_menu($data) {
             <style>.social-wall .wrapp{margin: 0px auto;width: <?php echo $wrappWidth; ?>%;}</style>
             <section class="social-wall">
                 <div class="row wrapp">
-                    <?php if ($data['meta_settings']['keys']['facebook_page_sw']['show'] == 1) { ?>
+        <?php if ($data['meta_settings']['keys']['facebook_page_sw']['show'] == 1) { ?>
                         <div class="col-md-<?php echo $colMdSocialWall; ?> item">
                             <iframe src="https://www.facebook.com/plugins/page.php?href=<?php echo $fbPage; ?>&tabs=timeline&width=<?php echo $fbWidht; ?>&height=<?php echo $fbHeight; ?>&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
                         </div>
-                    <?php } ?>
-                    <?php if ($data['meta_settings']['keys']['facebook_post_sw']['show'] == 1) { ?>
+        <?php } ?>
+        <?php if ($data['meta_settings']['keys']['facebook_post_sw']['show'] == 1) { ?>
                         <div class="col-md-<?php echo $colMdSocialWall; ?> item">
                             <iframe src="https://www.facebook.com/plugins/post.php?href=<?php echo $fbPost; ?>&tabs=timeline&width=<?php echo $fbWidht; ?>&height=<?php echo $fbHeight; ?>&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
                         </div>
-                    <?php } ?>
-                    <?php if ($data['meta_settings']['keys']['instagram_sw']['show'] == 1) { ?>
+        <?php } ?>
+        <?php if ($data['meta_settings']['keys']['instagram_sw']['show'] == 1) { ?>
                         <div class="col-md-<?php echo $colMdSocialWall; ?> item">
                             <iframe src="<?php echo $instaEmbed; ?>"  style="" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
                         </div>
-                    <?php } ?>
-                    <?php if ($data['meta_settings']['keys']['youtube_sw']['show'] == 1) { ?>
+                        <?php } ?>
+                        <?php if ($data['meta_settings']['keys']['youtube_sw']['show'] == 1) { ?>
                         <div class="col-md-<?php echo $colMdSocialWall; ?> item">
                             <iframe src="<?php echo $youtubeEmbed; ?>"  style="" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
                         </div>
-                    <?php } ?>
-                    <?php if ($data['meta_settings']['keys']['twitter_sw']['show'] == 1) { ?>
+            <?php } ?>
+            <?php if ($data['meta_settings']['keys']['twitter_sw']['show'] == 1) { ?>
                         <div class="col-md-<?php echo $colMdSocialWall; ?> item">
-                <?php echo $twitterEmbedCode; ?>
+            <?php echo $twitterEmbedCode; ?>
                         </div>
         <?php } ?>
                 </div>
@@ -628,7 +650,7 @@ function get_nav_menu($data) {
                                         <li class=" ">
                                             <a  href="<?php echo $name_url_1; ?>"><?php echo $name_1; ?></a>
                                         </li>
-                                    <?php } ?>
+    <?php } ?>
                                 </ul>
                             </div>
                         </div>
@@ -637,48 +659,48 @@ function get_nav_menu($data) {
                         <h2><?php echo Multylanguage::translate($data, "socialne_siete", "translate"); ?></h2>
                         <!-- Social Icons -->
                         <ul class="social-icon-list margin-bottom-20">
-                                <?php if ($data['meta_settings']['keys']['facebook_page']['show'] == 1) { ?>
+                            <?php if ($data['meta_settings']['keys']['facebook_page']['show'] == 1) { ?>
                                 <li>
                                     <a href="<?php echo $data['meta_settings']['keys']['facebook_page']['value'] ?>" target="_blank">
                                         <i class="rounded-x  fa fa-facebook"></i> 
                                     </a>
                                 </li>
-                                <?php } ?>
-                                <?php if ($data['meta_settings']['keys']['twitter']['show'] == 1) { ?>
+                            <?php } ?>
+                            <?php if ($data['meta_settings']['keys']['twitter']['show'] == 1) { ?>
                                 <li>
                                     <a href="<?php echo $data['meta_settings']['keys']['twitter']['value'] ?>" target="_blank">
                                         <i class="rounded-x  fa fa-twitter"></i>
                                     </a>
                                 </li>
-                                <?php } ?>
-                                <?php if ($data['meta_settings']['keys']['linked_in']['show'] == 1) { ?>
+                            <?php } ?>
+                            <?php if ($data['meta_settings']['keys']['linked_in']['show'] == 1) { ?>
                                 <li>
                                     <a href="<?php echo $data['meta_settings']['keys']['linked_in']['value'] ?>" target="_blank">
                                         <i class="rounded-x  fa fa-linkedin"></i> 
                                     </a>
                                 </li>
-                                <?php } ?>
-                                <?php if ($data['meta_settings']['keys']['google_plus']['show'] == 1) { ?>
+                            <?php } ?>
+                            <?php if ($data['meta_settings']['keys']['google_plus']['show'] == 1) { ?>
                                 <li>
                                     <a href="<?php echo $data['meta_settings']['keys']['google_plus']['value'] ?>" target="_blank">
                                         <i class="rounded-x  fa fa-google-plus"></i>
                                     </a>
                                 </li>
-                                <?php } ?>
-                                <?php if ($data['meta_settings']['keys']['youtube_channel']['show'] == 1) { ?>
+                            <?php } ?>
+                            <?php if ($data['meta_settings']['keys']['youtube_channel']['show'] == 1) { ?>
                                 <li>
                                     <a href="<?php echo $data['meta_settings']['keys']['youtube_channel']['value'] ?>" target="_blank">
                                         <i class="rounded-x  fa fa-youtube"></i>
                                     </a>
                                 </li>
-                                <?php } ?>
-                                <?php if ($data['meta_settings']['keys']['instagram']['show'] == 1) { ?>
+                            <?php } ?>
+    <?php if ($data['meta_settings']['keys']['instagram']['show'] == 1) { ?>
                                 <li>
                                     <a href="<?php echo $data['meta_settings']['keys']['instagram']['value'] ?>" target="_blank">
                                         <i class="rounded-x  fa fa-instagram"></i>
                                     </a>
                                 </li>
-                                <?php } ?>	
+    <?php } ?>	
                         </ul>
                         <!-- End Social Icons -->
                     </div>
@@ -692,23 +714,23 @@ function get_nav_menu($data) {
                 <ul class="list-inline terms-menu">
                     <li>
                         <a href="<?php echo WWW_PATH ?>">
-                         <?php echo Multylanguage::translate($data, "footer_signature", "translate"); ?> <?php echo date("Y"); ?>
+    <?php echo Multylanguage::translate($data, "footer_signature", "translate"); ?> <?php echo date("Y"); ?>
                         </a>
                     </li>
-                        <?php if ($data['meta_settings']['keys']['impressum']['show'] == 1) { ?>						
+                    <?php if ($data['meta_settings']['keys']['impressum']['show'] == 1) { ?>						
                         <li>
                             <a href="<?php echo $data['meta_settings']['keys']['impressum']['value'] ?>" target="_blank">
-                        <?php echo Multylanguage::translate($data, "impressum", "translate"); ?>
+                                <?php echo Multylanguage::translate($data, "impressum", "translate"); ?>
                             </a>
                         </li>
-                        <?php } ?>
-                        <?php if ($data['meta_settings']['keys']['data_protection']['show'] == 1) { ?>
+                    <?php } ?>
+    <?php if ($data['meta_settings']['keys']['data_protection']['show'] == 1) { ?>
                         <li>
                             <a href="<?php echo $data['meta_settings']['keys']['data_protection']['value'] ?>" target="_blank">
-                                <?php echo Multylanguage::translate($data, "data_protection", "translate"); ?>
+        <?php echo Multylanguage::translate($data, "data_protection", "translate"); ?>
                             </a>
                         </li>
-                        <?php } ?>
+    <?php } ?>
                 </ul>
             </div>
             <!--/end container-->
@@ -717,31 +739,32 @@ function get_nav_menu($data) {
     <!--=== End Footer v8 ===-->
 <?php } ?><?php
 
-function col_right($data) { ?>
+function col_right($data)
+{ ?>
     <!-- Blog Thumb v3 -->
-	
-	<?php 
-	$article = new ArticleView();
-	$posts = $article->getPosts(1156, false, "`order` DESC");
-	if(count($posts)>0){
-	?>
-    <div class="clearfix margin-bottom-50 dalsie-info">
-        <h2 class="title-v4 "><?php echo Multylanguage::translate($data, "partneri", "translate"); ?></h2>
-        <div class="blog-thumb-v3">
-			<?php foreach($posts as $post){?>
-				<?php if(Dnt::is_external_url($post['name_url'])){?>
-				<a target="_blank" href="<?php echo $post['name_url']; ?>">
-					<img  src="<?php echo $article->getPostImage($post['id_entity']); ?>" alt="<?php echo $post['name']?>" class="partners-logos" />
-				</a>
-				<?php }else{ ?>
-					<img  src="<?php echo $article->getPostImage($post['id_entity']); ?>" alt="<?php echo $post['name']?>" class="partners-logos" />
-				<?php } ?>
-			<?php } ?>
+
+            <?php
+            $article = new ArticleView();
+            $posts = $article->getPosts(1156, false, "`order` DESC");
+            if (count($posts) > 0) {
+                ?>
+        <div class="clearfix margin-bottom-50 dalsie-info">
+            <h2 class="title-v4 "><?php echo Multylanguage::translate($data, "partneri", "translate"); ?></h2>
+            <div class="blog-thumb-v3">
+                <?php foreach ($posts as $post) { ?>
+            <?php if (Dnt::is_external_url($post['name_url'])) { ?>
+                        <a target="_blank" href="<?php echo $post['name_url']; ?>">
+                            <img  src="<?php echo $article->getPostImage($post['id_entity']); ?>" alt="<?php echo $post['name'] ?>" class="partners-logos" />
+                        </a>
+            <?php } else { ?>
+                        <img  src="<?php echo $article->getPostImage($post['id_entity']); ?>" alt="<?php echo $post['name'] ?>" class="partners-logos" />
+            <?php } ?>
+        <?php } ?>
+            </div>
+            <hr class="hr-xs">
         </div>
-        <hr class="hr-xs">
-    </div>
-	<?php } ?>
-	
+                <?php } ?>
+
     <div class="margin-bottom-50 dalsie-info">
 
         <h2 class="title-v4 "><?php echo Multylanguage::translate($data, "otvaracie_hodiny", "translate"); ?></h2>
@@ -756,50 +779,50 @@ function col_right($data) { ?>
                 $logo_url_2 = $data['meta_settings']['keys']['logo_url_2']['value'];
                 $logo_url_3 = $data['meta_settings']['keys']['logo_url_3']['value'];
                 ?>
-                <?php if ($data['meta_settings']['keys']['logo_firmy']['show'] == 1) { ?>
+    <?php if ($data['meta_settings']['keys']['logo_firmy']['show'] == 1) { ?>
                     <li>
                         <a target="_blank" href="<?php echo $logo_url; ?>">
                             <img class="img-responsive" src="<?php echo $logo_firmy; ?>" alt="logo" style="margin-bottom: 20px;"/>
                         </a>
                     </li>
                 <?php } ?>
-                <?php if ($data['meta_settings']['keys']['logo_firmy_2']['show'] == 1) { ?>
+    <?php if ($data['meta_settings']['keys']['logo_firmy_2']['show'] == 1) { ?>
                     <li>
                         <a target="_blank" href="<?php echo $logo_url_2; ?>">
                             <img class="img-responsive" src="<?php echo $logo_firmy_2; ?>" alt="logo" />
                         </a>
                     </li>
-                <?php } ?>
-                <?php if ($data['meta_settings']['keys']['logo_firmy_3']['show'] == 1) { ?>
+    <?php } ?>
+    <?php if ($data['meta_settings']['keys']['logo_firmy_3']['show'] == 1) { ?>
                     <li >
                         <a target="_blank" href="<?php echo $logo_url_3; ?>">
                             <img class="img-responsive" src="<?php echo $logo_firmy_3; ?>" alt="logo" />
                         </a>
                     </li>
-                <?php } ?>
-				</ul>
-				<ul>
-				<li >
-					<?php echo Multylanguage::translate($data, "od_pondelok", "translate"); ?>
-				</li>
-				<li >
-					<?php echo Multylanguage::translate($data, "od_utorok", "translate"); ?>
-				</li>
-				<li >
-					<?php echo Multylanguage::translate($data, "od_streda", "translate"); ?>
-				</li>
-				<li >
-					<?php echo Multylanguage::translate($data, "od_stvrtok", "translate"); ?>
-				</li>
-				<li >
-					<?php echo Multylanguage::translate($data, "od_piatok", "translate"); ?>
-				</li>
-				<li >
-					<?php echo Multylanguage::translate($data, "od_sobota", "translate"); ?>
-				</li>
-				<li >
-					<?php echo Multylanguage::translate($data, "od_nedela", "translate"); ?>
-				</li>
+    <?php } ?>
+            </ul>
+            <ul>
+                <li >
+                    <?php echo Multylanguage::translate($data, "od_pondelok", "translate"); ?>
+                </li>
+                <li >
+                    <?php echo Multylanguage::translate($data, "od_utorok", "translate"); ?>
+                </li>
+                <li >
+                    <?php echo Multylanguage::translate($data, "od_streda", "translate"); ?>
+                </li>
+                <li >
+                    <?php echo Multylanguage::translate($data, "od_stvrtok", "translate"); ?>
+                </li>
+                <li >
+    <?php echo Multylanguage::translate($data, "od_piatok", "translate"); ?>
+                </li>
+                <li >
+    <?php echo Multylanguage::translate($data, "od_sobota", "translate"); ?>
+                </li>
+                <li >
+    <?php echo Multylanguage::translate($data, "od_nedela", "translate"); ?>
+                </li>
 
             </ul>
         </div>
@@ -819,55 +842,56 @@ function col_right($data) { ?>
     <div class="margin-bottom-50">
         <h2 class="title-v4"><?php echo Multylanguage::translate($data, "socialne_siete", "translate"); ?></h2>
         <ul class="blog-social-shares">
-               <?php if($data['meta_settings']['keys']['facebook_page']['show'] == 1){?>
-            <li>
-               <a href="<?php echo $data['meta_settings']['keys']['facebook_page']['value'] ?>" target="_blank">
-               <i class="rounded-x fb fa fa-facebook"></i> Facebook
-               </a>
-            </li>
+    <?php if ($data['meta_settings']['keys']['facebook_page']['show'] == 1) { ?>
+                <li>
+                    <a href="<?php echo $data['meta_settings']['keys']['facebook_page']['value'] ?>" target="_blank">
+                        <i class="rounded-x fb fa fa-facebook"></i> Facebook
+                    </a>
+                </li>
             <?php } ?>
-            <?php if($data['meta_settings']['keys']['twitter']['show'] == 1){?>
-            <li>
-               <a href="<?php echo $data['meta_settings']['keys']['twitter']['value'] ?>" target="_blank">
-               <i class="rounded-x tw fa fa-twitter"></i>Twitter
-               </a>
-            </li>
+    <?php if ($data['meta_settings']['keys']['twitter']['show'] == 1) { ?>
+                <li>
+                    <a href="<?php echo $data['meta_settings']['keys']['twitter']['value'] ?>" target="_blank">
+                        <i class="rounded-x tw fa fa-twitter"></i>Twitter
+                    </a>
+                </li>
             <?php } ?>
-            <?php if($data['meta_settings']['keys']['linked_in']['show'] == 1){?>
-            <li>
-               <a href="<?php echo $data['meta_settings']['keys']['linked_in']['value'] ?>" target="_blank">
-               <i class="rounded-x li fa fa-linkedin"></i> LinkedIn
-               </a>
-            </li>
+    <?php if ($data['meta_settings']['keys']['linked_in']['show'] == 1) { ?>
+                <li>
+                    <a href="<?php echo $data['meta_settings']['keys']['linked_in']['value'] ?>" target="_blank">
+                        <i class="rounded-x li fa fa-linkedin"></i> LinkedIn
+                    </a>
+                </li>
             <?php } ?>
-            <?php if($data['meta_settings']['keys']['google_plus']['show'] == 1){?>
-            <li>
-               <a href="<?php echo $data['meta_settings']['keys']['google_plus']['value'] ?>" target="_blank">
-               <i class="rounded-x gp fa fa-google-plus"></i>Google Plus
-               </a>
-            </li>
+    <?php if ($data['meta_settings']['keys']['google_plus']['show'] == 1) { ?>
+                <li>
+                    <a href="<?php echo $data['meta_settings']['keys']['google_plus']['value'] ?>" target="_blank">
+                        <i class="rounded-x gp fa fa-google-plus"></i>Google Plus
+                    </a>
+                </li>
             <?php } ?>
-            <?php if($data['meta_settings']['keys']['youtube_channel']['show'] == 1){?>
-            <li>
-               <a href="<?php echo $data['meta_settings']['keys']['youtube_channel']['value'] ?>" target="_blank">
-               <i class="rounded-x yt fa fa-youtube"></i>Youtube
-               </a>
-            </li>
-            <?php } ?>
-            <?php if($data['meta_settings']['keys']['instagram']['show'] == 1){?>
-            <li>
-               <a href="<?php echo $data['meta_settings']['keys']['instagram']['value'] ?>" target="_blank">
-               <i class="rounded-x ig fa fa-instagram"></i>Instagram
-               </a>
-            </li>
-            <?php } ?>
+    <?php if ($data['meta_settings']['keys']['youtube_channel']['show'] == 1) { ?>
+                <li>
+                    <a href="<?php echo $data['meta_settings']['keys']['youtube_channel']['value'] ?>" target="_blank">
+                        <i class="rounded-x yt fa fa-youtube"></i>Youtube
+                    </a>
+                </li>
+    <?php } ?>
+    <?php if ($data['meta_settings']['keys']['instagram']['show'] == 1) { ?>
+                <li>
+                    <a href="<?php echo $data['meta_settings']['keys']['instagram']['value'] ?>" target="_blank">
+                        <i class="rounded-x ig fa fa-instagram"></i>Instagram
+                    </a>
+                </li>
+    <?php } ?>
         </ul>
     </div>
     <!-- End Social Shares -->
     <!-- Blog Carousel Heading -->
 <?php } ?><?php
 
-function get_slider_carousel($data, $dataType, $ids, $name, $text) {
+function get_slider_carousel($data, $dataType, $ids, $name, $text)
+{
     //$GALLERY = explode(",", $data['meta_tree']['keys']['galeria_1']['value']);
     $GALLERY = explode(",", $ids);
     $PHOTOS = array();
@@ -876,7 +900,7 @@ function get_slider_carousel($data, $dataType, $ids, $name, $text) {
             $PHOTOS[] = Image::getFileImage($item);
         }
     } else {
-        $db = new Db;
+        $db = new DB;
         $article = new ArticleView;
         $query = "SELECT * FROM dnt_posts WHERE type = 'post' AND 
       		cat_id = '" . $ids . "' AND vendor_id = '" . Vendor::getId() . "'";
@@ -890,14 +914,14 @@ function get_slider_carousel($data, $dataType, $ids, $name, $text) {
     <div id="<?php echo $name; ?>" class="carousel slide" data-ride="carousel" data-interval="false">
         <!-- Indicators -->
         <ol class="carousel-indicators">
-            <?php
-            $i = 0;
-            foreach ($PHOTOS as $index => $photo) {
-                ?>
+                <?php
+                $i = 0;
+                foreach ($PHOTOS as $index => $photo) {
+                    ?>
                 <li data-target="#<?php echo $name; ?>" data-slide-to="<?php echo $i; ?>" class="<?php
-                    if ($i == 0) {
-                        echo "active";
-                    }
+            if ($i == 0) {
+                echo "active";
+            }
                     ?>"></li>
                 <?php
                 $i++;
@@ -906,24 +930,26 @@ function get_slider_carousel($data, $dataType, $ids, $name, $text) {
         </ol>
         <!-- Wrapper for slides -->
         <div class="carousel-inner">
-            <?php
-            $j = 0;
-            foreach ($PHOTOS as $index => $photo) { ?>
-              <div class="item <?php
-                   if ($j == 0) {
-                       echo "active";
-                   }
-                   ?>">
-                  <img src="<?php echo $photo; ?>" alt="Los Angeles">
-                  <?php if ($text) { ?>
-                      <div class="carousel-caption d-none d-md-block">
-                          <h1><?php echo $text ?></h1>
-                      </div>
-                  <?php } ?>
-              </div>
-               <?php $j++;
-            }
-            ?>
+                <?php
+                $j = 0;
+                foreach ($PHOTOS as $index => $photo) {
+                    ?>
+                <div class="item <?php
+                    if ($j == 0) {
+                        echo "active";
+                    }
+                    ?>">
+                    <img src="<?php echo $photo; ?>" alt="Los Angeles">
+        <?php if ($text) { ?>
+                        <div class="carousel-caption d-none d-md-block">
+                            <h1><?php echo $text ?></h1>
+                        </div>
+        <?php } ?>
+                </div>
+        <?php
+        $j++;
+    }
+    ?>
         </div>
         <!-- Left and right controls -->
         <a class="left carousel-control" href="#<?php echo $name; ?>" data-slide="prev">
@@ -938,7 +964,8 @@ function get_slider_carousel($data, $dataType, $ids, $name, $text) {
     <?php
 }
 
-function get_slider_main_ids($data, $dataType, $ids, $name) {
+function get_slider_main_ids($data, $dataType, $ids, $name)
+{
     //$GALLERY = explode(",", $data['meta_tree']['keys']['galeria_1']['value']);
     $GALLERY = explode(",", $ids);
     $PHOTOS = array();
@@ -947,7 +974,7 @@ function get_slider_main_ids($data, $dataType, $ids, $name) {
             $PHOTOS[] = Image::getFileImage($item);
         }
     } else {
-        $db = new Db;
+        $db = new DB;
         $article = new ArticleView;
         $query = "SELECT * FROM dnt_posts WHERE type = 'post' AND 
       		cat_id = '" . $ids . "' AND vendor_id = '" . Vendor::getId() . "'";
@@ -963,28 +990,28 @@ function get_slider_main_ids($data, $dataType, $ids, $name) {
             <div class="col-md-12">
                 <div class="dnt-carousel-slider carousel slide" id="<?php echo $name; ?>">
                     <div class="carousel-inner">
-                    <?php
-                    $j = 0;
-                    foreach ($PHOTOS as $index => $photo) {
-                        ?>
-                        <div class="item <?php
-                        if ($j == 0) {
-                            echo "active";
-                        }
-                        ?>">
-                            <div class="col-md-6 col-xs-12">
-                                <div class="wrap">
-                                    <a href="#">
-                                        <div class="text">Ahoj toto je test<br/><span class="description">Tak vyplňte súťažný formulár a budete automaticky zapojený do žrebovania o jeden z 2 letných pobytov</span></div>
-                                        <img src="<?php echo $photo; ?>" class="img-responsive">
-                                    </a>
+    <?php
+    $j = 0;
+    foreach ($PHOTOS as $index => $photo) {
+        ?>
+                            <div class="item <?php
+        if ($j == 0) {
+            echo "active";
+        }
+        ?>">
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="wrap">
+                                        <a href="#">
+                                            <div class="text">Ahoj toto je test<br/><span class="description">Tak vyplňte súťažný formulár a budete automaticky zapojený do žrebovania o jeden z 2 letných pobytov</span></div>
+                                            <img src="<?php echo $photo; ?>" class="img-responsive">
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <?php
-                        $j++;
-                    }
-                    ?>
+        <?php
+        $j++;
+    }
+    ?>
                     </div>
                     <a class="left carousel-control" href="#<?php echo $name; ?>" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
                     <a class="right carousel-control" href="#<?php echo $name; ?>" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
@@ -1018,10 +1045,11 @@ function get_slider_main_ids($data, $dataType, $ids, $name) {
     <?php
 }
 
-function get_slider_main_db($data, $ids, $name) {
+function get_slider_main_db($data, $ids, $name)
+{
     $multylanguage = new MultyLanguage;
     $article = new ArticleView;
-    $db = new Db;
+    $db = new DB;
 
     $query = "SELECT * FROM dnt_posts WHERE type = 'post' AND cat_id = '" . $ids . "' AND vendor_id = '" . Vendor::getId() . "' AND `show` > 0";
 
@@ -1052,18 +1080,18 @@ function get_slider_main_db($data, $ids, $name) {
                                     <div class="col-md-6 col-xs-12">
                                         <div class="wrap">
                                             <a href="<?php echo $nameUrl ?>">
-                                                <?php if ($perex || $content) { ?>
+            <?php if ($perex || $content) { ?>
                                                     <div class="text"><?php echo $perex; ?><br/><span class="description"><?php echo $content; ?></span></div>
-                                                <?php } ?>
+            <?php } ?>
                                                 <img src="<?php echo $image; ?>" class="img-responsive">
                                             </a>
                                         </div>
                                     </div>
                                 </div>
-                                <?php
-                                $j++;
-                            }
-                            ?>
+            <?php
+            $j++;
+        }
+        ?>
                         </div>
                         <a class="left carousel-control" href="#<?php echo $name; ?>" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
                         <a class="right carousel-control" href="#<?php echo $name; ?>" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
@@ -1090,12 +1118,13 @@ function get_slider_main_db($data, $ids, $name) {
     }
 }
 
-function get_slider($data) {
+function get_slider($data)
+{
     ?>
     <?php
     $multylanguage = new MultyLanguage;
     $article = new ArticleView;
-    $db = new Db;
+    $db = new DB;
     $query = "SELECT * FROM dnt_posts WHERE type = 'post' AND cat_id = '" . AdminContent::getCatId("sliders") . "' AND vendor_id = '" . Vendor::getId() . "' AND `show` > 0";
     if ($db->num_rows($query) > 0) {
         ?>
@@ -1110,31 +1139,31 @@ function get_slider($data) {
         <!-- Master Slider -->
         <div class="blog-ms-v1 content-sm bg-color-darker margin-bottom-60">
             <div class="master-slider ms-skin-default" id="masterslider">
-        <?php
-        foreach ($db->get_results($query) as $row) {
-            if (Dnt::is_external_url($row['name_url'])) {
-                $nameUrl = $row['name_url'];
-            } else {
-                $nameUrl = WWW_PATH."a/".$row['id_entity'];
-            }
-            $image = $article->getPostImage($row['id_entity']);
-            ?>
-                <div class="ms-slide blog-slider">
-                    <img src="<?php echo $image; ?>" data-src="<?php echo $image; ?>" alt="lorem ipsum dolor sit"/>
-                    <span class="blog-slider-badge" 
-                    <?php if ($nameUrl) { ?> onclick="location.href = '<?php echo $nameUrl ?>';" <?php } ?>  ><?php echo $row['name']; ?></span>
-                    <div class="ms-info"></div>
-                    <div class="blog-slider-title">
-                    <?php if ($nameUrl) { ?>
-                    <a target="_blank" href="<?php echo $nameUrl; ?>">
-                        <h2><?php echo $row['perex']; ?></h2>
-                    </a>
-                    <?php } else { ?>
-                    <h2><?php echo $row['perex']; ?></h2>
-                    <?php } ?>
+                        <?php
+                        foreach ($db->get_results($query) as $row) {
+                            if (Dnt::is_external_url($row['name_url'])) {
+                                $nameUrl = $row['name_url'];
+                            } else {
+                                $nameUrl = WWW_PATH . "a/" . $row['id_entity'];
+                            }
+                            $image = $article->getPostImage($row['id_entity']);
+                            ?>
+                    <div class="ms-slide blog-slider">
+                        <img src="<?php echo $image; ?>" data-src="<?php echo $image; ?>" alt="lorem ipsum dolor sit"/>
+                        <span class="blog-slider-badge" 
+            <?php if ($nameUrl) { ?> onclick="location.href = '<?php echo $nameUrl ?>';" <?php } ?>  ><?php echo $row['name']; ?></span>
+                        <div class="ms-info"></div>
+                        <div class="blog-slider-title">
+            <?php if ($nameUrl) { ?>
+                                <a target="_blank" href="<?php echo $nameUrl; ?>">
+                                    <h2><?php echo $row['perex']; ?></h2>
+                                </a>
+            <?php } else { ?>
+                                <h2><?php echo $row['perex']; ?></h2>
+            <?php } ?>
+                        </div>
                     </div>
-                </div>
-                <?php } ?>
+        <?php } ?>
             </div>
         </div>
         <!-- END Master Slider -->
@@ -1142,7 +1171,8 @@ function get_slider($data) {
 <?php } ?>
 <?php
 
-function get_paralax($image, $name) { ?>
+function get_paralax($image, $name)
+{ ?>
     <style>
         .microslider-wrapper{
             background: url('<?php echo $image; ?>') no-repeat center center fixed; 
@@ -1156,18 +1186,21 @@ function get_paralax($image, $name) { ?>
             <span class="page-name"><span class="name"><?php echo $name; ?></span></span>
         </div>
     </div>
-	<img src="<?php echo $image; ?>" class="microslider-wrapper-img-paralax img-responsive">
+    <img src="<?php echo $image; ?>" class="microslider-wrapper-img-paralax img-responsive">
 <?php } ?>
-<?php function get_video_embed($data, $videoId = false){ 
-if(!$videoId){
-	$videoId = $data['post_id'];
-}
-?>
-<style>
-.resp-container {position: relative;overflow: hidden;padding-top: 56.25%;}
-.resp-iframe {position: absolute;top: 0;left: 0;width: 100%;height: 100%;border: 0;}
-</style>
-<div class="resp-container">
-    <iframe class="resp-iframe" src="<?php echo WWW_PATH; ?>embed/video/<?php echo $videoId; ?>" gesture="media"  allow="encrypted-media" allowfullscreen></iframe>
-</div>
+<?php
+
+function get_video_embed($data, $videoId = false)
+{
+    if (!$videoId) {
+        $videoId = $data['post_id'];
+    }
+    ?>
+    <style>
+        .resp-container {position: relative;overflow: hidden;padding-top: 56.25%;}
+        .resp-iframe {position: absolute;top: 0;left: 0;width: 100%;height: 100%;border: 0;}
+    </style>
+    <div class="resp-container">
+        <iframe class="resp-iframe" src="<?php echo WWW_PATH; ?>embed/video/<?php echo $videoId; ?>" gesture="media"  allow="encrypted-media" allowfullscreen></iframe>
+    </div>
 <?php } ?>

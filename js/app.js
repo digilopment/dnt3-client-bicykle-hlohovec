@@ -13,11 +13,11 @@ var App = function() {
   // Fixed Header
   function handleHeader() {
     jQuery(window).scroll(function() {
-      if (jQuery(window).scrollTop() > 120) {
+      /*if (jQuery(window).scrollTop() > 120) {
         jQuery('.header-fixed .header-sticky').addClass('header-fixed-shrink');
       } else {
         jQuery('.header-fixed .header-sticky').removeClass('header-fixed-shrink');
-      }
+      }*/
     });
   }
 
