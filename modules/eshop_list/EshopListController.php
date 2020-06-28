@@ -16,7 +16,7 @@ class EshopListController extends BaseController
 {
 
     protected $rootCatId = 95;
-    protected $pageLimit = 5;
+    protected $pageLimit = 18;
     protected $currentPage = 1;
     protected $rest;
     protected $image;
@@ -127,7 +127,9 @@ class EshopListController extends BaseController
         foreach ($categoryTree as $cat) {
             $categoryIds[] = $cat['id_entity'];
         }
-        foreach ($this->posts->postsModel as $post) {
+
+        $data = $this->dnt->orderby($this->posts->postsModel, "name", "ASC");
+        foreach ($data as $post) {
             if (in_array($post->post_category_id, $categoryIds)) {
                 if ($post->show > 0) {
                     $final[] = $post;
@@ -155,7 +157,7 @@ class EshopListController extends BaseController
         } elseif ($this->webhook(2) == 'products' && $this->webhook(3) == 'search') {
             $this->filterUrl = 'products/search';
             foreach ($this->postBaseConfig() as $post) {
-                $searhString = str_replace('-', '', $this->rest->get('q'));
+                $searhString = str_replace('-', '', $this->dnt->name_url(urldecode($this->rest->get('q'))));
                 if ($this->dnt->in_string($searhString, $post->search)) {
                     $final[] = $post;
                 }
@@ -232,6 +234,7 @@ class EshopListController extends BaseController
             $data['routeCategory'] = is_numeric((int) $this->rest->webhook(3)) ? $this->rest->webhook(3) : $this->rootCatId;
             $data['categoryTree'] = $this->categories->getTreePath($data['routeCategory']);
             $data['categories'] = $this->categories->getChildren($this->rootCatId);
+            
             $data['categoryElement'] = function($id) {
                 return $this->categories->getElement($id);
             };
@@ -241,6 +244,11 @@ class EshopListController extends BaseController
             $data['getChildren'] = function($parentId) {
                 return $this->categories->getChildren($parentId);
             };
+
+            $data['getParentElements'] = function($id) {
+                return $this->categories->getParentElements($id);
+            };
+
 
             $this->modulConfigurator($data);
         } else {

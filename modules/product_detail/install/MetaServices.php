@@ -24,19 +24,6 @@ class MetaServices
             '`order`' => "100",
             '`show`' => "1",
         );
-        
-        $insertedData[] = array(
-            '`post_id`' => $postId,
-            '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
-            '`key`' => "test",
-            '`value`' => $defaultContent,
-            '`content_type`' => "text",
-            '`cat_id`' => "2",
-            '`description`' => "Test",
-            '`order`' => "100",
-            '`show`' => "1",
-        );
         return $insertedData;
     }
 

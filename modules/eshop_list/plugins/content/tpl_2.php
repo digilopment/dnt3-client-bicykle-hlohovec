@@ -11,6 +11,24 @@
             <h2 class="btn-eshop-menu title-v4">Kategórie 
                 <span class="pull-right" ><i class="fa fa-1x fa-bars"></i> </span>
             </h2>
+            <style>
+                .prod-cat .nav{
+                    display: none;
+                }
+                <?php foreach ($data['getParentElements']($data['routeCategory']) as $parent) { ?>
+                    .prod-cat .nav.nav-parent-<?php echo $parent; ?> {
+                        display: block;
+                    }
+                <?php } ?>
+                .prod-cat .nav.nav-parent-<?php echo $data['routeCategory']; ?> {
+                    display: block;
+                }
+
+                .prod-cat .nav.nav-parent-131 {
+                    display: block;
+                }
+
+            </style>
             <div class="panel-body eshop-nav no-padding">
                 <?php
 
@@ -26,13 +44,26 @@
                     } else {
                         $selected = '';
                     }
-                    echo '<li class="' . $type . ' ' . $selected . '"><a class="' . $selected . '" href="' . $data['path'] . '' . $data['modulUrl'] . '/category/' . $element['id_entity'] . '"><i class="fa fa-angle-right"></i>' . $element['name'] . '</a></li>';
+                    $str = '<li class="' . $type . ' ' . $selected . '">'
+                            . '<a class="' . $selected . '" href="' . $data['path'] . '' . $data['modulUrl'] . '/category/' . $element['id_entity'] . '">';
+
+                    if ($data['hasChild']($element['id']) && $element['id'] == $data['routeCategory']) {
+                        $str .= '<i class="fa fa-angle-down"></i>';
+                    } elseif ($data['hasChild']($element['id'])) {
+                        $str .= '<i class="fa fa-angle-right"></i>';
+                    } else {
+                        $str .= '&nbsp;';
+                    }
+                    $str .= $element['name'] . ''
+                            . '</a><'
+                            . '/li>';
+                    echo $str;
                 }
 
                 function child($data, $parentId)
                 {
                     if ($data['hasChild']($parentId)) {
-                        echo '<ul class="nav">';
+                        echo '<ul class="nav nav-parent-' . $parentId . '">';
                         foreach ($data['getChildren']($parentId) as $child) {
                             htmlElement($child, $data);
                             child($data, $child['id']);
@@ -159,11 +190,11 @@
                         <section class="panel">
                             <div class="pro-img-box">
                                 <img src="<?php echo $data['postImage']($item->id_entity); ?>" alt="" />
-                                <a href="<?php echo $data['detailtUlr']($item->id_entity, $item->name_url) ?>" class="adtocart"> <i class="fa fa-shopping-cart"></i>
+                                <a href="<?php echo $data['detailtUlr']($item->id_entity, $item->name_url) ?>" class="adtocart"> <i class="fa fa-info-circle"></i>
                                 </a>
                             </div>
                             <div class="panel-body text-center">
-                                <h4><a href="#" class="pro-title"> <?php echo $item->name; ?> </a></h4>
+                                <h4><a href="<?php echo $data['detailtUlr']($item->id_entity, $item->name_url) ?>" class="pro-title"> <?php echo $item->name; ?> </a></h4>
                                 <p class="price"><?php echo $data['postMeta']($item->id_entity, 'price'); ?>€</p>
                             </div>
                         </section>
@@ -247,6 +278,7 @@
     }
     .product-list .pro-img-box {
         position: relative;
+        height: 240px;
     }
     .adtocart {
         background: #fc5959;
@@ -276,6 +308,16 @@
     .product-list .price {
         color: #fc5959;
         font-size: 15px;
+    }
+
+    .eshop .pagination li a:hover {
+        color:#fff
+    }
+    .eshop .pagination li a {
+        margin: 3px;
+    }
+    .product-list .panel{
+        min-height: 390px;
     }
     .pro-img-details {
         margin-left: -15px;
@@ -398,11 +440,17 @@
         display: none;
     }
 
-
-    .eshop .btn-group-lg>.btn, .eshop .btn-lg {
-        font-size: 16px;
+    .eshop .links .btn {
+        padding: 8px;
+        color: #fff;
+        font-size: 13px;
+        margin: 15px 0px;
+        display: block;
     }
-    .eshop .btn-success:hover {
+    .eshop .links .btn i{
+        color: #fff;
+    }
+    .eshop .btn:hover {
         color: #fff!important;
         background-color: #da0809;
         border-color: #da0809;
@@ -422,6 +470,35 @@
         margin-left: 0px;
     }
 
+    .eshop table {
+        font-size: 14px;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .eshop .description{
+        margin: 15px 0px;
+    }
+
+    .eshop table th, .eshop table td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    .eshop table tr:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
+
+    .eshop table tr td:nth-child(odd){
+        font-weight: bold;
+        text-align:left;
+        width:35%;
+    }
+    .eshop table tr td:nth-child(even){
+        width:65%
+    }
+
+
     @media screen and (max-width: 991px) {
         .eshop .btn-eshop-menu>span{
             display: block;
@@ -440,9 +517,19 @@
         .eshop hr{
             margin:5px;
         }
+        .prod-cat .nav{
+            display: block;
+        }
+        .eshop .pagination li a:hover {
+            color:#fff
+        }
+        .eshop .pagination li a {
+            margin: 3px;
+        }
     }
 
     @media screen and (min-width: 991px) {
+
         .eshop .product{
             margin-top: 25px;
         }
@@ -452,6 +539,17 @@
         .eshop .product .right-section{
             padding:15px 0px;
         }
-
     }
+
+    @media screen and (min-width: 1200px) {
+        .eshop .links {
+            margin-top: 30px;
+            display: block;
+        }
+        .eshop .links .btn {
+            display: inline;
+        }
+    }
+
+
 </style>

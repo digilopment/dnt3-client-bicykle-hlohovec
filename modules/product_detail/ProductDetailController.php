@@ -146,6 +146,10 @@ class ProductDetailController extends BaseController
                 return $this->categories->getChildren($parentId);
             };
 
+            $data['getParentElements'] = function($id) {
+                return $this->categories->getParentElements($id);
+            };
+
             $data['article']['service'] = $this->modul();
             $data['post_id'] = $this->item->id_entity;
 

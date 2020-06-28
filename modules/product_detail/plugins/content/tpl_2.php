@@ -11,7 +11,20 @@
             <h2 class="btn-eshop-menu title-v4">Kategórie 
                 <span class="pull-right" ><i class="fa fa-1x fa-bars"></i> </span>
             </h2>
-            <div class="panel-body no-padding eshop-nav" >
+            <style>
+                .prod-cat .nav{
+                    display: none;
+                }
+                <?php foreach ($data['getParentElements']($data['routeCategory']) as $parent) { ?>
+                    .prod-cat .nav.nav-parent-<?php echo $parent; ?> {
+                        display: block;
+                    }
+                <?php } ?>
+                .prod-cat .nav.nav-parent-<?php echo $data['routeCategory']; ?> {
+                    display: block;
+                }
+            </style>
+            <div class="panel-body eshop-nav no-padding">
                 <?php
 
                 function htmlElement($element, $data)
@@ -26,13 +39,26 @@
                     } else {
                         $selected = '';
                     }
-                    echo '<li class="' . $type . ' ' . $selected . '"><a class="' . $selected . '" href="' . $data['path'] . '' . $data['modulUrl'] . '/category/' . $element['id_entity'] . '"><i class="fa fa-angle-right"></i>' . $element['name'] . '</a></li>';
+                    $str = '<li class="' . $type . ' ' . $selected . '">'
+                            . '<a class="' . $selected . '" href="' . $data['path'] . '' . $data['modulUrl'] . '/category/' . $element['id_entity'] . '">';
+
+                    if ($data['hasChild']($element['id']) && $element['id'] == $data['routeCategory']) {
+                        $str .= '<i class="fa fa-angle-down"></i>';
+                    } elseif ($data['hasChild']($element['id'])) {
+                        $str .= '<i class="fa fa-angle-right"></i>';
+                    } else {
+                        $str .= '&nbsp;';
+                    }
+                    $str .= $element['name'] . ''
+                            . '</a><'
+                            . '/li>';
+                    echo $str;
                 }
 
                 function child($data, $parentId)
                 {
                     if ($data['hasChild']($parentId)) {
-                        echo '<ul class="nav">';
+                        echo '<ul class="nav nav-parent-' . $parentId . '">';
                         foreach ($data['getChildren']($parentId) as $child) {
                             htmlElement($child, $data);
                             child($data, $child['id']);
@@ -97,65 +123,83 @@
                             <a class="left carousel-control" href="#myCarousel-2" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left"></span> </a>
                             <a class="right carousel-control" href="#myCarousel-2" data-slide="next"> <span class="glyphicon glyphicon-chevron-right"></span> </a>
                         </div>
-                        <br/>
-                        <div class="row">
-                            <div class="col-sm-12 col-md-6 col-lg-6">
-                                <a href="<?php echo WWW_PATH; ?>kontakt" class="btn btn-success btn-lg"><i class="fa fa-external-link"></i> Spýtať sa na produkt</a>
-                                <br/><br/>
-                                <a href="<?php echo $data['categoryUrl'] ?>" class="btn btn-danger btn-lg"><i class="fa fa-external-link"></i> Pozrieť iné bicykle v tejto kategórii</a>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12 right-section">
                     <h2 class="name">
-                        <small>nazov: </small><?php echo $data['item']->name; ?>
-
+                        <?php echo $data['item']->name; ?>
+                        <hr/>
                     </h2>
-                    <hr />
-                    <h3 class="price-container">
-                        <small>cena: </small><?php echo $data['postMeta']($data['item']->id_entity, 'price'); ?>€
-                        <small>s DPH</small>
-                    </h3>
 
-                    <hr />
+                    <?php if ($data['postMeta']($data['item']->id_entity, 'price')) { ?>
+                        <h3 class="price-container">
+                            <?php echo $data['postMeta']($data['item']->id_entity, 'price'); ?>€
+                            <small>s DPH</small>
+                        </h3>
+                    <?php } ?>
+                    <div class="links">
+                        <a href="<?php echo WWW_PATH; ?>kontakt" class="btn btn-success"><i class="fa fa-external-link"></i> Spýtať sa na produkt</a>
+                        <a href="<?php echo $data['categoryUrl'] ?>" class="btn btn-warning"><i class="fa fa-external-link"></i> Pozrieť iné bicykle v tejto kategórii</a>
+                    </div>
+
+
+                </div>
+                <div class="col-xs-12">
                     <div class="description description-tabs">
                         <ul id="myTab" class="nav nav-pills no-padding">
-                            <li class="active"><a href="#more-information" data-toggle="tab" class="no-margin">Špecifikácia</a></li>
-                            <li class=""><a href="#specifications" data-toggle="tab">Ďalšie informácie</a></li>
+                            <li class="active"><a href="#more-information" data-toggle="tab" class="no-margin">Informácie</a></li>
+                            <li class=""><a href="#specifications" data-toggle="tab">Špecifikácia</a></li>
+                            <li class=""><a href="#variants" data-toggle="tab">Varianty</a></li>
                         </ul>
                         <div id="myTabContent" class="tab-content">
                             <div class="tab-pane fade active in" id="more-information">
-                                <br />
-                                <strong><?php echo $data['item']->name ?></strong>
+                                <br/>
+                                <strong> <?php echo $data['item']->name ?></strong>
                                 <p>
-                                    Integer egestas, orci id condimentum eleifend, nibh nisi pulvinar eros, vitae ornare massa neque ut orci. Nam aliquet lectus sed odio eleifend, at iaculis dolor egestas. Nunc elementum pellentesque augue
-                                    sodales porta. Etiam aliquet rutrum turpis, feugiat sodales ipsum consectetur nec.
+                                    <?php
+                                    $content = explode('<!--params-->', $data['item']->content);
+                                    echo $content[0];
+                                    ?>
                                 </p>
                             </div>
                             <div class="tab-pane fade" id="specifications">
                                 <br />
-                                <dl class="">
-                                    <dt>Gravina</dt>
-                                    <dd>Etiam porta sem malesuada magna mollis euismod.</dd>
-                                    <dd>Donec id elit non mi porta gravida at eget metus.</dd>
-                                    <dd>Eget lacinia odio sem nec elit.</dd>
-                                    <br />
 
-                                    <dt>Test lists</dt>
-                                    <dd>A description list is perfect for defining terms.</dd>
-                                    <br />
-
-                                    <dt>Altra porta</dt>
-                                    <dd>Vestibulum id ligula porta felis euismod semper</dd>
-                                </dl>
+                                <?php
+                                if (isset($content[1])) {
+                                    echo $content[1];
+                                }
+                                ?>
+                            </div>
+                            <div class="tab-pane fade" id="variants">
+                                <br />
+                                <div class="params">
+                                    <table>
+                                        <?php
+                                        //$variants = json_decode($data['postMeta']($data['item']->id_entity, 'variants'));
+                                        //$variants = json_decode($data['postMeta']($data['item']->id_entity, 'variants'), false, 512, JSON_UNESCAPED_UNICODE);
+                                        $variants = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $data['postMeta']($data['item']->id_entity, 'variants')), true);
+                                        //var_dump($variants);
+                                        if (is_array($variants)) {
+                                            foreach ($variants as $key => $variant) {
+                                                if (isset($variant['variant'])) {
+                                                    echo '<tr><td>' . $variant['variant'] . '</td></tr>';
+                                                }
+                                            }
+                                        } else {
+                                            if ($data['postMeta']($data['item']->id_entity, 'variant')) {
+                                                echo '<tr><td>' . $data['postMeta']($data['item']->id_entity, 'variant') . '</td></tr>';
+                                            } else {
+                                                echo '<tr><td>' . $data['item']->name . '</td></tr>';
+                                            }
+                                        }
+                                        ?>
+                                    </table>
+                                </div>
                             </div>
 
                         </div>
                     </div>
-                    <hr />
-
-
                 </div>
             </div>
         </div>
@@ -250,6 +294,16 @@
     .product-list .price {
         color: #fc5959;
         font-size: 15px;
+    }
+
+    .eshop .pagination li a:hover {
+        color:#fff
+    }
+    .eshop .pagination li a {
+        margin: 3px;
+    }
+    .product-list .panel{
+        min-height: 350px;
     }
     .pro-img-details {
         margin-left: -15px;
@@ -372,11 +426,17 @@
         display: none;
     }
 
-
-    .eshop .btn-group-lg>.btn, .eshop .btn-lg {
-        font-size: 16px;
+    .eshop .links .btn {
+        padding: 8px;
+        color: #fff;
+        font-size: 13px;
+        margin: 15px 0px;
+        display: block;
     }
-    .eshop .btn-success:hover {
+    .eshop .links .btn i{
+        color: #fff;
+    }
+    .eshop .btn:hover {
         color: #fff!important;
         background-color: #da0809;
         border-color: #da0809;
@@ -396,6 +456,35 @@
         margin-left: 0px;
     }
 
+    .eshop table {
+        font-size: 14px;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .eshop .description{
+        margin: 15px 0px;
+    }
+
+    .eshop table th, .eshop table td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    .eshop table tr:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
+
+    .eshop table tr td:nth-child(odd){
+        font-weight: bold;
+        text-align:left;
+        width:35%;
+    }
+    .eshop table tr td:nth-child(even){
+        width:65%
+    }
+
+
     @media screen and (max-width: 991px) {
         .eshop .btn-eshop-menu>span{
             display: block;
@@ -414,9 +503,19 @@
         .eshop hr{
             margin:5px;
         }
+        .prod-cat .nav{
+            display: block;
+        }
+        .eshop .pagination li a:hover {
+            color:#fff
+        }
+        .eshop .pagination li a {
+            margin: 3px;
+        }
     }
 
     @media screen and (min-width: 991px) {
+
         .eshop .product{
             margin-top: 25px;
         }
@@ -426,6 +525,17 @@
         .eshop .product .right-section{
             padding:15px 0px;
         }
-
     }
+
+    @media screen and (min-width: 1200px) {
+        .eshop .links {
+            margin-top: 30px;
+            display: block;
+        }
+        .eshop .links .btn {
+            display: inline;
+        }
+    }
+
+
 </style>
