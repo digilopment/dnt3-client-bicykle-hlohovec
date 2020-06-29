@@ -69,8 +69,17 @@ class EshopListController extends BaseController
 
     protected function customData()
     {
+        $image = $this->data['article']['img'];
+        $description = $this->data['meta_settings']['keys']['description']['value'];
+        $title = $this->setTitle();
         $customData = [
             'title' => $this->setTitle(),
+            'meta' => [
+                '<meta content="' . $title . '" property="og:title" />',
+                '<meta content="' . $this->data['title'] . '" property="og:site_name" />',
+                '<meta content="' . $image . '" property="og:image" />',
+                '<meta name="description" content="' . $description . '" />',
+            ]
         ];
         return $customData;
     }
@@ -234,7 +243,7 @@ class EshopListController extends BaseController
             $data['routeCategory'] = is_numeric((int) $this->rest->webhook(3)) ? $this->rest->webhook(3) : $this->rootCatId;
             $data['categoryTree'] = $this->categories->getTreePath($data['routeCategory']);
             $data['categories'] = $this->categories->getChildren($this->rootCatId);
-            
+
             $data['categoryElement'] = function($id) {
                 return $this->categories->getElement($id);
             };
