@@ -78,7 +78,7 @@ class EshopListController extends BaseController
     protected function modulPostData()
     {
         $nameUrl = $this->webhook(1);
-        foreach ($this->data['menu_items'] as $item) {
+        foreach ($this->data['sitemap_items'] as $item) {
             if ($item['name_url'] == $nameUrl) {
                 $this->modulPostData = (object) $item;
             }
@@ -248,7 +248,6 @@ class EshopListController extends BaseController
             $data['getParentElements'] = function($id) {
                 return $this->categories->getParentElements($id);
             };
-
 
             $this->modulConfigurator($data);
         } else {
