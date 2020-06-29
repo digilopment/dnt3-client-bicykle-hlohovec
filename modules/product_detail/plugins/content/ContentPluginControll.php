@@ -21,7 +21,7 @@ class ContentPluginControll extends Plugin
     public function run()
     {
         $data = $this->data;
-        $this->layout($this->loc, 'tpl_2', $data);
+        $this->layout($this->loc, 'tpl', $data);
     }
 
 }

@@ -221,7 +221,7 @@ class EshopListController extends BaseController
             $data['searchUrl'] = WWW_PATH . '' . $this->modulPostData->name_url . '/products/search';
             $data['countItems'] = $this->countItems;
             $data['postImage'] = function($idEntity) {
-                return $this->image->getPostImage($idEntity, 'dnt_posts', IMAGE::SMALL);
+                return $this->image->getPostImage($idEntity, 'dnt_posts', IMAGE::MEDIUM);
             };
             $data['postMeta'] = function($postId, $key) {
                 return isset($this->metaData['keys'][$postId][$key]) && $this->metaData['keys'][$postId][$key]['show'] == 1 ? $this->metaData['keys'][$postId][$key]['value'] : false;
