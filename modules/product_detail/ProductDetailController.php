@@ -55,13 +55,24 @@ class ProductDetailController extends BaseController
 
     protected function data()
     {
-        $this->data = $this->frontend->get();
+        $postId = ((int)$this->rest->webhook(3));
+        $this->data = $this->frontend->get(false, $postId);
     }
 
     protected function customData()
     {
+        //var_dump($this->data);exit;
+        $image = $this->data['article']['img'];
+        $description = str_replace('"','',$this->dnt->not_html($this->data['meta_tree']['dnt_posts_content']));
+        $title = $this->setTitle();
         $customData = [
-            'title' => $this->setTitle(),
+            'title' => $title,
+            'meta' => [
+                '<meta content="' . $title . '" property="og:title" />',
+                '<meta content="' . $this->data['title'] . '" property="og:site_name" />',
+                '<meta content="' . $image . '" property="og:image" />',
+                '<meta name="description" content="' . $description . '" />',
+            ]
         ];
         return $customData;
     }
