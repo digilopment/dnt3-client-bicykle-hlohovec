@@ -8,7 +8,7 @@ use DntLibrary\Base\Frontend;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Settings;
 
-class ArticleViewController extends BaseController
+class ImageListController extends BaseController
 {
 
     public function __construct()
@@ -21,12 +21,12 @@ class ArticleViewController extends BaseController
 
     protected function setTitle()
     {
-        return $this->data['article']['name'] . ' | ' . $this->modulPostData->name . ' | ' . $this->settings->get('title');
+        return $this->modulPostData->name . ' | ' . $this->settings->get('title');
     }
 
     protected function data()
     {
-        $this->data = $this->frontend->get(false, $this->rest->webhook(3));
+        $this->data = $this->frontend->get();
     }
 
     protected function webhook($key)
@@ -71,15 +71,9 @@ class ArticleViewController extends BaseController
     public function run()
     {
         $this->init();
-        $nameUrlArr = explode('/', $this->data['article']['name_url']);
-        $nameUrl = end($nameUrlArr);
-        if (
-                $this->modulPostData->name_url == $this->webhook(1) &&
-                is_numeric($this->webhook(3)) &&
-                $this->webhook(4) == $nameUrl
-        ) {
+        if ($this->modulPostData->name_url == $this->webhook(1) && empty($this->webhook(2))) {
             $data = $this->data;
-            $this->modulConfigurator($data, 'article_view');
+            $this->modulConfigurator($data);
         } else {
             $this->dnt->redirect(WWW_PATH . '404');
         }

@@ -3,6 +3,7 @@
 namespace DntView\Layout\Modul;
 
 use DntLibrary\App\BaseController;
+use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Frontend;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Settings;
@@ -15,6 +16,7 @@ class ArticleListController extends BaseController
         $this->settings = new Settings();
         $this->frontend = new Frontend();
         $this->rest = new Rest();
+        $this->dnt = new Dnt();
     }
 
     protected function setTitle()
@@ -69,9 +71,11 @@ class ArticleListController extends BaseController
     public function run()
     {
         $this->init();
-        if ($this->modulPostData->name_url == $this->webhook(1)) {
+        if ($this->modulPostData->name_url == $this->webhook(1) && empty($this->webhook(2))) {
             $data = $this->data;
             $this->modulConfigurator($data, 'article_list');
+        } else {
+            $this->dnt->redirect(WWW_PATH . '404');
         }
     }
 

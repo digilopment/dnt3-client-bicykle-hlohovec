@@ -351,9 +351,10 @@ function get_top($data)
             <link rel="stylesheet" href="<?php echo $data['media_path']; ?>css/red.css?<?php echo rand(10, 1000) ?>">
             <link rel="stylesheet" href="<?php echo $data['media_path']; ?>css/eshop.css?<?php echo rand(10, 1000) ?>">
             <!-- Custom Fonts -->
-            <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+            <?php 
+            /*<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
             <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-            <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+            <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>*/?>
             <!-- light box -->
             <script src="<?php echo $data['media_path']; ?>js/lightbox-plus-jquery.min.js"></script>
             <script src="<?php echo $data['media_path']; ?>js/jquery.min.js"></script>

@@ -1,4 +1,4 @@
-<MODULE cache="0">
+<MODULE cache="1">
     <PLUGIN name="layout">
         <VAR id="id" value="layout" />
         <VAR id="layout" value="LAYOUT" />
@@ -20,29 +20,28 @@
         <VAR id="tpl" value="top" />
     </PLUGIN>
 
-    <PLUGIN name="paralax">
-      <VAR id="id" value="paralax" />
-      <VAR id="name" value="paralax" />
+    <PLUGIN name="margin">
+      <VAR id="id" value="margin" />
+      <VAR id="name" value="margin" />
       <VAR id="layout" value="PARALAX" />
       <VAR id="level" value="global" />
       <VAR id="cache" value="1Y" />
-      <VAR id="cache_id" value="POST_ID" />
       <VAR id="compress" value="1" />
       <VAR id="type" value="mdl" />
-      <VAR id="tpl" value="paralax" />
+      <VAR id="tpl" value="margin" />
       <VAR id="template" value="tpl" />
-   </PLUGIN>
+    </PLUGIN>
 
-    <PLUGIN name="singl-page">
-      <VAR id="id" value="singl-page" />
-      <VAR id="name" value="singl-page" />
+    <PLUGIN name="image-list">
+      <VAR id="id" value="image-list" />
+      <VAR id="name" value="image-list" />
       <VAR id="layout" value="MAIN-CONTENT" />
-      <VAR id="level" value="global" />
+      <VAR id="level" value="local" />
       <VAR id="cache" value="1Y" />
       <VAR id="cache_id" value="POST_ID" />
       <VAR id="compress" value="1" />
       <VAR id="type" value="mdl" />
-      <VAR id="tpl" value="singl-page" />
+      <VAR id="tpl" value="image-list" />
       <VAR id="template" value="tpl" />
    </PLUGIN>
 
