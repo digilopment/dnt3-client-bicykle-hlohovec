@@ -55,7 +55,7 @@ class ProductDetailController extends BaseController
 
     protected function data()
     {
-        $postId = ((int)$this->rest->webhook(3));
+        $postId = ((int) $this->rest->webhook(3));
         $this->data = $this->frontend->get(false, $postId);
     }
 
@@ -63,7 +63,7 @@ class ProductDetailController extends BaseController
     {
         //var_dump($this->data);exit;
         $image = $this->data['article']['img'];
-        $description = str_replace('"','',$this->dnt->not_html($this->data['meta_tree']['dnt_posts_content']));
+        $description = str_replace('"', '', $this->dnt->not_html($this->data['meta_tree']['dnt_posts_content']));
         $title = $this->setTitle();
         $customData = [
             'title' => $title,
@@ -150,17 +150,6 @@ class ProductDetailController extends BaseController
             $data['categoryElement'] = function($id) {
                 return $this->categories->getElement($id);
             };
-            $data['hasChild'] = function($parentId) {
-                return $this->categories->hasChild($parentId) ? true : false;
-            };
-            $data['getChildren'] = function($parentId) {
-                return $this->categories->getChildren($parentId);
-            };
-
-            $data['getParentElements'] = function($id) {
-                return $this->categories->getParentElements($id);
-            };
-
             $data['article']['service'] = $this->modul();
             $data['post_id'] = $this->item->id_entity;
 

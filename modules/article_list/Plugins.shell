@@ -1,0 +1,70 @@
+<MODULE cache="1">
+    <PLUGIN name="layout">
+        <VAR id="id" value="layout" />
+        <VAR id="layout" value="LAYOUT" />
+        <VAR id="level" value="global" />
+        <VAR id="cache" value="1H" />
+        <VAR id="cache_id" value="POST_ID" />
+        <VAR id="compress" value="1" />
+        <VAR id="tpl" value="layout" />
+    </PLUGIN>
+
+    <PLUGIN name="top">
+        <VAR id="id" value="top" />
+        <VAR id="layout" value="HEAD-CONTENT" />
+        <VAR id="level" value="global" />
+        <VAR id="cache" value="1Y" />
+        <VAR id="cache_id" value="POST_ID" />
+        <VAR id="compress" value="0" />
+        <VAR id="type" value="mdl" />
+        <VAR id="tpl" value="top" />
+    </PLUGIN>
+
+    <PLUGIN name="margin">
+      <VAR id="id" value="margin" />
+      <VAR id="name" value="margin" />
+      <VAR id="layout" value="PARALAX" />
+      <VAR id="level" value="global" />
+      <VAR id="cache" value="1Y" />
+      <VAR id="compress" value="1" />
+      <VAR id="type" value="mdl" />
+      <VAR id="tpl" value="margin" />
+      <VAR id="template" value="tpl" />
+    </PLUGIN>
+
+    <PLUGIN name="article-list">
+      <VAR id="id" value="article-list" />
+      <VAR id="name" value="article-list" />
+      <VAR id="layout" value="MAIN-CONTENT" />
+      <VAR id="level" value="local" />
+      <VAR id="cache" value="1Y" />
+      <VAR id="cache_id" value="POST_ID" />
+      <VAR id="compress" value="1" />
+      <VAR id="type" value="mdl" />
+      <VAR id="tpl" value="article-list" />
+      <VAR id="template" value="tpl" />
+   </PLUGIN>
+
+
+ <PLUGIN name="right-column">
+      <VAR id="id" value="right-column" />
+      <VAR id="name" value="right-column" />
+      <VAR id="layout" value="MAIN-CONTENT" />
+      <VAR id="level" value="global" />
+      <VAR id="cache" value="1Y" />
+      <VAR id="compress" value="1" />
+      <VAR id="type" value="mdl" />
+      <VAR id="tpl" value="right-column" />
+      <VAR id="template" value="tpl" />
+   </PLUGIN>
+   
+    <PLUGIN name="bottom">
+        <VAR id="id" value="bottom" />
+        <VAR id="layout" value="BOTTOM-CONTENT" />
+        <VAR id="level" value="global" />
+        <VAR id="cache" value="1Y" />
+        <VAR id="compress" value="1" />
+        <VAR id="type" value="mdl" />
+        <VAR id="tpl" value="bottom" />
+    </PLUGIN>
+</MODULE>

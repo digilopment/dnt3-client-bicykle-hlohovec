@@ -1,42 +1,76 @@
-<MODULE cache="0">
-   
+<?xml version="1.0" encoding="UTF-8"?>
+<MODULE cache="1">
    <PLUGIN name="layout">
       <VAR id="id" value="layout" />
       <VAR id="layout" value="LAYOUT" />
       <VAR id="level" value="global" />
       <VAR id="cache" value="2M" />
       <VAR id="compress" value="1" />
-      <VAR id="tpl" value="layout" />
+      <VAR id="tpl" value="layout_eshop" />
    </PLUGIN>
-   
-        <PLUGIN name="top">
-              <VAR id="id" value="top" />
-              <VAR id="layout" value="HEAD-CONTENT" />
-              <VAR id="level" value="global" />
-              <VAR id="cache" value="2M" />
-              <VAR id="compress" value="0" />
-              <VAR id="type" value="mdl" />
-              <VAR id="tpl" value="top" />
-           </PLUGIN>
 
-        <PLUGIN name="content">
-              <VAR id="id" value="content" />
-              <VAR id="layout" value="MAIN-CONTENT" />
-              <VAR id="level" value="local" />
-              <VAR id="cache" value="2M" />
-              <VAR id="compress" value="1" />
-              <VAR id="type" value="mdl" />
-              <VAR id="tpl" value="content" />
-           </PLUGIN>
+   <PLUGIN name="top">
+      <VAR id="id" value="top" />
+      <VAR id="layout" value="HEAD-CONTENT" />
+      <VAR id="level" value="global" />
+      <VAR id="cache" value="1Y" />
+      <VAR id="compress" value="0" />
+      <VAR id="type" value="mdl" />
+      <VAR id="tpl" value="top" />
+   </PLUGIN>
 
-        <PLUGIN name="bottom">
-              <VAR id="id" value="bottom" />
-              <VAR id="layout" value="BOTTOM-CONTENT" />
-              <VAR id="level" value="global" />
-              <VAR id="cache" value="0H" />
-              <VAR id="compress" value="1" />
-              <VAR id="type" value="mdl" />
-              <VAR id="tpl" value="bottom" />
-        </PLUGIN>
+   <PLUGIN name="navigation">
+      <VAR id="id" value="navigation-tree" />
+      <VAR id="name" value="navigation" />
+      <VAR id="layout" value="MAIN-CONTENT" />
+      <VAR id="level" value="global" />
+      <VAR id="cache" value="1Y" />
+      <VAR id="compress" value="1" />
+      <VAR id="type" value="mdl" />
+      <VAR id="tpl" value="navigation-tree" />
+      <VAR id="template" value="tpl" />
+   </PLUGIN>
 
+   <PLUGIN name="navigationControll">
+      <VAR id="id" value="navigation-tree" />
+      <VAR id="name" value="navigationControll" />
+      <VAR id="layout" value="MAIN-CONTENT" />
+      <VAR id="level" value="global" />
+      <VAR id="cache" value="1Y" />
+      <VAR id="compress" value="0" />
+      <VAR id="type" value="mdl" />
+      <VAR id="tpl" value="navigation-tree" />
+      <VAR id="template" value="controll" />
+   </PLUGIN>
+
+   <PLUGIN name="content">
+      <VAR id="id" value="content" />
+      <VAR id="layout" value="MAIN-CONTENT" />
+      <VAR id="level" value="local" />
+      <VAR id="cache" value="1Y" />
+      <VAR id="compress" value="1" />
+      <VAR id="type" value="mdl" />
+      <VAR id="tpl" value="content" />
+      <VAR id="template" value="tpl" />
+   </PLUGIN>
+
+   <PLUGIN name="content">
+      <VAR id="id" value="content" />
+      <VAR id="layout" value="MAIN-CONTENT" />
+      <VAR id="level" value="local" />
+      <VAR id="cache" value="1Y" />
+      <VAR id="compress" value="1" />
+      <VAR id="type" value="mdl" />
+      <VAR id="tpl" value="content" />
+   </PLUGIN>
+
+   <PLUGIN name="bottom">
+      <VAR id="id" value="bottom" />
+      <VAR id="layout" value="BOTTOM-CONTENT" />
+      <VAR id="level" value="global" />
+      <VAR id="cache" value="1Y" />
+      <VAR id="compress" value="1" />
+      <VAR id="type" value="mdl" />
+      <VAR id="tpl" value="bottom" />
+   </PLUGIN>
 </MODULE>

@@ -1,226 +1,122 @@
-<div class="margin-bottom-60"></div>
-<div class="container eshop margin-bottom-40">
-    <div class="col-md-3">
-        <section class="panel search">
-            <h2 class="title-v4">Vyhľadávanie</h2>
-            <form class="search-form" action="<?php echo $data['searchUrl'] ?>">
-                <div class="panel-body"><input type="text" placeholder="Vyhľadávanie" name="q" class="form-control" /></div>
-            </form>
-        </section>
-        <section class="panel">
-             <h2 class="btn-eshop-menu title-v4">Kategórie 
-                <span class="pull-right" ><i class="fa fa-1x fa-bars"></i> </span>
-                <div class="btn-group show-all-cats">
-                    <button title="Zobraziť všetky kategórie v strome" type="button" class="btn btn-default">
-                        <i class="fa fa-eye"></i>
-                    </button>
-                </div>
-            </h2>
-            <style>
-                .prod-cat .nav{
-                    display: none;
-                }
-                <?php foreach ($data['getParentElements']($data['routeCategory']) as $parent) { ?>
-                    .prod-cat .nav.nav-parent-<?php echo $parent; ?> {
-                        display: block;
-                    }
-                <?php } ?>
-                .prod-cat .nav.nav-parent-<?php echo $data['routeCategory']; ?> {
-                    display: block;
-                }
-            </style>
-            <script>
-                $(document).ready(function () {
-                    $(".show-all-cats").click(function () {
-                        if ($(".show-all-cats").hasClass('isShow')) {
-                            $(".eshop .prod-cat .nav").hide();
-                            $(".show-all-cats").removeClass('isShow');
-                                <?php foreach ($data['getParentElements']($data['routeCategory']) as $parent) { ?>
-                                $(".prod-cat .nav.nav-parent-<?php echo $parent; ?>").show();
-                                <?php } ?>
-                            $(".prod-cat .nav.nav-parent-131").show();
-                        } else {
-                            $(".eshop .prod-cat .nav").fadeIn();
-                            $(".show-all-cats").addClass('isShow');
+<div class="col-sm-9 col-md-9 col-lg-9 product">
+    <section class="panel tree-path">
+        <div class="panel-body no-padding">
+            <div class="pull-left">
+                <ul class="pagination pagination-sm pro-page-list">
+                    <li class="">
+                        <a><i class="fa fa-arrow-right"></i></a>
+                    </li>
+                    <?php
+                    $i = 0;
+                    foreach ($this->data['plugin_data']['categoryTreeProduct'] as $catId) {
+                        if ($i > 0) {
+                            ?>
+                            <li class="" ><a href="<?php echo $this->data['plugin_data']['path'] . '' . $this->data['plugin_data']['modulUrl'] . '/category/' . $catId; ?>"><?php echo $this->data['plugin_data']['categoryElement']($catId)['name'] ?></a></li>
+                            <?php
                         }
-                    });
-                });
-            </script>
-            <div class="panel-body eshop-nav no-padding">
-                <?php
-
-                function htmlElement($element, $data)
-                {
-                    if ($data['hasChild']($element['id'])) {
-                        $type = 'parent';
-                    } else {
-                        $type = 'child';
+                        $i++;
                     }
-                    if ($element['id'] == $data['routeCategory']) {
-                        $selected = 'active';
-                    } else {
-                        $selected = '';
-                    }
-                    $str = '<li class="' . $type . ' ' . $selected . '">'
-                            . '<a class="' . $selected . '" href="' . $data['path'] . '' . $data['modulUrl'] . '/category/' . $element['id_entity'] . '">';
-
-                    if ($data['hasChild']($element['id']) && $element['id'] == $data['routeCategory']) {
-                        $str .= '<i class="fa fa-angle-down"></i>';
-                    } elseif ($data['hasChild']($element['id'])) {
-                        $str .= '<i class="fa fa-angle-right"></i>';
-                    } else {
-                        $str .= '&nbsp;';
-                    }
-                    $str .= $element['name'] . ''
-                            . '</a><'
-                            . '/li>';
-                    echo $str;
-                }
-
-                function child($data, $parentId)
-                {
-                    if ($data['hasChild']($parentId)) {
-                        echo '<ul class="nav nav-parent-' . $parentId . '">';
-                        foreach ($data['getChildren']($parentId) as $child) {
-                            htmlElement($child, $data);
-                            child($data, $child['id']);
-                        }
-                        echo '</ul>';
-                    }
-                }
-
-                echo '<ul class="nav prod-cat no-padding">';
-                foreach ($this->data['plugin_data']['categories'] as $parent) {
-                    htmlElement($parent, $this->data['plugin_data']);
-                    child($this->data['plugin_data'], $parent['id']);
-                }
-                echo '</ul>';
-                ?>
+                    ?>
+                    <li class="active"><a href=""><?php echo $data['item']->name; ?></a></li>
+                </ul>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
 
-    <div class="col-sm-9 col-md-9 col-lg-9 product">
-
-        <section class="panel tree-path">
-            <div class="panel-body no-padding">
-                <div class="pull-left">
-                    <ul class="pagination pagination-sm pro-page-list">
-                        <li class="">
-                            <a><i class="fa fa-arrow-right"></i></a>
-                        </li>
-                        <?php
-                        $i = 0;
-                        foreach ($this->data['plugin_data']['categoryTreeProduct'] as $catId) {
-                            if ($i > 0) {
-                                ?>
-                                <li class="" ><a href="<?php echo $this->data['plugin_data']['path'] . '' . $this->data['plugin_data']['modulUrl'] . '/category/' . $catId; ?>"><?php echo $this->data['plugin_data']['categoryElement']($catId)['name'] ?></a></li>
-                                <?php
-                            }
-                            $i++;
-                        }
-                        ?>
-                        <li class="active"><a href=""><?php echo $data['item']->name; ?></a></li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- product -->
-        <div class="product-content product-wrap clearfix product-deatil">
-            <div class="row">
-                <div class="col-md-6 col-sm-12 col-xs-12 left-section">
-                    <div class="product-image">
-                        <div id="myCarousel-2" class="carousel slide">
-                            <ol class="carousel-indicators">
-                                <li data-target="#myCarousel-2" data-slide-to="0" class="active"></li>
-                            </ol>
-                            <div class="carousel-inner">
-                                <!-- Slide 1 -->
-                                <div class="item active">
-                                    <img src="<?php echo $data['postImage']($data['item']->id_entity); ?>" alt="" />
-                                </div>
-
+    <!-- product -->
+    <div class="product-content product-wrap clearfix product-deatil">
+        <div class="row">
+            <div class="col-md-6 col-sm-12 col-xs-12 left-section">
+                <div class="product-image">
+                    <div id="myCarousel-2" class="carousel slide">
+                        <ol class="carousel-indicators">
+                            <li data-target="#myCarousel-2" data-slide-to="0" class="active"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <!-- Slide 1 -->
+                            <div class="item active">
+                                <img src="<?php echo $data['postImage']($data['item']->id_entity); ?>" alt="" />
                             </div>
-                            <a class="left carousel-control" href="#myCarousel-2" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left"></span> </a>
-                            <a class="right carousel-control" href="#myCarousel-2" data-slide="next"> <span class="glyphicon glyphicon-chevron-right"></span> </a>
+
                         </div>
+                        <a class="left carousel-control" href="#myCarousel-2" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left"></span> </a>
+                        <a class="right carousel-control" href="#myCarousel-2" data-slide="next"> <span class="glyphicon glyphicon-chevron-right"></span> </a>
                     </div>
                 </div>
-                <div class="col-md-6 col-sm-12 col-xs-12 right-section">
-                    <h2 class="name">
-                        <?php echo $data['item']->name; ?>
-                        <hr/>
-                    </h2>
+            </div>
+            <div class="col-md-6 col-sm-12 col-xs-12 right-section">
+                <h2 class="name">
+                    <?php echo $data['item']->name; ?>
+                    <hr/>
+                </h2>
 
-                    <?php if ($data['postMeta']($data['item']->id_entity, 'price')) { ?>
-                        <h3 class="price-container">
-                            <?php echo $data['postMeta']($data['item']->id_entity, 'price'); ?>€
-                            <small>s DPH</small>
-                        </h3>
-                    <?php } ?>
-                    <div class="links">
-                        <a href="<?php echo WWW_PATH; ?>kontakt" class="btn btn-success"><i class="fa fa-external-link"></i> Spýtať sa na produkt</a>
-                        <a href="<?php echo $data['categoryUrl'] ?>" class="btn btn-warning"><i class="fa fa-external-link"></i> Pozrieť iné bicykle v tejto kategórii</a>
-                    </div>
-
-
+                <?php if ($data['postMeta']($data['item']->id_entity, 'price')) { ?>
+                    <h3 class="price-container">
+                        <?php echo $data['postMeta']($data['item']->id_entity, 'price'); ?>€
+                        <small>s DPH</small>
+                    </h3>
+                <?php } ?>
+                <div class="links">
+                    <a href="<?php echo WWW_PATH; ?>kontakt" class="btn btn-success"><i class="fa fa-external-link"></i> Spýtať sa na produkt</a>
+                    <a href="<?php echo $data['categoryUrl'] ?>" class="btn btn-warning"><i class="fa fa-external-link"></i> Pozrieť iné bicykle v tejto kategórii</a>
                 </div>
-                <div class="col-xs-12">
-                    <div class="description description-tabs">
-                        <ul id="myTab" class="nav nav-pills no-padding">
-                            <li class="active"><a href="#more-information" data-toggle="tab" class="no-margin">Informácie</a></li>
-                            <li class=""><a href="#specifications" data-toggle="tab">Špecifikácia</a></li>
-                            <li class=""><a href="#variants" data-toggle="tab">Varianty</a></li>
-                        </ul>
-                        <div id="myTabContent" class="tab-content">
-                            <div class="tab-pane fade active in" id="more-information">
-                                <br/>
-                                <strong> <?php echo $data['item']->name ?></strong>
-                                <p>
-                                    <?php
-                                    $content = explode('<!--params-->', $data['item']->content);
-                                    echo $content[0];
-                                    ?>
-                                </p>
-                            </div>
-                            <div class="tab-pane fade" id="specifications">
-                                <br />
+
+
+            </div>
+            <div class="col-xs-12">
+                <div class="description description-tabs">
+                    <ul id="myTab" class="nav nav-pills no-padding">
+                        <li class="active"><a href="#more-information" data-toggle="tab" class="no-margin">Informácie</a></li>
+                        <li class=""><a href="#specifications" data-toggle="tab">Špecifikácia</a></li>
+                        <li class=""><a href="#variants" data-toggle="tab">Varianty</a></li>
+                    </ul>
+                    <div id="myTabContent" class="tab-content">
+                        <div class="tab-pane fade active in" id="more-information">
+                            <br/>
+                            <strong> <?php echo $data['item']->name ?></strong>
+                            <p>
                                 <?php
-                                if (isset($content[1])) {
-                                    echo $content[1];
-                                }
+                                $content = explode('<!--params-->', $data['item']->content);
+                                echo $content[0];
                                 ?>
-                            </div>
-                            <div class="tab-pane fade" id="variants">
-                                <br />
-                                <div class="params">
-                                    <table>
-                                        <?php
-                                        $variants = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $data['postMeta']($data['item']->id_entity, 'variants')), true);
-                                        if (is_array($variants)) {
-                                            foreach ($variants as $key => $variant) {
-                                                if (isset($variant['variant'])) {
-                                                    echo '<tr><td>' . $variant['variant'] . '</td></tr>';
-                                                }
-                                            }
-                                        } else {
-                                            if ($data['postMeta']($data['item']->id_entity, 'variant')) {
-                                                echo '<tr><td>' . $data['postMeta']($data['item']->id_entity, 'variant') . '</td></tr>';
-                                            } else {
-                                                echo '<tr><td>' . $data['item']->name . '</td></tr>';
+                            </p>
+                        </div>
+                        <div class="tab-pane fade" id="specifications">
+                            <br />
+                            <?php
+                            if (isset($content[1])) {
+                                echo $content[1];
+                            }
+                            ?>
+                        </div>
+                        <div class="tab-pane fade" id="variants">
+                            <br />
+                            <div class="params">
+                                <table>
+                                    <?php
+                                    $variants = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $data['postMeta']($data['item']->id_entity, 'variants')), true);
+                                    if (is_array($variants)) {
+                                        foreach ($variants as $key => $variant) {
+                                            if (isset($variant['variant'])) {
+                                                echo '<tr><td>' . $variant['variant'] . '</td></tr>';
                                             }
                                         }
-                                        ?>
-                                    </table>
-                                </div>
+                                    } else {
+                                        if ($data['postMeta']($data['item']->id_entity, 'variant')) {
+                                            echo '<tr><td>' . $data['postMeta']($data['item']->id_entity, 'variant') . '</td></tr>';
+                                        } else {
+                                            echo '<tr><td>' . $data['item']->name . '</td></tr>';
+                                        }
+                                    }
+                                    ?>
+                                </table>
                             </div>
-
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
-        <!-- end product -->
     </div>
+    <!-- end product -->
 </div>

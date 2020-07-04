@@ -243,20 +243,10 @@ class EshopListController extends BaseController
             $data['routeCategory'] = is_numeric((int) $this->rest->webhook(3)) ? $this->rest->webhook(3) : $this->rootCatId;
             $data['categoryTree'] = $this->categories->getTreePath($data['routeCategory']);
             $data['categories'] = $this->categories->getChildren($this->rootCatId);
-
             $data['categoryElement'] = function($id) {
                 return $this->categories->getElement($id);
             };
-            $data['hasChild'] = function($parentId) {
-                return $this->categories->hasChild($parentId) ? true : false;
-            };
-            $data['getChildren'] = function($parentId) {
-                return $this->categories->getChildren($parentId);
-            };
 
-            $data['getParentElements'] = function($id) {
-                return $this->categories->getParentElements($id);
-            };
 
             $this->modulConfigurator($data);
         } else {

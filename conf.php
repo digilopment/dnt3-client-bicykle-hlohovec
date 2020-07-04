@@ -13,7 +13,9 @@ function custom_modules($webhook = false)
      */
     $custom_modules = array(
         //PARTNERI
-
+        'singl_page' => array_merge(
+                array(), $webhook->getSitemapModules('singl_page')
+        ),
         'search' => array_merge(
                 array(), $webhook->getSitemapModules('search')
         ),
