@@ -35,6 +35,7 @@ class ProductDetailController extends BaseController
     protected $modulUrl;
     protected $modulPostData;
     protected $pathIdentifier = 'product';
+    protected $currencies = ['EUR', 'CZK'];
 
     public function __construct()
     {
@@ -146,6 +147,17 @@ class ProductDetailController extends BaseController
             $data['categories'] = $this->categories->getChildren($this->rootCatId);
 
             $data['categoryUrl'] = WWW_PATH . '' . $this->modulPostData->name_url . '/category/' . $this->item->post_category_id;
+
+            $data['price'] = function($postId) use ($data) {
+                $price = isset($this->metaData['keys'][$postId]['price']) && $this->metaData['keys'][$postId]['price']['show'] == 1 ? $this->metaData['keys'][$postId]['price']['value'] : false;
+                foreach ($this->currencies as $currency) {
+                    if ($this->dnt->in_string(strtolower($currency), strtolower($price))) {
+                        return $price;
+                    }
+                }
+
+                return $price . ' ' . $data['meta_settings']['keys']['vendor_currency']['value'];
+            };
 
             $data['categoryElement'] = function($id) {
                 return $this->categories->getElement($id);

@@ -48,21 +48,13 @@
       <VAR id="layout" value="MAIN-CONTENT" />
       <VAR id="level" value="local" />
       <VAR id="cache" value="1Y" />
+      <VAR id="cache_id" value="POST_ID" />
       <VAR id="compress" value="1" />
       <VAR id="type" value="mdl" />
       <VAR id="tpl" value="content" />
       <VAR id="template" value="tpl" />
    </PLUGIN>
 
-   <PLUGIN name="content">
-      <VAR id="id" value="content" />
-      <VAR id="layout" value="MAIN-CONTENT" />
-      <VAR id="level" value="local" />
-      <VAR id="cache" value="1Y" />
-      <VAR id="compress" value="1" />
-      <VAR id="type" value="mdl" />
-      <VAR id="tpl" value="content" />
-   </PLUGIN>
 
    <PLUGIN name="bottom">
       <VAR id="id" value="bottom" />

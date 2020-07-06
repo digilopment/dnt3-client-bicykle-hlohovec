@@ -34,6 +34,7 @@ class EshopListController extends BaseController
     protected $pages = [];
     protected $modulUrl;
     protected $modulPostData;
+    protected $currencies = ['EUR', 'CZK'];
 
     public function __construct()
     {
@@ -238,7 +239,16 @@ class EshopListController extends BaseController
             $data['detailtUlr'] = function($postId, $nameUrl) {
                 return WWW_PATH . '' . $this->modulPostData->name_url . '/product/' . $postId . '/' . $nameUrl . '';
             };
+            $data['price'] = function($postId) use ($data) {
+                $price = isset($this->metaData['keys'][$postId]['price']) && $this->metaData['keys'][$postId]['price']['show'] == 1 ? $this->metaData['keys'][$postId]['price']['value'] : false;
+                foreach ($this->currencies as $currency) {
+                    if ($this->dnt->in_string(strtolower($currency), strtolower($price))) {
+                        return $price;
+                    }
+                }
 
+                return $price . ' ' . $data['meta_settings']['keys']['vendor_currency']['value'];
+            };
             $data['path'] = WWW_PATH;
             $data['routeCategory'] = is_numeric((int) $this->rest->webhook(3)) ? $this->rest->webhook(3) : $this->rootCatId;
             $data['categoryTree'] = $this->categories->getTreePath($data['routeCategory']);

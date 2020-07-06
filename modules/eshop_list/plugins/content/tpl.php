@@ -36,7 +36,7 @@
                         </div>
                         <div class="panel-body text-center">
                             <h4><a href="<?php echo $data['detailtUlr']($item->id_entity, $item->name_url) ?>" class="pro-title"> <?php echo $item->name; ?> </a></h4>
-                            <p class="price"><?php echo $data['postMeta']($item->id_entity, 'price'); ?>€</p>
+                            <p class="price"><?php echo $data['price']($item->id_entity); ?></p>
                         </div>
                     </section>
                 </div>

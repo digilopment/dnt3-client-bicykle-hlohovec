@@ -52,7 +52,7 @@
 
                 <?php if ($data['postMeta']($data['item']->id_entity, 'price')) { ?>
                     <h3 class="price-container">
-                        <?php echo $data['postMeta']($data['item']->id_entity, 'price'); ?>€
+                        <?php echo $data['price']($data['item']->id_entity); ?>
                         <small>s DPH</small>
                     </h3>
                 <?php } ?>
