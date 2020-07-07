@@ -1,4 +1,5 @@
-<MODULE cache="0">
+<MODULE cache="1">
+
     <PLUGIN name="layout">
         <VAR id="id" value="layout" />
         <VAR id="layout" value="LAYOUT" />
@@ -13,22 +14,23 @@
         <VAR id="id" value="top" />
         <VAR id="layout" value="HEAD-CONTENT" />
         <VAR id="level" value="global" />
-        <VAR id="cache" value="0H" />
-        <VAR id="compress" value="0" />
+        <VAR id="cache" value="1Y" />
+        <VAR id="cache_id" value="POST_ID" />
+        <VAR id="compress" value="1" />
         <VAR id="type" value="mdl" />
         <VAR id="tpl" value="top" />
     </PLUGIN>
 
-    <PLUGIN name="paralax">
-      <VAR id="id" value="paralax" />
-      <VAR id="name" value="paralax" />
+    <PLUGIN name="double-slider">
+      <VAR id="id" value="double-slider" />
+      <VAR id="name" value="double-slider" />
       <VAR id="layout" value="PARALAX" />
       <VAR id="level" value="global" />
       <VAR id="cache" value="1Y" />
       <VAR id="cache_id" value="POST_ID" />
       <VAR id="compress" value="1" />
       <VAR id="type" value="mdl" />
-      <VAR id="tpl" value="paralax" />
+      <VAR id="tpl" value="double-slider" />
       <VAR id="template" value="tpl" />
    </PLUGIN>
 
@@ -67,4 +69,5 @@
         <VAR id="type" value="mdl" />
         <VAR id="tpl" value="bottom" />
     </PLUGIN>
+
 </MODULE>

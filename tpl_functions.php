@@ -1087,7 +1087,7 @@ function get_slider_main_db($data, $ids, $name)
             $(document).ready(function () {
                 $('#<?php echo $name; ?>').carousel({
                     interval: 10000
-                })
+                });
 
                 $('.dnt-carousel-slider.carousel .item').each(function () {
                     var next = $(this).next();

@@ -1,0 +1,82 @@
+<MODULE cache="1">
+
+    <PLUGIN name="layout">
+        <VAR id="id" value="layout" />
+        <VAR id="layout" value="LAYOUT" />
+        <VAR id="level" value="global" />
+        <VAR id="cache" value="1Y" />
+        <VAR id="cache_id" value="POST_ID" />
+        <VAR id="compress" value="1" />
+        <VAR id="tpl" value="layout_homepage" />
+    </PLUGIN>
+
+    <PLUGIN name="top">
+        <VAR id="id" value="top" />
+        <VAR id="layout" value="HEAD-CONTENT" />
+        <VAR id="level" value="global" />
+        <VAR id="cache" value="1Y" />
+        <VAR id="compress" value="1" />
+        <VAR id="type" value="mdl" />
+        <VAR id="tpl" value="top" />
+    </PLUGIN>
+
+    <PLUGIN name="slider">
+        <VAR id="id" value="slider" />
+        <VAR id="name" value="slider" />
+        <VAR id="layout" value="PARALAX" />
+        <VAR id="level" value="local" />
+        <VAR id="cache" value="1Y" />
+        <VAR id="cache_id" value="POST_ID" />
+        <VAR id="compress" value="1" />
+        <VAR id="type" value="mdl" />
+        <VAR id="tpl" value="slider" />
+        <VAR id="template" value="tpl" />
+    </PLUGIN>
+
+    <PLUGIN name="posts">
+        <VAR id="id" value="posts" />
+        <VAR id="name" value="posts" />
+        <VAR id="layout" value="SECTIONS" />
+        <VAR id="level" value="local" />
+        <VAR id="cache" value="0Y" />
+        <VAR id="compress" value="1" />
+        <VAR id="type" value="mdl" />
+        <VAR id="tpl" value="posts" />
+        <VAR id="template" value="tpl" />
+    </PLUGIN>
+
+    <PLUGIN name="logo-video">
+        <VAR id="id" value="logo-video" />
+        <VAR id="name" value="logo-video" />
+        <VAR id="layout" value="SECTIONS" />
+        <VAR id="level" value="local" />
+        <VAR id="cache" value="1Y" />
+        <VAR id="compress" value="1" />
+        <VAR id="type" value="mdl" />
+        <VAR id="tpl" value="logo-video" />
+        <VAR id="template" value="tpl" />
+    </PLUGIN>
+
+    <PLUGIN name="gallery">
+        <VAR id="id" value="gallery" />
+        <VAR id="name" value="gallery" />
+        <VAR id="layout" value="SECTIONS" />
+        <VAR id="level" value="local" />
+        <VAR id="cache" value="1Y" />
+        <VAR id="compress" value="1" />
+        <VAR id="type" value="mdl" />
+        <VAR id="tpl" value="gallery" />
+        <VAR id="template" value="tpl" />
+    </PLUGIN>
+
+    <PLUGIN name="bottom">
+        <VAR id="id" value="bottom" />
+        <VAR id="layout" value="BOTTOM-CONTENT" />
+        <VAR id="level" value="global" />
+        <VAR id="cache" value="1Y" />
+        <VAR id="compress" value="1" />
+        <VAR id="type" value="mdl" />
+        <VAR id="tpl" value="bottom" />
+    </PLUGIN>
+
+</MODULE>

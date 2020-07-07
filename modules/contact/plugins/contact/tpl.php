@@ -117,20 +117,20 @@
                                         url: '<?php echo WWW_PATH; ?>rpc/json/contact-form',
                                         data: $(form).serialize(),
                                         timeout: 10000,
-                                        dataType: "json",
+                                        dataType: 'json',
                                         success: function (data) {
                                         console.log(data);
                                                 if (data.success == 1) {
-                                        $("#form-request").hide();
-                                                $("#form_ok").show();
+                                        $('#form-request').hide();
+                                                $('#form_ok').show();
                                         } else if (data.success == 0) {
-                                        alert("Bat token');
+                                        alert('Bat token');
                                         } else {
                                         writeError(data.message);
                                         }
                                         },
                                                 error: function () {
-                                                alert("Momentálne sme zaneprázdnený.');
+                                                alert('Momentálne sme zaneprázdnený.');
                                                 }
                                                 });
                                                         return false;
@@ -139,7 +139,7 @@
                                         );
 
                                         function writeError(message) {
-                                            $("#form-result").html("<div class=\"alert alert-error\">" + message + "</div>');
+                                            $("#form-result").html('<div class="alert alert-error">' + message + '</div>');
                                             }
                                         }
                                         );
