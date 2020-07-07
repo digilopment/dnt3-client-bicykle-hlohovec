@@ -23,7 +23,7 @@
         <VAR id="name" value="navigation" />
         <VAR id="layout" value="MAIN-CONTENT" />
         <VAR id="level" value="global" />
-        <VAR id="cache" value="1H" />
+        <VAR id="cache" value="1Y" />
         <VAR id="compress" value="1" />
         <VAR id="type" value="mdl" />
         <VAR id="tpl" value="navigation-tree" />

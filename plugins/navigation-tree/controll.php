@@ -14,7 +14,6 @@
     .prod-cat .nav.nav-parent-131 {
         display: block;
     }
-
 </style>
 <script>
     $(document).ready(function () {
@@ -31,5 +30,10 @@
                 $(".show-all-cats").addClass('isShow');
             }
         });
+        var activeClass = '<?php echo $this->data['plugin_data']['routeCategory'];?>';
+        if(!activeClass){
+            activeClass = 131;
+        }
+        $(".nav.prod-cat .class-" + activeClass).addClass('active');
     });
 </script>
