@@ -57,7 +57,7 @@
                     </h3>
                 <?php } ?>
                 <div class="links">
-                    <a href="<?php echo WWW_PATH; ?>kontakt" class="btn btn-success"><i class="fa fa-external-link"></i> Spýtať sa na produkt</a>
+                    <a href="<?php echo WWW_PATH; ?>kontakt?productId=<?php echo $data['item']->id_entity; ?>#form-area" class="btn btn-success"><i class="fa fa-external-link"></i> Spýtať sa na produkt</a>
                     <a href="<?php echo $data['categoryUrl'] ?>" class="btn btn-warning"><i class="fa fa-external-link"></i> Pozrieť iné bicykle v tejto kategórii</a>
                 </div>
 

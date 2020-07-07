@@ -64,94 +64,94 @@
                             </li>
                         </ul>
                     </div>
-
                 </div>
-
-
-
             </div>
-
             <div class="col-xs-12">
                 <h3><?php echo $this->data['plugin_data']['translate']('formular'); ?></h3>
                 <div class="overflow-h margin-bottom-10 article-view">
                     <script type="text/javascript">
                         $(document).ready(function () {
-                        $("#form-request").validate({
-                        rules: {
-                        meno: {
-                        required: true,
-                                minlength: 1
-                        },
-                                surname: {
-                                required: true,
+                            $("#form-request").validate({
+                                rules: {
+                                    meno: {
+                                        required: true,
                                         minlength: 1
-                                },
-                                tel_c: {
-                                required: true,
+                                    },
+                                    surname: {
+                                        required: true,
                                         minlength: 1
-                                },
-                                predmet: {
-                                required: true,
+                                    },
+                                    tel_c: {
+                                        required: true,
                                         minlength: 1
-                                },
-                                email: {
-                                required: true,
+                                    },
+                                    predmet: {
+                                        required: true,
+                                        minlength: 1
+                                    },
+                                    email: {
+                                        required: true,
                                         email: true
-                                },
-                                sprava: {
-                                required: true,
+                                    },
+                                    sprava: {
+                                        required: true,
                                         minlength: 1
+                                    },
                                 },
-                        },
                                 messages: {
-                                meno: "<?php echo $this->data['plugin_data']['translate']('field_word_err'); ?>",
-                                        surname: "<?php echo $this->data['plugin_data']['translate']('field_word_err'); ?>",
-                                        tel_c: "<?php echo $this->data['plugin_data']['translate']('field_word_err'); ?>",
-                                        predmet: "<?php echo $this->data['plugin_data']['translate']('field_word_err'); ?>",
-                                        email: "<?php echo $this->data['plugin_data']['translate']('field_word_err'); ?>",
-                                        sprava: "<?php echo $this->data['plugin_data']['translate']('field_word_err'); ?>",
+                                    meno: "<?php echo $this->data['plugin_data']['translate']('field_word_err'); ?>",
+                                    surname: "<?php echo $this->data['plugin_data']['translate']('field_word_err'); ?>",
+                                    tel_c: "<?php echo $this->data['plugin_data']['translate']('field_word_err'); ?>",
+                                    predmet: "<?php echo $this->data['plugin_data']['translate']('field_word_err'); ?>",
+                                    email: "<?php echo $this->data['plugin_data']['translate']('field_word_err'); ?>",
+                                    sprava: "<?php echo $this->data['plugin_data']['translate']('field_word_err'); ?>",
                                 },
                                 submitHandler: function (form) {
-                                $.ajax({
-                                type: "POST",
+                                    $.ajax({
+                                        type: "POST",
                                         url: '<?php echo WWW_PATH; ?>rpc/json/contact-form',
                                         data: $(form).serialize(),
                                         timeout: 10000,
                                         dataType: 'json',
                                         success: function (data) {
-                                        console.log(data);
-                                                if (data.success == 1) {
-                                        $('#form-request').hide();
+                                            console.log(data);
+                                            if (data.success == 1) {
+                                                $('#form-request').hide();
                                                 $('#form_ok').show();
-                                        } else if (data.success == 0) {
-                                        alert('Bat token');
-                                        } else {
-                                        writeError(data.message);
-                                        }
-                                        },
-                                                error: function () {
-                                                alert('Momentálne sme zaneprázdnený.');
-                                                }
-                                                });
-                                                        return false;
-                                                }
-                                        }
-                                        );
-
-                                        function writeError(message) {
-                                            $("#form-result").html('<div class="alert alert-error">' + message + '</div>');
+                                            } else if (data.success == 0) {
+                                                alert('Bat token');
+                                            } else {
+                                                writeError(data.message);
                                             }
+                                        },
+                                        error: function () {
+                                            alert('Momentálne sme zaneprázdnený.');
                                         }
-                                        );
+                                    });
+                                    return false;
+                                }
+                            }
+                            );
+
+                            function writeError(message) {
+                                $("#form-result").html('<div class="alert alert-error">' + message + '</div>');
+                            }
+                        }
+                        );
 
                     </script>
                     <form action="" method="post" id="form-request" class="sky-form contact-style" novalidate="novalidate">
-                        <fieldset class="no-padding">
+                        <fieldset class="no-padding" id="form-area">
                             <label><?php echo $this->data['plugin_data']['translate']('predmet'); ?> <span class="color-red">*</span></label>
                             <div class="row sky-space-20">
                                 <div class="col-md-7 col-md-offset-0">
                                     <div>
-                                        <input type="text" name="predmet" id="predmet" class="form-control">
+                                        
+                                        <?php if ($this->data['plugin_data']['dynamicRequest']) { ?>
+                                            <input type="text" name="predmet" value="<?php echo $this->data['plugin_data']['requestSubject'] ?>" id="predmet" class="form-control">
+                                        <?php } else { ?>
+                                            <<input type="text" name="predmet" id="predmet" class="form-control">
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>
@@ -193,7 +193,11 @@
                             <div class="row sky-space-20">
                                 <div class="col-md-11 col-md-offset-0">
                                     <div>
-                                        <textarea rows="8" name="sprava" id="message" class="form-control"></textarea>
+                                        <?php if ($this->data['plugin_data']['dynamicRequest']) { ?>
+                                            <textarea rows="8" name="sprava" id="message" class="form-control"><?php echo $this->data['plugin_data']['requestContent'] ?></textarea>
+                                        <?php } else { ?>
+                                            <textarea rows="8" name="sprava" id="message" class="form-control"></textarea>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>
@@ -207,11 +211,7 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-            <br/>
-            <br/>
-
         </div>
     </div>
 </div>
