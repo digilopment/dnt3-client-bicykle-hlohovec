@@ -3,7 +3,7 @@
         <VAR id="id" value="layout" />
         <VAR id="layout" value="LAYOUT" />
         <VAR id="level" value="global" />
-        <VAR id="cache" value="1H" />
+        <VAR id="cache" value="1Y" />
         <VAR id="compress" value="1" />
         <VAR id="tpl" value="layout_eshop" />
     </PLUGIN>
@@ -12,7 +12,7 @@
         <VAR id="id" value="top" />
         <VAR id="layout" value="HEAD-CONTENT" />
         <VAR id="level" value="global" />
-        <VAR id="cache" value="0H" />
+        <VAR id="cache" value="1Y" />
         <VAR id="compress" value="1" />
         <VAR id="type" value="mdl" />
         <VAR id="tpl" value="top" />

@@ -10,7 +10,7 @@
         <h2 class="btn-eshop-menu title-v4">Kategórie 
             <span class="pull-right" ><i class="fa fa-1x fa-bars"></i> </span>
             <div class="btn-group show-all-cats">
-                <button title="Zobraziť všetky kategórie v strome" type="button" class="btn btn-default">
+                <button title="Zobraziť všetky sekcie v zozname" type="button" class="btn btn-default">
                     <i class="fa fa-eye"></i>
                 </button>
             </div>

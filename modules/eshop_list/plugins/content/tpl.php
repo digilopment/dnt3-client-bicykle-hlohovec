@@ -43,7 +43,17 @@
                 <?php
             }
         } else {
-            echo 'No items';
+            ?>
+            <div class="col-md-12">
+                <section class="panel">
+                    <div class="panel-body text-left">
+                        <i class="fa fa-exclamation-circle" style="font-size: 50px;color: #da0809;"></i>
+                        <h3>Ľutujeme, ale táto sekcia neobsahuje žiadne bicykle.</h3>
+                        <h4>Skúste si prosím vybrať inú kategóriu, alebo použiť vyhľadávač.</h4>
+                    </div>
+                </section>
+            </div>
+            <?php
         }
         ?>
     </div>
