@@ -150,7 +150,7 @@
                                         <?php if ($this->data['plugin_data']['dynamicRequest']) { ?>
                                             <input type="text" name="predmet" value="<?php echo $this->data['plugin_data']['requestSubject'] ?>" id="predmet" class="form-control">
                                         <?php } else { ?>
-                                            <<input type="text" name="predmet" id="predmet" class="form-control">
+                                            <input type="text" name="predmet" id="predmet" class="form-control">
                                         <?php } ?>
                                     </div>
                                 </div>
