@@ -9,15 +9,15 @@
       <VAR id="tpl" value="layout_clean" />
    </PLUGIN>
 
-   <PLUGIN name="contact">
-      <VAR id="name" value="contact" />
-      <VAR id="id" value="contact" />
+   <PLUGIN name="content">
+      <VAR id="name" value="content" />
+      <VAR id="id" value="content" />
       <VAR id="layout" value="CLEAN" />
       <VAR id="level" value="local" />
       <VAR id="cache" value="0Y" />
       <VAR id="compress" value="0" />
       <VAR id="type" value="mdl" />
-      <VAR id="tpl" value="contact" />
+      <VAR id="tpl" value="content" />
    </PLUGIN>
    
 </MODULE>

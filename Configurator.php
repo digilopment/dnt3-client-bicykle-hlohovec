@@ -35,9 +35,6 @@ class Configurator extends Webhook
             'image_list' => array_merge(
                     array(), $this->getSitemapModules('image_list')
             ),
-            'gallery_list' => array_merge(
-                    array(), $this->getSitemapModules('gallery_list')
-            ),
             'auto_redirect' => array_merge(
                     array(), array('a/{digit}')
             ),
@@ -83,9 +80,6 @@ class Configurator extends Webhook
             ),
             'product_detail' => array(
                 'service_name' => 'Detail Produktu',
-            ),
-            'gallery_list' => array(
-                'service_name' => 'Galéria',
             ),
             'eshop_list' => array(
                 'service_name' => 'Zoznam produktov',
