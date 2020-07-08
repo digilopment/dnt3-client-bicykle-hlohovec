@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MODULE cache="0">
+   <PLUGIN name="layout">
+      <VAR id="id" value="layout" />
+      <VAR id="layout" value="LAYOUT" />
+      <VAR id="level" value="global" />
+      <VAR id="cache" value="1Y" />
+      <VAR id="compress" value="1" />
+      <VAR id="tpl" value="layout_api" />
+   </PLUGIN>
+
+   <PLUGIN name="contact">
+      <VAR id="name" value="contact" />
+      <VAR id="id" value="contact" />
+      <VAR id="layout" value="JSON" />
+      <VAR id="level" value="local" />
+      <VAR id="cache" value="0Y" />
+      <VAR id="compress" value="0" />
+      <VAR id="type" value="mdl" />
+      <VAR id="tpl" value="contact" />
+   </PLUGIN>
+   
+</MODULE>
