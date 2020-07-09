@@ -1052,7 +1052,7 @@ function get_slider_main_db($data, $ids, $name)
                                 } else {
                                     $nameUrl = false;
                                 }
-                                $image = $article->getPostImage($row['id_entity']);
+                                $image = $article->getPostImage($row['id_entity'], null, Image::MEDIUM);
                                 $perex = Dnt::not_html($row['perex']);
                                 $content = Dnt::not_html($row['content']);
                                 ?>
@@ -1130,7 +1130,7 @@ function get_slider($data)
                     } else {
                         $nameUrl = WWW_PATH . "a/" . $row['id_entity'];
                     }
-                    $image = $article->getPostImage($row['id_entity']);
+                    $image = $article->getPostImage($row['id_entity'], null, Image::MEDIUM);
                     ?>
                     <div class="ms-slide blog-slider">
                         <img src="<?php echo $image; ?>" data-src="<?php echo $image; ?>" alt="lorem ipsum dolor sit"/>

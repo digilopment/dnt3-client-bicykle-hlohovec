@@ -322,9 +322,9 @@
 }
 
 @media screen and (max-width: 991px) {
-
     .eshop .product{
         margin-top: 25px;
+        padding: 0px;
     }
     .eshop .product .product-image{
         padding:25px 0px;
@@ -338,6 +338,9 @@
     .eshop .product-list .panel {
         min-height: auto;
         margin: 0px;
+    }
+    .eshop .category-section{
+        padding: 0px;
     }
 }
 

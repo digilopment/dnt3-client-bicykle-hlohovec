@@ -1,5 +1,4 @@
-
-<div class="col-md-3">
+<div class="col-md-3 category-section">
     <section class="panel search">
         <h2 class="title-v4">Vyhľadávanie</h2>
         <form class="search-form" action="<?php echo $this->data['plugin_data']['searchUrl'] ?>">
@@ -26,14 +25,9 @@
                 } else {
                     $type = 'child';
                 }
-                $selected = false;
-                if ($element['id'] == $data['routeCategory']) {
-                    //$selected = 'active';
-                } else {
-                    //$selected = '';
-                }
-                $str = '<li class="' . $type . ' ' . $selected . '">'
-                        . '<a class="' . $selected . ' class-' . $element['id_entity'] . '" href="' . $data['path'] . '' . $data['modulUrl'] . '/category/' . $element['id_entity'] . '">';
+
+                $str = '<li class="' . $type . '">'
+                        . '<a class="class-' . $element['id_entity'] . '" href="' . $data['path'] . '' . $data['modulUrl'] . '/category/' . $element['id_entity'] . '">';
 
                 if ($data['hasChild']($element['id']) && $element['id'] == $data['routeCategory']) {
                     $str .= '<i class="fa fa-angle-down"></i>';

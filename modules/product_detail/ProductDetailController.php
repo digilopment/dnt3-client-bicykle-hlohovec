@@ -62,7 +62,6 @@ class ProductDetailController extends BaseController
 
     protected function customData()
     {
-        //var_dump($this->data);exit;
         $image = $this->data['article']['img'];
         $description = str_replace('"', '', $this->dnt->not_html($this->data['meta_tree']['dnt_posts_content']));
         $title = $this->setTitle();
