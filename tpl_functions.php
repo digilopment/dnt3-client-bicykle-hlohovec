@@ -344,7 +344,7 @@ function get_top($data)
             <link rel="" type="img/png" href="<?php echo $favicon; ?>" />
             <link rel="icon" type="image/vnd.microsoft.icon" href="<?php echo $favicon; ?>" />
             <!-- Web Fonts -->
-            <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,300,700'>
+            <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto:400,300,700'>
             <!-- CSS Customization -->
             <link rel="stylesheet" href="<?php echo $data['media_path']; ?>css/bundle.css">
             <link rel="stylesheet" href="<?php echo $data['media_path']; ?>css/custom.css?<?php echo rand(10, 1000) ?>">

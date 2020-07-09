@@ -66,9 +66,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12">
+            <div class="col-xs-12 no-padding">
                 <h3><?php echo $this->data['plugin_data']['translate']('formular'); ?></h3>
-                <div class="overflow-h margin-bottom-10 article-view">
+                <div class="overflow-h margin-bottom-10">
                     <script type="text/javascript">
                         $(document).ready(function () {
                             $("#form-request").validate({
