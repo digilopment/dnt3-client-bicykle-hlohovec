@@ -2,14 +2,15 @@
 
 namespace DntView\Layout;
 
+use DntLibrary\App\Modul;
 use DntLibrary\Base\Vendor;
-use DntLibrary\Base\Webhook;
 
-class Configurator extends Webhook
+class Configurator extends Modul
 {
 
     public function modulesRegistrator()
     {
+        $this->getSitemap();
         $modulesRegistrator = array(
             'singl_page' => array_merge(
                     array(), $this->getSitemapModules('singl_page')

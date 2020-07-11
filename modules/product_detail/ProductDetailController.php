@@ -4,9 +4,9 @@ namespace DntView\Layout\Modul;
 
 use DntLibrary\App\BaseController;
 use DntLibrary\App\Categories;
+use DntLibrary\App\Data;
 use DntLibrary\App\Post;
 use DntLibrary\Base\Dnt;
-use DntLibrary\Base\Frontend;
 use DntLibrary\Base\Image;
 use DntLibrary\Base\PostMeta;
 use DntLibrary\Base\Rest;
@@ -41,7 +41,7 @@ class ProductDetailController extends BaseController
     {
         $this->rest = new Rest();
         $this->dnt = new Dnt();
-        $this->frontend = new Frontend();
+        $this->frontendData = new Data();
         $this->posts = new Post();
         $this->postMeta = new PostMeta();
         $this->categories = new Categories();
@@ -51,13 +51,21 @@ class ProductDetailController extends BaseController
 
     protected function setTitle()
     {
-        return $this->item->name . ' | ' . $this->modulPostData->name . ' | ' . Settings::get('title');
+        return $this->item->name . ' | ' . $this->modulPostData->name . ' | ' . $this->data['meta_settings']['keys']['title']['value'];
     }
 
     protected function data()
     {
         $postId = ((int) $this->rest->webhook(3));
-        $this->data = $this->frontend->get(false, $postId);
+        $config = [
+            'post_id' => $postId,
+            'sitemap_items' => true,
+            'menu_items' => true,
+            'translates' => true,
+            'meta_settings' => true,
+        ];
+        $this->frontendData->configure($config);
+        $this->data = $this->frontendData->get();
     }
 
     protected function customData()
@@ -108,11 +116,11 @@ class ProductDetailController extends BaseController
     protected function init()
     {
         $this->data();
+        $this->modulPostData();
         $this->categories->init();
         $this->getPost();
         $this->postMeta();
-        $this->modulPostData();
-        $this->data = $this->frontend->addCustomData($this->data, $this->customData());
+        $this->data = $this->frontendData->addCustomData($this->data, $this->customData());
     }
 
     public function run()
