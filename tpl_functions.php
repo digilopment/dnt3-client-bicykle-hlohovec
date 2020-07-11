@@ -406,8 +406,6 @@ function get_top($data)
                 MasterSliderShowcase1.initMasterSliderShowcase1();
             });
         </script>
-    </body>
-    </html>
 <?php } ?><?php
 
 function get_top_lista($data)
