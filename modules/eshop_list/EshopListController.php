@@ -163,28 +163,32 @@ class EshopListController extends BaseController
 
     protected function postFilter()
     {
-        
+
         $categoryIds = [];
         $final = [];
         
-        if ($this->webhook(2) == 'category' && empty($this->webhook(3))) {
-            $this->filterUrl = 'category';
+        if ($this->webhook(2) == 'category') {
             $categoryTree = $this->categories->getChildren($this->rootCatId, true);
             foreach ($categoryTree as $cat) {
                 $categoryIds[] = $cat['id_entity'];
             }
-            $filter = "post_category_id IN (" . join(',', $categoryIds) . ")";
+            $filter = "post_category_id IN (" . join(',', $categoryIds) . ") ";
+            $this->filterUrl = '';
         } elseif ($this->webhook(2) == 'products' && $this->webhook(3) == 'search') {
-            $this->filterUrl = 'products/search';
             $searhString = str_replace('-', '', $this->dnt->name_url(urldecode($this->rest->get('q'))));
             $filter = "search LIKE '%$searhString%'";
+            $this->filterUrl = 'category/search/?q=' . $searhString;
+        } elseif ($this->webhook(2) == 'products' && $this->webhook(3)) {
+            $productsIds = explode('-', $this->webhook(3));
+            $filter = "id_entity IN (" . join(',', $productsIds) . ") ";
+            $this->filterUrl = 'category/' . $this->webhook(3);
         } else {
-            $this->filterUrl = 'products/' . $this->webhook(3);
-            $categoryTree = $this->categories->getChildren($this->webhook(3), true);
+            $categoryTree = $this->categories->getChildren($this->rootCatId, true);
             foreach ($categoryTree as $cat) {
                 $categoryIds[] = $cat['id_entity'];
             }
-            $filter = "post_category_id IN (" . join(',', $categoryIds) . ")";
+            $filter = "post_category_id IN (" . join(',', $categoryIds) . ") ";
+            $this->filterUrl = '';
         }
         
         $query = "SELECT * FROM dnt_posts WHERE "
@@ -274,7 +278,11 @@ class EshopListController extends BaseController
             $data['currentPage'] = $this->currentPage;
             $data['pages'] = $this->pages;
             $data['modulUrl'] = $this->modulPostData->name_url;
-            $data['currentUrl'] = WWW_PATH . '' . $this->modulPostData->name_url . '/' . $this->filterUrl;
+            $data['currentUrl'] = function($page) {
+                $url = WWW_PATH . '' . $this->modulPostData->name_url . '/' . $this->filterUrl;
+                $hasQueryParams = parse_url($url, PHP_URL_QUERY);
+                return ($hasQueryParams) ? $url . '&page=' . $page : $url . '?page=' . $page;
+            };
             $data['searchUrl'] = WWW_PATH . '' . $this->modulPostData->name_url . '/products/search';
             $data['countItems'] = $this->countItems;
             $data['postImage'] = function($idEntity) {
@@ -304,10 +312,9 @@ class EshopListController extends BaseController
                 return $this->categories->getElement($id);
             };
 
-
             $this->modulConfigurator($data);
         } else {
-            $this->dnt->redirect(WWW_PATH . "404");
+            $this->dnt->redirect(WWW_PATH . '404');
         }
     }
 

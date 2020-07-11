@@ -62,7 +62,7 @@
             <div class="pull-right">
                 <ul class="pagination pagination-sm pro-page-list">
                     <?php foreach ($data['pages'] as $page => $active) { ?>
-                        <li class="<?php echo $active; ?>" ><a href="<?php $data['currentUrl'] ?>?page=<?php echo $page ?>"><?php echo $page ?></a></li>
+                        <li class="<?php echo $active; ?>" ><a href="<?php echo $data['currentUrl']($page) ?>"><?php echo $page ?></a></li>
                     <?php } ?>
                 </ul>
             </div>
