@@ -173,15 +173,15 @@ class EshopListController extends BaseController
                 $categoryIds[] = $cat['id_entity'];
             }
             $filter = "post_category_id IN (" . join(',', $categoryIds) . ") ";
-            $this->filterUrl = '';
+            $this->filterUrl = $this->webhook(2) . '/' . $this->webhook(3);
         } elseif ($this->webhook(2) == 'products' && $this->webhook(3) == 'search') {
             $searhString = str_replace('-', '', $this->dnt->name_url(urldecode($this->rest->get('q'))));
             $filter = "search LIKE '%$searhString%'";
-            $this->filterUrl = 'products/search/?q=' . $searhString;
+            $this->filterUrl = $this->webhook(2) . '/' . $this->webhook(3) . '/?q=' . $searhString;
         } elseif ($this->webhook(2) == 'products' && $this->webhook(3)) {
             $productsIds = explode('-', $this->webhook(3));
             $filter = "id_entity IN (" . join(',', $productsIds) . ") ";
-            $this->filterUrl = 'products/' . $this->webhook(3);
+            $this->filterUrl = $this->webhook(2) . '/' . $this->webhook(3);
         } else {
             $categoryTree = $this->categories->getChildren($this->rootCatId, true);
             foreach ($categoryTree as $cat) {
@@ -202,8 +202,9 @@ class EshopListController extends BaseController
             $final = $this->db->get_results($query, true);
         }
 
-        //$final = [];
-        /*if ($this->webhook(2) == 'category') {
+        /*
+         * //$final = [];
+        if ($this->webhook(2) == 'category') {
             $this->filterUrl = 'category';
             foreach ($this->postBaseConfig() as $post) {
                 $categoryTree = $this->categories->getChildren($this->webhook(3), true);
