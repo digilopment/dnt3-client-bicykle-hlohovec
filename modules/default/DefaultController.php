@@ -11,7 +11,7 @@ class DefaultController extends BaseController
 
     public function __construct()
     {
-        $this->settings = new Settings;
+        $this->settings = new Settings();
         $this->frontend = new Frontend();
     }
 

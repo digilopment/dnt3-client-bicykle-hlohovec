@@ -54,13 +54,14 @@ class EshopListController extends BaseController
         $categories = $this->categories->getTreePath($catId);
         $i = 0;
         $categoryNames = [];
+        $rootTitle = $this->data['meta_settings']['keys']['title']['value'];
         for ($i = count($categories) - 1; $i > 1; $i--) {
             $categoryNames[] = $this->categories->getElement($categories[$i])['name'];
         }
         if (count($categoryNames) > 0) {
-            return $this->categories->getElement($catId)['name'] . ' | ' . join(' | ', $categoryNames) . ' | ' . $this->modulPostData->name . ' | ' . $this->settings->get('title');
+            return $this->categories->getElement($catId)['name'] . ' | ' . join(' | ', $categoryNames) . ' | ' . $this->modulPostData->name . ' | ' . $rootTitle;
         }
-        return $this->categories->getElement($catId)['name'] . ' | ' . Settings::get('title');
+        return $this->categories->getElement($catId)['name'] . ' | ' . $rootTitle;
     }
 
     protected function data()

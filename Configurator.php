@@ -7,7 +7,7 @@ use DntLibrary\Base\Vendor;
 
 class Configurator extends Modul
 {
-
+    
     public function modulesRegistrator()
     {
         $this->getSitemap();
