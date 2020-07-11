@@ -3,7 +3,7 @@
 namespace DntView\Layout\Modul;
 
 use DntLibrary\App\BaseController;
-use DntLibrary\Base\Frontend;
+use DntLibrary\App\Data;
 use DntLibrary\Base\Settings;
 
 class DefaultController extends BaseController
@@ -12,7 +12,7 @@ class DefaultController extends BaseController
     public function __construct()
     {
         $this->settings = new Settings();
-        $this->frontend = new Frontend();
+        $this->frontendData = new Data();
     }
 
     protected function setTitle()
@@ -22,17 +22,19 @@ class DefaultController extends BaseController
 
     protected function data()
     {
-        $this->data = $this->frontend->get();
-    }
-
-    protected function init()
-    {
-        $this->data = $this->frontend->get();
+        $config = [
+            'sitemap_items' => true,
+            'menu_items' => true,
+            'translates' => true,
+            'meta_settings' => true,
+        ];
+        $this->frontendData->configure($config);
+        $this->data = $this->frontendData->get();
     }
 
     public function run()
     {
-        $this->init();
+        $this->data();
         $data = $this->data;
         $this->modulConfigurator($data, 'default');
     }

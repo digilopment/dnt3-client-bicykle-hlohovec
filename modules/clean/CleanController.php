@@ -3,8 +3,8 @@
 namespace DntView\Layout\Modul;
 
 use DntLibrary\App\BaseController;
+use DntLibrary\App\Data;
 use DntLibrary\Base\Dnt;
-use DntLibrary\Base\Frontend;
 use DntLibrary\Base\Rest;
 
 class CleanController extends BaseController
@@ -13,13 +13,20 @@ class CleanController extends BaseController
     public function __construct()
     {
         $this->rest = new Rest();
-        $this->frontend = new Frontend();
+        $this->frontendData = new Data();
         $this->dnt = new Dnt();
     }
 
     protected function data()
     {
-        $this->data = $this->frontend->get();
+        $config = [
+            'sitemap_items' => true,
+            'menu_items' => true,
+            'translates' => true,
+            'meta_settings' => true,
+        ];
+        $this->frontendData->configure($config);
+        $this->data = $this->frontendData->get();
     }
 
     public function init()

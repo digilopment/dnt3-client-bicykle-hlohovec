@@ -3,7 +3,7 @@
 namespace DntView\Layout\Modul;
 
 use DntLibrary\App\BaseController;
-use DntLibrary\Base\Frontend;
+use DntLibrary\App\Data;
 use DntLibrary\Base\Settings;
 
 class ContactController extends BaseController
@@ -12,7 +12,7 @@ class ContactController extends BaseController
     public function __construct()
     {
         $this->settings = new Settings;
-        $this->frontend = new Frontend();
+        $this->frontendData = new Data();
     }
 
     protected function setTitle()
@@ -22,7 +22,14 @@ class ContactController extends BaseController
 
     protected function data()
     {
-        $this->data = $this->frontend->get();
+        $config = [
+            'sitemap_items' => true,
+            'menu_items' => true,
+            'translates' => true,
+            'meta_settings' => true,
+        ];
+        $this->frontendData->configure($config);
+        $this->data = $this->frontendData->get();
     }
 
     protected function webhook($key)
@@ -61,7 +68,7 @@ class ContactController extends BaseController
     {
         $this->data();
         $this->modulPostData();
-        $this->data = $this->frontend->addCustomData($this->data, $this->customData());
+        $this->data = $this->frontendData->addCustomData($this->data, $this->customData());
     }
 
     public function run()

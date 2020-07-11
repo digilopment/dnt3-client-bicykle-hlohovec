@@ -3,8 +3,8 @@
 namespace DntView\Layout\Modul;
 
 use DntLibrary\App\BaseController;
+use DntLibrary\App\Data;
 use DntLibrary\Base\Dnt;
-use DntLibrary\Base\Frontend;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Settings;
 
@@ -14,7 +14,7 @@ class ArticleViewController extends BaseController
     public function __construct()
     {
         $this->settings = new Settings();
-        $this->frontend = new Frontend();
+        $this->frontendData = new Data();
         $this->rest = new Rest();
         $this->dnt = new Dnt();
     }
@@ -26,7 +26,16 @@ class ArticleViewController extends BaseController
 
     protected function data()
     {
-        $this->data = $this->frontend->get(false, $this->rest->webhook(3));
+        $postId = ((int) $this->rest->webhook(3));
+        $config = [
+            'post_id' => $postId,
+            'sitemap_items' => true,
+            'menu_items' => true,
+            'translates' => true,
+            'meta_settings' => true,
+        ];
+        $this->frontendData->configure($config);
+        $this->data = $this->frontendData->get();
     }
 
     protected function webhook($key)
@@ -65,7 +74,7 @@ class ArticleViewController extends BaseController
     {
         $this->data();
         $this->modulPostData();
-        $this->data = $this->frontend->addCustomData($this->data, $this->customData());
+        $this->data = $this->frontendData->addCustomData($this->data, $this->customData());
     }
 
     public function run()
