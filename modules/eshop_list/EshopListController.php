@@ -166,7 +166,7 @@ class EshopListController extends BaseController
 
         $categoryIds = [];
         $final = [];
-        
+
         if ($this->webhook(2) == 'category') {
             $categoryTree = $this->categories->getChildren($this->rootCatId, true);
             foreach ($categoryTree as $cat) {
@@ -190,7 +190,7 @@ class EshopListController extends BaseController
             $filter = "post_category_id IN (" . join(',', $categoryIds) . ") ";
             $this->filterUrl = '';
         }
-        
+
         $query = "SELECT * FROM dnt_posts WHERE "
                 . "type = 'product' AND "
                 . "`show` = '1' AND "
