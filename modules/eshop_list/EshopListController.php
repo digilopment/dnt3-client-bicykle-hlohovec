@@ -6,11 +6,13 @@ use DntLibrary\App\BaseController;
 use DntLibrary\App\Categories;
 use DntLibrary\App\Data;
 use DntLibrary\App\Post;
+use DntLibrary\Base\DB;
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Image;
 use DntLibrary\Base\PostMeta;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Settings;
+use DntLibrary\Base\Vendor;
 
 class EshopListController extends BaseController
 {
@@ -46,6 +48,8 @@ class EshopListController extends BaseController
         $this->categories = new Categories();
         $this->settings = new Settings();
         $this->image = new Image();
+        $this->vendor = new Vendor();
+        $this->db = new DB();
     }
 
     protected function setTitle()
@@ -159,8 +163,43 @@ class EshopListController extends BaseController
 
     protected function postFilter()
     {
+        
+        $categoryIds = [];
         $final = [];
-        if ($this->webhook(2) == 'category') {
+        
+        if ($this->webhook(2) == 'category' && empty($this->webhook(3))) {
+            $this->filterUrl = 'category';
+            $categoryTree = $this->categories->getChildren($this->rootCatId, true);
+            foreach ($categoryTree as $cat) {
+                $categoryIds[] = $cat['id_entity'];
+            }
+            $filter = "post_category_id IN (" . join(',', $categoryIds) . ")";
+        } elseif ($this->webhook(2) == 'products' && $this->webhook(3) == 'search') {
+            $this->filterUrl = 'products/search';
+            $searhString = str_replace('-', '', $this->dnt->name_url(urldecode($this->rest->get('q'))));
+            $filter = "search LIKE '%$searhString%'";
+        } else {
+            $this->filterUrl = 'products/' . $this->webhook(3);
+            $categoryTree = $this->categories->getChildren($this->webhook(3), true);
+            foreach ($categoryTree as $cat) {
+                $categoryIds[] = $cat['id_entity'];
+            }
+            $filter = "post_category_id IN (" . join(',', $categoryIds) . ")";
+        }
+        
+        $query = "SELECT * FROM dnt_posts WHERE "
+                . "type = 'product' AND "
+                . "`show` = '1' AND "
+                . "vendor_id = '" . $this->vendor->getId() . "' AND "
+                . $filter
+                . "ORDER BY name asc";
+
+        if ($this->db->num_rows($query) > 0) {
+            $final = $this->db->get_results($query, true);
+        }
+
+        //$final = [];
+        /*if ($this->webhook(2) == 'category') {
             $this->filterUrl = 'category';
             foreach ($this->postBaseConfig() as $post) {
                 $categoryTree = $this->categories->getChildren($this->webhook(3), true);
@@ -192,7 +231,7 @@ class EshopListController extends BaseController
             foreach ($this->postBaseConfig() as $post) {
                 $final[] = $post;
             }
-        }
+        }*/
         $this->finalItems = $final;
     }
 
