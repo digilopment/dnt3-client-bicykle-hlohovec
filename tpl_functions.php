@@ -414,12 +414,12 @@ function get_top_lista($data)
     $db = new DB;
     $webhook = new Webhook;
     $rest = new Rest;
-    $searchUrl = $webhook->getSitemapModules("search");
+    $searchUrl = $webhook->getSitemapModules("eshop_list");
     ?>
     <div class="blog-topbar">
         <div class="topbar-search-block">
             <div class="container">
-                <form action="<?php echo $searchUrl[0] ?>">
+                <form action="<?php echo WWW_PATH . $searchUrl[0].'/products/search' ?>">
                     <input type="text" name="q" class="form-control" 
                            placeholder="<?php echo MultyLanguage::translate($data, "text_to_search", "translate"); ?>">
                     <div class="search-close"><i class="fa fa-times" aria-hidden="true"></i></div>
