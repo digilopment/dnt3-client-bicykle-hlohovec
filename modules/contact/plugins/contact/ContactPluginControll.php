@@ -52,7 +52,7 @@ class ContactPluginControll extends Plugin
 
         if (isset($this->item->id_entity)) {
             $data['dynamicRequest'] = true;
-            $productUrl = WWW_PATH . 'katalog/product/' . $this->item->id_entity . '/' . $this->item->name_url;
+            $productUrl = WWW_PATH . 'bicykle/product/' . $this->item->id_entity . '/' . $this->item->name_url;
             $data['requestSubject'] = 'Dostupnosť produktu ' . $this->item->name;
             $data['requestContent'] = 'Dobrý deň, chcem sa spýtať na dostupnosť produktu s názvom ' . $this->item->name . ' na tejto adrese: ' . $productUrl . ' Ďakujem za spätnú informáciu.';
         } else {
