@@ -629,7 +629,7 @@ function get_footer($data)
                                         $name_1 = $item['name'];
                                         ?>
                                         <li class=" ">
-                                            <a  href="<?php echo $name_url_1; ?>"><?php echo $name_1; ?></a>
+                                            <a  href="<?php echo WWW_PATH . $name_url_1; ?>"><?php echo $name_1; ?></a>
                                         </li>
                                     <?php } ?>
                                 </ul>

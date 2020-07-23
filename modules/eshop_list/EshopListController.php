@@ -2,6 +2,7 @@
 
 namespace DntView\Layout\Modul;
 
+use App\AggrBuilder;
 use DntLibrary\App\BaseController;
 use DntLibrary\App\Categories;
 use DntLibrary\App\Data;
@@ -50,6 +51,7 @@ class EshopListController extends BaseController
         $this->image = new Image();
         $this->vendor = new Vendor();
         $this->db = new DB();
+        $this->aggrBuilder = new AggrBuilder();
     }
 
     protected function setTitle()
@@ -141,26 +143,6 @@ class EshopListController extends BaseController
         return $final;
     }
 
-    protected function postBaseConfig()
-    {
-        $final = [];
-        $categoryTree = $this->categories->getChildren($this->rootCatId, true);
-        $categoryIds = [];
-        foreach ($categoryTree as $cat) {
-            $categoryIds[] = $cat['id_entity'];
-        }
-
-        $data = $this->dnt->orderby($this->posts->postsModel, "name", "ASC");
-        foreach ($data as $post) {
-            if (in_array($post->post_category_id, $categoryIds)) {
-                if ($post->show > 0) {
-                    $final[] = $post;
-                }
-            }
-        }
-        return $final;
-    }
-
     protected function postFilter()
     {
 
@@ -191,52 +173,75 @@ class EshopListController extends BaseController
             $this->filterUrl = '';
         }
 
-        $query = "SELECT * FROM dnt_posts WHERE "
-                . "type = 'product' AND "
-                . "`show` = '1' AND "
-                . "vendor_id = '" . $this->vendor->getId() . "' AND "
-                . $filter
-                . "ORDER BY name asc";
+        if (isset($this->aggrBuilder->decode()->sort) && isset($this->aggrBuilder->decode()->sortType)) {
+            $this->orderByMetaKey = $this->aggrBuilder->decode()->sort;
+            $this->orderByType = $this->aggrBuilder->decode()->sortType;
+        } else {
+            $this->orderByMetaKey = 'price';
+            $this->orderByType = 'ASC';
+        }
+
+        $query = "SELECT 
+                    `dnt_posts`.id               AS id, 
+                    `dnt_posts`.id_entity        AS id_entity, 
+                    `dnt_posts`.post_category_id AS post_category_id, 
+                    `dnt_posts`.sub_cat_id       AS sub_cat_id, 
+                    `dnt_posts`.cat_id           AS cat_id, 
+                    `dnt_posts`.type             AS type, 
+                    `dnt_posts`.name             AS name, 
+                    `dnt_posts`.name_url         AS name_url, 
+                    `dnt_posts`.position         AS position, 
+                    `dnt_posts`.priority         AS priority, 
+                    `dnt_posts`.service          AS service, 
+                    `dnt_posts`.service_id       AS service_id, 
+                    `dnt_posts`.img              AS img, 
+                    `dnt_posts`.datetime_creat   AS datetime_creat, 
+                    `dnt_posts`.datetime_update  AS datetime_update, 
+                    `dnt_posts`.datetime_publish AS datetime_publish, 
+                    `dnt_posts`.microtime        AS microtime, 
+                    `dnt_posts`.perex            AS perex, 
+                    `dnt_posts`.content          AS content, 
+                    `dnt_posts`.tags             AS tags, 
+                    `dnt_posts`.embed            AS embed, 
+                    `dnt_posts`.custom           AS custom, 
+                    `dnt_posts`.prilohy          AS prilohy, 
+                    `dnt_posts`.order            AS `order`, 
+                    `dnt_posts`.show             AS `show`, 
+                    `dnt_posts`.search           AS search, 
+                    `dnt_posts`.protected        AS protected, 
+                    `dnt_posts`.vendor_id        AS vendor_id, 
+                    `dnt_posts`.parent_id        AS parent_id,
+                    CAST(`dnt_posts_meta`.`value` AS DECIMAL(10,2)) " . $this->orderByMetaKey . "
+                FROM 
+                    dnt_posts 
+                LEFT JOIN 
+                    dnt_posts_meta 
+                ON 
+                    dnt_posts.id_entity = dnt_posts_meta.post_id 
+                WHERE  
+                    dnt_posts.vendor_id = '" . $this->vendor->getId() . "' AND 
+                    dnt_posts.`type` = 'product' AND 
+                    dnt_posts.`show` = '1' AND 
+                    dnt_posts_meta.`key` = '" . $this->orderByMetaKey . "' AND  
+                    " . $filter . " 
+                GROUP  BY 
+                    dnt_posts.id_entity 
+                ORDER  BY 
+                    " . $this->orderByMetaKey . " " . $this->orderByType;
+
+        if ($this->orderByMetaKey == 'name') {
+            $query = "SELECT * FROM dnt_posts WHERE "
+                    . "type = 'product' AND "
+                    . "`show` = '1' AND "
+                    . "vendor_id = '" . $this->vendor->getId() . "' AND "
+                    . $filter
+                    . "ORDER BY " . $this->orderByMetaKey . " " . $this->orderByType;
+        }
 
         if ($this->db->num_rows($query) > 0) {
             $final = $this->db->get_results($query, true);
         }
 
-        /*
-         * //$final = [];
-        if ($this->webhook(2) == 'category') {
-            $this->filterUrl = 'category';
-            foreach ($this->postBaseConfig() as $post) {
-                $categoryTree = $this->categories->getChildren($this->webhook(3), true);
-                $categoryIds = [];
-                foreach ($categoryTree as $cat) {
-                    $categoryIds[] = $cat['id_entity'];
-                }
-                if (in_array($post->post_category_id, $categoryIds)) {
-                    $final[] = $post;
-                }
-            }
-        } elseif ($this->webhook(2) == 'products' && $this->webhook(3) == 'search') {
-            $this->filterUrl = 'products/search';
-            foreach ($this->postBaseConfig() as $post) {
-                $searhString = str_replace('-', '', $this->dnt->name_url(urldecode($this->rest->get('q'))));
-                if ($this->dnt->in_string($searhString, $post->search)) {
-                    $final[] = $post;
-                }
-            }
-        } elseif ($this->webhook(2) == 'products') {
-            $this->filterUrl = 'products/' . $this->webhook(3);
-            foreach ($this->postBaseConfig() as $post) {
-                $categoryIds = explode('-', $this->webhook(3));
-                if (in_array($post->post_category_id, $categoryIds)) {
-                    $final[] = $post;
-                }
-            }
-        } else {
-            foreach ($this->postBaseConfig() as $post) {
-                $final[] = $post;
-            }
-        }*/
         $this->finalItems = $final;
     }
 
@@ -252,8 +257,24 @@ class EshopListController extends BaseController
         }
     }
 
+    protected function aggrIndex()
+    {
+        $priceAsc = [
+            'sort' => 'price',
+            'sortType' => 'asc'
+        ];
+        $priceDesc = [
+            'sort' => 'price',
+            'sortType' => 'desc'
+        ];
+
+        $this->priceAsc = $this->aggrBuilder->encode($priceAsc);
+        $this->priceDesc = $this->aggrBuilder->encode($priceDesc);
+    }
+
     protected function init()
     {
+        $this->aggrIndex();
         $this->data();
         $this->modulPostData();
         $this->categories->init();
@@ -278,11 +299,23 @@ class EshopListController extends BaseController
             $data['hasItems'] = $this->hasItems;
             $data['currentPage'] = $this->currentPage;
             $data['pages'] = $this->pages;
+            $data['orderBy'] = $this->orderByMetaKey;
+            $data['orderByType'] = $this->orderByType;
             $data['modulUrl'] = $this->modulPostData->name_url;
             $data['currentUrl'] = function($page) {
-                $url = WWW_PATH . '' . $this->modulPostData->name_url . '/' . $this->filterUrl;
-                $hasQueryParams = parse_url($url, PHP_URL_QUERY);
-                return ($hasQueryParams) ? $url . '&page=' . $page : $url . '?page=' . $page;
+                $url = WWW_FULL_PATH;
+                if ($this->dnt->in_string('page=', WWW_FULL_PATH)) {
+                    return str_replace('page=' . $this->rest->get('page'), 'page=' . $page, $url);
+                } else {
+                    $hasQueryParams = parse_url($url, PHP_URL_QUERY);
+                    return ($hasQueryParams) ? $url . '&page=' . $page : $url . '?page=' . $page;
+                }
+                /* $url = WWW_PATH . '' . $this->modulPostData->name_url . '/' . $this->filterUrl; 
+                  $url .= ($this->rest->get('aggrBuilder')) ? '?aggrBuilder=' . $this->rest->get('aggrBuilder') : false;
+
+                  $hasQueryParams = parse_url($url, PHP_URL_QUERY);
+                  return ($hasQueryParams) ? $url . '&page=' . $page : $url . '?page=' . $page;
+                 * */
             };
             $data['searchUrl'] = WWW_PATH . '' . $this->modulPostData->name_url . '/products/search';
             $data['countItems'] = $this->countItems;
@@ -302,7 +335,6 @@ class EshopListController extends BaseController
                         return $price;
                     }
                 }
-
                 return $price . ' ' . $data['meta_settings']['keys']['vendor_currency']['value'];
             };
             $data['path'] = WWW_PATH;
@@ -312,7 +344,8 @@ class EshopListController extends BaseController
             $data['categoryElement'] = function($id) {
                 return $this->categories->getElement($id);
             };
-
+            $data['sortByPriceAsc'] = $this->aggrBuilder->build($this->priceAsc);
+            $data['sortByPriceDesc'] = $this->aggrBuilder->build($this->priceDesc);
             $this->modulConfigurator($data);
         } else {
             $this->dnt->redirect(WWW_PATH . '404');

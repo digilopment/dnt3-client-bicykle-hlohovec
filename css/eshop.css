@@ -288,6 +288,22 @@
     margin-left: 15px;
 }
 
+.eshop .order-box{
+
+}
+.eshop .order-box ul {
+    padding-left: 20px;
+}
+.eshop .order-box ul li {
+    list-style: none;
+    float: left;
+    padding-right: 10px;
+    font-size: 15px;
+}
+.eshop .order-box ul li.active i{
+    color: #da0809;
+}
+
 
 @media screen and (max-width: 991px) {
     .eshop .btn-eshop-menu>span{

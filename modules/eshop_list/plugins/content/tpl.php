@@ -22,6 +22,12 @@
             </div>
         </div>
     </section>
+    <div class="row order-box">
+        <ul>
+            <li class="<?php echo ($data['orderBy'] == 'price' && $data['orderByType'] == 'asc') ? 'active' : false; ?>"><a title="Zoradiť od najlacnejšieho" href="<?php echo $data['sortByPriceAsc']?>"><i class="fa fa-sort-amount-asc"></i></a>
+            <li class="<?php echo ($data['orderBy'] == 'price' && $data['orderByType'] == 'desc') ? 'active' : false; ?>"><a title="Zoradiť od najdrahšieho" href="<?php echo $data['sortByPriceDesc']?>"><i class="fa fa-sort-amount-desc"></i></a>
+        </ul>    
+    </div>
     <div class="row product-list">
         <?php
         if ($data['hasItems']) {
