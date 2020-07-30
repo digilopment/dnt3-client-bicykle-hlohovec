@@ -22,10 +22,51 @@
             </div>
         </div>
     </section>
+
+    <div class="box padding15 w566">
+        <div id="filter">
+            <form action="" method="get">
+
+                <div class="left">
+                    Výrobca:
+                </div>
+                <div class="left">
+                    <div>
+                        <select name="type" onchange="submit();">
+                            <option value="0">Horské bicykle</option>
+                            <option value="259">Mestské bicykle</option>
+                            <option value="19">Cestné bicykle</option>
+                            <option value="2">Elektro bicykle</option>
+                            <option value="171">Detské bicykle</option>		
+                        </select>
+                    </div>
+                </div>
+
+                <div class="left">
+                    Zotriedenie:
+                </div>
+                <div class="left">
+                    <div>
+                        <select name="sort" onchange="javascript:filter('sort', this.value);">
+                            <option value="0">nezáleží</option>
+                            <option value="id_product-desc">Od najnovších</option>
+                            <option value="id_product-asc">Od najstarších</option>
+                            <option value="sk_name-desc">Abecedne ↓</option>
+                            <option value="sk_name-asc">Abecedne ↑</option>
+                            <option value="price_sorter-desc" selected="selected">Podľa ceny ↓</option>
+                            <option value="price_sorter-asc">Podľa ceny ↑</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="both"></div>
+            </form>
+        </div>
+    </div>
+
     <div class="row order-box">
         <ul>
-            <li class="<?php echo ($data['orderBy'] == 'price' && $data['orderByType'] == 'asc') ? 'active' : false; ?>"><a title="Zoradiť od najlacnejšieho" href="<?php echo $data['sortByPriceAsc']?>"><i class="fa fa-sort-amount-asc"></i></a>
-            <li class="<?php echo ($data['orderBy'] == 'price' && $data['orderByType'] == 'desc') ? 'active' : false; ?>"><a title="Zoradiť od najdrahšieho" href="<?php echo $data['sortByPriceDesc']?>"><i class="fa fa-sort-amount-desc"></i></a>
+            <li class="<?php echo ($data['orderBy'] == 'price' && $data['orderByType'] == 'asc') ? 'active' : false; ?>"><a title="Zoradiť od najlacnejšieho" href="<?php echo $data['sortByPriceAsc'] ?>"><i class="fa fa-sort-amount-asc"></i></a>
+            <li class="<?php echo ($data['orderBy'] == 'price' && $data['orderByType'] == 'desc') ? 'active' : false; ?>"><a title="Zoradiť od najdrahšieho" href="<?php echo $data['sortByPriceDesc'] ?>"><i class="fa fa-sort-amount-desc"></i></a>
         </ul>    
     </div>
     <div class="row product-list">
