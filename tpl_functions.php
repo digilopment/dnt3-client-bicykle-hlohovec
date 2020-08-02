@@ -722,7 +722,7 @@ function get_footer($data)
 
 function rightColPartners($data){
     $article = new ArticleView();
-    $posts = $article->getPosts(303, false, "`order` DESC");
+    $posts = $article->getPosts(1156, false, "`order` DESC");
     if (count($posts) > 0) {
         ?>
         <div class="clearfix margin-bottom-50 dalsie-info">
