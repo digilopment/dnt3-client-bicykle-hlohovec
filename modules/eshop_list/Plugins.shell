@@ -52,7 +52,7 @@
         <VAR id="layout" value="MAIN-CONTENT" />
         <VAR id="level" value="local" />
         <VAR id="cache" value="0Y" />
-        <VAR id="cache_id" value="WEBHOOK{3}-GET{page}-GET{q}-GET{aggrBuilder}" />
+        <VAR id="cache_id" value="WEBHOOK{3}-GET{q}-GET{aggrBuilder}" />
         <VAR id="compress" value="1" />
         <VAR id="type" value="mdl" />
         <VAR id="tpl" value="content" />

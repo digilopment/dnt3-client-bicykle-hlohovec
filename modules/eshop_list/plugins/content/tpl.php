@@ -23,52 +23,79 @@
         </div>
     </section>
 
-    <div class="box padding15 w566">
-        <div id="filter">
-            <form action="" method="get">
-
-                <div class="left">
-                    Výrobca:
-                </div>
-                <div class="left">
-                    <div>
-                        <select name="type" onchange="submit();">
-                            <option value="0">Horské bicykle</option>
-                            <option value="259">Mestské bicykle</option>
-                            <option value="19">Cestné bicykle</option>
-                            <option value="2">Elektro bicykle</option>
-                            <option value="171">Detské bicykle</option>		
-                        </select>
-                    </div>
-                </div>
-
-                <div class="left">
-                    Zotriedenie:
-                </div>
-                <div class="left">
-                    <div>
-                        <select name="sort" onchange="javascript:filter('sort', this.value);">
-                            <option value="0">nezáleží</option>
-                            <option value="id_product-desc">Od najnovších</option>
-                            <option value="id_product-asc">Od najstarších</option>
-                            <option value="sk_name-desc">Abecedne ↓</option>
-                            <option value="sk_name-asc">Abecedne ↑</option>
-                            <option value="price_sorter-desc" selected="selected">Podľa ceny ↓</option>
-                            <option value="price_sorter-asc">Podľa ceny ↑</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="both"></div>
-            </form>
+    <section class="panel filter">
+        <div class="col-md-3">
+            <label for="sel1">Použitie bicykla:</label>
+            <select id="filterType" name="type" class="form-control">
+                <?php
+                foreach ($data['types'] as $val => $name) {
+                    if ($val == $data['aggrDecode']['type']) {
+                        echo '<option selected value="' . $val . '">' . $name . '</option>';
+                    } else {
+                        echo '<option value="' . $val . '">' . $name . '</option>';
+                    }
+                }
+                ?>
+            </select>
         </div>
-    </div>
+        <div class="col-md-3">
+            <label for="sel1">Cena:</label>
+            <select id="filterPrice" name="price" class="form-control">
+                <option value="0">bez ohraničenia</option>
+                <?php
+                foreach ($data['priceRange'] as $val => $name) {
+                    if ($val == explode('-', $data['aggrDecode']['range'])[1]) {
+                        echo '<option selected value="' . $val . '">' . $name . '</option>';
+                    } else {
+                        echo '<option value="' . $val . '">' . $name . '</option>';
+                    }
+                }
+                ?>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="sel1">Zoradiť:</label>
+            <select id="filterSort" class="form-control">
+                <option <?php echo ($data['aggrDecode']['sort'] == 'price' && $data['aggrDecode']['sortType'] == 'DESC') ? 'selected' : false; ?> value="price-DESC">od najdrahších</option>
+                <option <?php echo ($data['aggrDecode']['sort'] == 'price' && $data['aggrDecode']['sortType'] == 'ASC') ? 'selected' : false; ?> value="price-ASC">od najlacnejších</option>
+                <option <?php echo ($data['aggrDecode']['sort'] == 'name' && $data['aggrDecode']['sortType'] == 'ASC') ? 'selected' : false; ?> value="name_url-ASC">podľa abecedy [A-Z]</option>
+                <option <?php echo ($data['aggrDecode']['sort'] == 'name' && $data['aggrDecode']['sortType'] == 'DESC') ? 'selected' : false; ?> value="name_url-DESC">podľa abecedy [Z-A]</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="sel1">&nbsp;</label>
+            <span id="submitFilter" class="form-control btn btn-info">Filtrovať produkty</span>
+        </div>
+    </section>
 
-    <div class="row order-box">
-        <ul>
-            <li class="<?php echo ($data['orderBy'] == 'price' && $data['orderByType'] == 'asc') ? 'active' : false; ?>"><a title="Zoradiť od najlacnejšieho" href="<?php echo $data['sortByPriceAsc'] ?>"><i class="fa fa-sort-amount-asc"></i></a>
-            <li class="<?php echo ($data['orderBy'] == 'price' && $data['orderByType'] == 'desc') ? 'active' : false; ?>"><a title="Zoradiť od najdrahšieho" href="<?php echo $data['sortByPriceDesc'] ?>"><i class="fa fa-sort-amount-desc"></i></a>
-        </ul>    
-    </div>
+
+    <script>
+        function strToHex(str) {
+            var hex = '';
+            for (var i = 0; i < str.length; i++) {
+                hex += '' + str.charCodeAt(i).toString(16);
+            }
+            return hex;
+        }
+
+        $("#submitFilter").click(function () {
+            var domain = location.protocol + '//' + location.host + location.pathname;
+
+            var filterType = $("#filterType").val();
+            var filterPrice = $("#filterPrice").val();
+            var filterSort = $("#filterSort").val();
+            var sort = 'sort:' + filterSort.split('-')[0] + ';';
+            var sortType = 'sortType:' + filterSort.split('-')[1] + ';';
+            var range = 'range:0-' + filterPrice + ';';
+            var type = 'type:' + filterType + ';';
+            var page = 'page:1;';
+
+            var finalStr = sort + sortType + range + type + page;
+            var aggrBuilder = strToHex(finalStr);
+            window.location = domain + '?aggrBuilder=' + aggrBuilder;
+        });
+    </script>
+
     <div class="row product-list">
         <?php
         if ($data['hasItems']) {
@@ -77,13 +104,13 @@
                 <div class="col-md-4">
                     <section class="panel">
                         <div class="pro-img-box">
-                            <img src="<?php echo $data['postImage']($item->id_entity); ?>" alt="" />
-                            <a href="<?php echo $data['detailtUlr']($item->id_entity, $item->name_url) ?>" class="adtocart"> <i class="fa fa-info-circle"></i>
+                            <img src="<?php echo $data['postImage']($item['id_entity']); ?>" alt="" />
+                            <a href="<?php echo $data['detailtUlr']($item['id_entity'], $item['name_url']) ?>" class="adtocart"> <i class="fa fa-info-circle"></i>
                             </a>
                         </div>
                         <div class="panel-body text-center">
-                            <h4><a href="<?php echo $data['detailtUlr']($item->id_entity, $item->name_url) ?>" class="pro-title"> <?php echo $item->name; ?> </a></h4>
-                            <p class="price"><?php echo $data['price']($item->id_entity); ?></p>
+                            <h4><a href="<?php echo $data['detailtUlr']($item['id_entity'], $item['name_url']) ?>" class="pro-title"> <?php echo $item['name']; ?> </a></h4>
+                            <p class="price"><?php echo $item['price']; ?></p>
                         </div>
                     </section>
                 </div>
@@ -96,7 +123,13 @@
                     <div class="panel-body text-left">
                         <i class="fa fa-exclamation-circle" style="font-size: 50px;color: #da0809;"></i>
                         <h3>Ľutujeme, ale táto sekcia neobsahuje žiadne bicykle.</h3>
-                        <h4>Skúste si prosím vybrať inú kategóriu, alebo použiť vyhľadávač.</h4>
+                        <p>Skúste si prosím vybrať inú kategóriu, alebo použiť vyhľadávač.</p>
+                            <?php if ($data['aggrDecode']['type']) {?>
+                            <h3>Všimli sme si, že máte aktívny filter. </h3>
+                                 <h4>V kategórii bicyklov <b><?php echo $data['categoryElement']($data['routeCategory'])['name'] ?></b> 
+                                vyhľadávate bicykle zaradené do typu <b><?php echo $data['types'][$data['aggrDecode']['type']]?></b> .</h4>
+                            <p><i class="fa fa-info-circle" style="font-size: 20px;color: #da0809;"></i> Pre vyhľadávanie všetkých bicyklov (Použitie bicykla <b><?php echo $data['types'][$data['aggrDecode']['type']]?></b>) prejdite do kategórie <b><?php echo $data['categoryElement'](131)['name'] ?></b> v ľavom stĺpci úplne hore a použite filter <b>Použitie bicykla</b> a kliknite na <b><?php echo $data['types'][$data['aggrDecode']['type']]?></b></p>
+                            <?php } ?>
                     </div>
                 </section>
             </div>

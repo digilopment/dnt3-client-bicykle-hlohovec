@@ -14,6 +14,7 @@ use DntLibrary\Base\PostMeta;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Settings;
 use DntLibrary\Base\Vendor;
+use mysqli;
 
 class EshopListController extends BaseController
 {
@@ -114,50 +115,38 @@ class EshopListController extends BaseController
         return isset($this->data['webhook'][$key]) ? $this->data['webhook'][$key] : false;
     }
 
-    protected function paginatedItems()
-    {
-        (int) $page = ($this->rest->get('page')) ? $this->rest->get('page') : 1;
-        $this->currentPage = $page;
-        $beginIndex = ($page * $this->pageLimit) - $this->pageLimit;
-        $endIndex = $this->pageLimit + $beginIndex - 1;
-        $final = [];
-        $i = 0;
-        foreach ($this->finalItems as $item) {
-            if ($beginIndex <= $i && $endIndex >= $i) {
-                $final[] = $item;
-            }
-            $i++;
-        }
-        $this->countItems = count($final);
-        if ($this->countItems > 0) {
-            $this->hasItems = true;
-        }
-
-        $countPages = ceil(count($this->finalItems) / $this->pageLimit);
-        $pages = [];
-        for ($i = 1; $i <= $countPages; $i++) {
-            $pages[$i] = ($i == $page) ? 'active' : 'default';
-        }
-        $this->pages = $pages;
-        $this->paginatedItems = $final;
-        return $final;
-    }
-
     protected function postFilter()
     {
 
-        $categoryIds = [];
+        $categoryIds = [$this->rootCatId];
         $final = [];
 
-        if ($this->webhook(2) == 'category' && is_numeric($this->webhook(3))) {
-            $categoryTree = $this->categories->getChildren($this->webhook(3), true);
-            foreach ($categoryTree as $cat) {
-                $categoryIds[] = $cat['id_entity'];
+        if ($this->webhook(2) == 'category' && (is_numeric($this->webhook(3)) || $this->dnt->in_string('-', $this->webhook(3)))) {
+
+            if (is_numeric($this->webhook(3))) {
+                $categoryTree = $this->categories->getChildren($this->webhook(3), true);
+                foreach ($categoryTree as $cat) {
+                    $categoryIds[] = $cat['id_entity'];
+                }
+            } else {
+                foreach (explode('-', $this->webhook(3)) as $catId) {
+                    if (is_numeric($catId)) {
+                        foreach ($this->categories->getChildren($catId, true) as $cat) {
+                            $categoryIds[] = $cat['id_entity'];
+                        }
+                    }
+                }
             }
             $filter = "post_category_id IN (" . join(',', $categoryIds) . ") ";
             $this->filterUrl = $this->webhook(2) . '/' . $this->webhook(3);
         } elseif ($this->webhook(2) == 'products' && $this->webhook(3) == 'search') {
-            $searhString = str_replace('-', '', $this->dnt->name_url(urldecode($this->rest->get('q'))));
+            $searchStr = false;
+            if ($this->aggrDecode['q']) {
+                $searchStr = $this->aggrDecode['q'];
+            } elseif ($this->rest->get('q')) {
+                $searchStr = $this->rest->get('q');
+            }
+            $searhString = str_replace('-', '', $this->dnt->name_url(urldecode($searchStr)));
             $filter = "search LIKE '%$searhString%'";
             $this->filterUrl = $this->webhook(2) . '/' . $this->webhook(3) . '/?q=' . $searhString;
         } elseif ($this->webhook(2) == 'products' && $this->webhook(3)) {
@@ -173,116 +162,181 @@ class EshopListController extends BaseController
             $this->filterUrl = '';
         }
 
-        if (isset($this->aggrBuilder->decode()->sort) && isset($this->aggrBuilder->decode()->sortType)) {
-            $this->orderByMetaKey = $this->aggrBuilder->decode()->sort;
-            $this->orderByType = $this->aggrBuilder->decode()->sortType;
-        } else {
-            $this->orderByMetaKey = 'price';
-            $this->orderByType = 'ASC';
-        }
+        $query = "SELECT * FROM dnt_posts WHERE "
+                . "type = 'product' AND "
+                . "`show` = '1' AND "
+                . "vendor_id = '" . $this->vendor->getId() . "' AND "
+                . $filter
+                . "ORDER BY id ASC ";
 
-        $query = "SELECT 
-                    `dnt_posts`.id               AS id, 
-                    `dnt_posts`.id_entity        AS id_entity, 
-                    `dnt_posts`.post_category_id AS post_category_id, 
-                    `dnt_posts`.sub_cat_id       AS sub_cat_id, 
-                    `dnt_posts`.cat_id           AS cat_id, 
-                    `dnt_posts`.type             AS type, 
-                    `dnt_posts`.name             AS name, 
-                    `dnt_posts`.name_url         AS name_url, 
-                    `dnt_posts`.position         AS position, 
-                    `dnt_posts`.priority         AS priority, 
-                    `dnt_posts`.service          AS service, 
-                    `dnt_posts`.service_id       AS service_id, 
-                    `dnt_posts`.img              AS img, 
-                    `dnt_posts`.datetime_creat   AS datetime_creat, 
-                    `dnt_posts`.datetime_update  AS datetime_update, 
-                    `dnt_posts`.datetime_publish AS datetime_publish, 
-                    `dnt_posts`.microtime        AS microtime, 
-                    `dnt_posts`.perex            AS perex, 
-                    `dnt_posts`.content          AS content, 
-                    `dnt_posts`.tags             AS tags, 
-                    `dnt_posts`.embed            AS embed, 
-                    `dnt_posts`.custom           AS custom, 
-                    `dnt_posts`.prilohy          AS prilohy, 
-                    `dnt_posts`.order            AS `order`, 
-                    `dnt_posts`.show             AS `show`, 
-                    `dnt_posts`.search           AS search, 
-                    `dnt_posts`.protected        AS protected, 
-                    `dnt_posts`.vendor_id        AS vendor_id, 
-                    `dnt_posts`.parent_id        AS parent_id,
-                    CAST(`dnt_posts_meta`.`value` AS DECIMAL(10,2)) " . $this->orderByMetaKey . "
-                FROM 
-                    dnt_posts 
-                LEFT JOIN 
-                    dnt_posts_meta 
-                ON 
-                    dnt_posts.id_entity = dnt_posts_meta.post_id 
-                WHERE  
-                    dnt_posts.vendor_id = '" . $this->vendor->getId() . "' AND 
-                    dnt_posts.`type` = 'product' AND 
-                    dnt_posts.`show` = '1' AND 
-                    dnt_posts_meta.`key` = '" . $this->orderByMetaKey . "' AND  
-                    " . $filter . " 
-                GROUP  BY 
-                    dnt_posts.id_entity 
-                ORDER  BY 
-                    " . $this->orderByMetaKey . " " . $this->orderByType;
-
-        if ($this->orderByMetaKey == 'name') {
-            $query = "SELECT * FROM dnt_posts WHERE "
-                    . "type = 'product' AND "
-                    . "`show` = '1' AND "
-                    . "vendor_id = '" . $this->vendor->getId() . "' AND "
-                    . $filter
-                    . "ORDER BY " . $this->orderByMetaKey . " " . $this->orderByType;
-        }
-
-        if ($this->db->num_rows($query) > 0) {
-            $final = $this->db->get_results($query, true);
-        }
-
-        $this->finalItems = $final;
+        $this->finalItems = $this->db->get_results($query);
     }
 
-    protected function postMeta()
+    protected function postsWithMetaData()
     {
         $ids = [];
-        foreach ($this->paginatedItems as $item) {
-            $ids[] = $item->id_entity;
+        $metaData = [];
+        foreach ($this->finalItems as $item) {
+            $ids[] = $item['id_entity'];
         }
         $idsIn = join(',', $ids);
         if ($idsIn) {
-            $this->metaData = $this->postMeta->getPostsMeta($idsIn);
+            $metaData = $this->postMeta->getPostsMeta($idsIn);
+        }
+
+        $final = [];
+        foreach ($this->finalItems as $key => $item) {
+            $final[$key] = $item;
+            $postId = $item['id_entity'];
+            $final[$key]['price'] = isset($metaData['keys'][$postId]['price']) && $metaData['keys'][$postId]['price']['show'] == 1 ? $metaData['keys'][$postId]['price']['value'] : false;
+        }
+        $this->finalItems = $final;
+    }
+
+    protected function aplyFilter()
+    {
+        $final = [];
+        if (isset(explode('-', $this->aggrDecode['range'])[1]) && explode('-', $this->aggrDecode['range'])[1] > 0) {
+            $this->priceRange = [explode('-', $this->aggrDecode['range'])[0], explode('-', $this->aggrDecode['range'])[1]];
+            foreach ($this->finalItems as $key => $item) {
+                if ($item['price'] >= $this->priceRange[0] && $item['price'] <= $this->priceRange[1]) {
+                    $final[$key] = $item;
+                }
+            }
+            $this->finalItems = $final;
+        }
+
+
+        if ($this->aggrDecode['type']) {
+            $ids = [];
+            $final = [];
+            $finalSubCats = [];
+            foreach ($this->categories->getChildren($this->webhook(3), true) as $cat) {
+                foreach (explode('-', $this->aggrDecode['type']) as $partial) {
+                    if ($this->dnt->in_string($partial, $cat['name_url'])) {
+                        $ids[] = $cat['id_entity'];
+                    }
+                }
+            }
+            foreach ($ids as $id) {
+                foreach ($this->categories->getChildren($id, true) as $lastChild) {
+                    $finalSubCats[$lastChild['id_entity']] = $lastChild['id_entity'];
+                }
+            }
+            foreach ($this->finalItems as $key => $item) {
+                if (in_array($item['post_category_id'], $finalSubCats)) {
+                    $final[$key] = $item;
+                }
+            }
+            $this->finalItems = $final;
         }
     }
 
-    protected function aggrIndex()
+    protected function order()
     {
-        $priceAsc = [
-            'sort' => 'price',
-            'sortType' => 'asc'
-        ];
-        $priceDesc = [
-            'sort' => 'price',
-            'sortType' => 'desc'
-        ];
+        $this->finalItems = $this->dnt->orderby($this->finalItems, $this->aggrDecode['sort'], $this->aggrDecode['sortType']);
+    }
 
-        $this->priceAsc = $this->aggrBuilder->encode($priceAsc);
-        $this->priceDesc = $this->aggrBuilder->encode($priceDesc);
+    protected function paginatedItems()
+    {
+        $posts = $this->finalItems;
+        (int) $page = $this->aggrDecode['page'];
+        $this->currentPage = $page;
+        $beginIndex = ($page * $this->pageLimit) - $this->pageLimit;
+        $endIndex = $this->pageLimit + $beginIndex - 1;
+        $final = [];
+        $i = 0;
+        foreach ($posts as $item) {
+            if ($beginIndex <= $i && $endIndex >= $i) {
+                $final[] = $item;
+            }
+            $i++;
+        }
+        $this->countItems = count($final);
+        if ($this->countItems > 0) {
+            $this->hasItems = true;
+        }
+
+        $countPages = ceil(count($posts) / $this->pageLimit);
+        $pages = [];
+        for ($i = 1; $i <= $countPages; $i++) {
+            $pages[$i] = ($i == $page) ? 'active' : 'default';
+        }
+        $this->pages = $pages;
+        $this->paginatedItems = $final;
+    }
+
+    protected function setAggrParams($customParams = [])
+    {
+        $q = false;
+        if ($this->rest->get('q')) {
+            $q = $this->rest->get('q');
+        } elseif (isset($this->aggrBuilder->decode()->q)) {
+            $q = $this->aggrBuilder->decode()->q;
+        }
+        $decoded = [
+            'sort' => $this->aggrBuilder->decode()->sort ?? 'price',
+            'sortType' => $this->aggrBuilder->decode()->sortType ?? 'ASC',
+            'range' => $this->aggrBuilder->decode()->range ?? '0-10000',
+            'type' => $this->aggrBuilder->decode()->type ?? false,
+            'page' => $this->aggrBuilder->decode()->page ?? 1,
+            'q' => $q,
+        ];
+        $finalDecoded = array_merge($decoded, $customParams);
+        $this->aggrEncoded = $this->aggrBuilder->encode($finalDecoded);
+        $this->aggrDecode = $decoded;
+    }
+
+    protected function posts()
+    {
+        $this->posts->init();
+        $this->postFilter();
+        $this->postsWithMetaData();
+        $this->aplyFilter();
+        $this->order();
+        $this->paginatedItems();
     }
 
     protected function init()
     {
-        $this->aggrIndex();
+        $this->setAggrParams();
         $this->data();
         $this->modulPostData();
         $this->categories->init();
-        $this->posts->init();
-        $this->postFilter();
-        $this->paginatedItems();
-        $this->postMeta();
+        $this->posts();
         $this->data = $this->frontendData->addCustomData($this->data, $this->customData());
+    }
+
+    protected function types()
+    {
+        return array(
+            "0" => "všetky",
+            "fully" => "MTB Fully",
+            "hardtaily" => "MTB Hardtaily",
+            "crossove-cross-trekkingove" => "Krosové a trekingové bicykle",
+            "cestne" => "Cestné bicykle",
+            "gravel" => "Gravel",
+            "city-mestske" => "Mestské bicykle",
+            "skladacie" => "Skladacie",
+            "damske" => "Dámske bicykle",
+            "detske" => "Detské bicykle",
+            "elektro" => "Elektro bicykle"
+        );
+    }
+
+    protected function priceRange()
+    {
+        $final = [];
+        for ($i = 100; $i <= 700; $i += 50) {
+            $final[$i] = 'do ' . $i . ' €';
+        }
+        for ($i = 700; $i <= 2000; $i += 150) {
+            $final[$i] = 'do ' . $i . ' €';
+        }
+        for ($i = 2000; $i <= 7000; $i += 500) {
+            $final[$i] = 'do ' . $i . ' €';
+        }
+        return $final;
     }
 
     public function run()
@@ -299,43 +353,19 @@ class EshopListController extends BaseController
             $data['hasItems'] = $this->hasItems;
             $data['currentPage'] = $this->currentPage;
             $data['pages'] = $this->pages;
-            $data['orderBy'] = $this->orderByMetaKey;
-            $data['orderByType'] = $this->orderByType;
             $data['modulUrl'] = $this->modulPostData->name_url;
             $data['currentUrl'] = function($page) {
-                $url = WWW_FULL_PATH;
-                if ($this->dnt->in_string('page=', WWW_FULL_PATH)) {
-                    return str_replace('page=' . $this->rest->get('page'), 'page=' . $page, $url);
-                } else {
-                    $hasQueryParams = parse_url($url, PHP_URL_QUERY);
-                    return ($hasQueryParams) ? $url . '&page=' . $page : $url . '?page=' . $page;
-                }
-                /* $url = WWW_PATH . '' . $this->modulPostData->name_url . '/' . $this->filterUrl; 
-                  $url .= ($this->rest->get('aggrBuilder')) ? '?aggrBuilder=' . $this->rest->get('aggrBuilder') : false;
-
-                  $hasQueryParams = parse_url($url, PHP_URL_QUERY);
-                  return ($hasQueryParams) ? $url . '&page=' . $page : $url . '?page=' . $page;
-                 * */
+                $this->setAggrParams(['page' => $page]);
+                $url = explode('?', WWW_FULL_PATH);
+                return $url[0] . '?aggrBuilder=' . $this->aggrEncoded;
             };
             $data['searchUrl'] = WWW_PATH . '' . $this->modulPostData->name_url . '/products/search';
             $data['countItems'] = $this->countItems;
             $data['postImage'] = function($idEntity) {
                 return $this->image->getPostImage($idEntity, 'dnt_posts', IMAGE::MEDIUM);
             };
-            $data['postMeta'] = function($postId, $key) {
-                return isset($this->metaData['keys'][$postId][$key]) && $this->metaData['keys'][$postId][$key]['show'] == 1 ? $this->metaData['keys'][$postId][$key]['value'] : false;
-            };
             $data['detailtUlr'] = function($postId, $nameUrl) {
                 return WWW_PATH . '' . $this->modulPostData->name_url . '/product/' . $postId . '/' . $nameUrl . '';
-            };
-            $data['price'] = function($postId) use ($data) {
-                $price = isset($this->metaData['keys'][$postId]['price']) && $this->metaData['keys'][$postId]['price']['show'] == 1 ? $this->metaData['keys'][$postId]['price']['value'] : false;
-                foreach ($this->currencies as $currency) {
-                    if ($this->dnt->in_string(strtolower($currency), strtolower($price))) {
-                        return $price;
-                    }
-                }
-                return $price . ' ' . $data['meta_settings']['keys']['vendor_currency']['value'];
             };
             $data['path'] = WWW_PATH;
             $data['routeCategory'] = is_numeric((int) $this->rest->webhook(3)) ? $this->rest->webhook(3) : $this->rootCatId;
@@ -344,8 +374,9 @@ class EshopListController extends BaseController
             $data['categoryElement'] = function($id) {
                 return $this->categories->getElement($id);
             };
-            $data['sortByPriceAsc'] = $this->aggrBuilder->build($this->priceAsc);
-            $data['sortByPriceDesc'] = $this->aggrBuilder->build($this->priceDesc);
+            $data['aggrDecode'] = $this->aggrDecode;
+            $data['types'] = $this->types();
+            $data['priceRange'] = $this->priceRange();
             $this->modulConfigurator($data);
         } else {
             $this->dnt->redirect(WWW_PATH . '404');

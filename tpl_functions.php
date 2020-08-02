@@ -720,14 +720,9 @@ function get_footer($data)
     <!--=== End Footer v8 ===-->
 <?php } ?><?php
 
-function col_right($data)
-{
-    ?>
-    <!-- Blog Thumb v3 -->
-
-    <?php
+function rightColPartners($data){
     $article = new ArticleView();
-    $posts = $article->getPosts(1156, false, "`order` DESC");
+    $posts = $article->getPosts(303, false, "`order` DESC");
     if (count($posts) > 0) {
         ?>
         <div class="clearfix margin-bottom-50 dalsie-info">
@@ -745,8 +740,14 @@ function col_right($data)
             </div>
             <hr class="hr-xs">
         </div>
-    <?php } ?>
+    <?php }
+}
+function col_right($data)
+{
+    ?>
+    <!-- Blog Thumb v3 -->
 
+    <?php rightColPartners($data); ?>
     <div class="margin-bottom-50 dalsie-info">
 
         <h2 class="title-v4 "><?php echo Multylanguage::translate($data, "otvaracie_hodiny", "translate"); ?></h2>
