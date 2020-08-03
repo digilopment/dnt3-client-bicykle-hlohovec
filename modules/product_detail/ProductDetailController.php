@@ -142,6 +142,9 @@ class ProductDetailController extends BaseController
             $data['postImage'] = function($idEntity) {
                 return $this->image->getPostImage($idEntity, 'dnt_posts', IMAGE::MEDIUM);
             };
+            $data['postImageOriginal'] = function($idEntity) {
+                return $this->image->getPostImage($idEntity, 'dnt_posts', IMAGE::LARGE);
+            };
             $data['hasItem'] = isset($this->item->id_entity) ? true : false;
 
             //CATEGORIES

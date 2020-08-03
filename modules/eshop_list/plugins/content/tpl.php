@@ -104,8 +104,11 @@
                 <div class="col-md-4">
                     <section class="panel">
                         <div class="pro-img-box">
-                            <img src="<?php echo $data['postImage']($item['id_entity']); ?>" alt="" />
-                            <a href="<?php echo $data['detailtUlr']($item['id_entity'], $item['name_url']) ?>" class="adtocart"> <i class="fa fa-info-circle"></i>
+                            <a href="<?php echo $data['detailtUlr']($item['id_entity'], $item['name_url']) ?>">
+                                <img src="<?php echo $data['postImage']($item['id_entity']); ?>" alt="" />
+                            </a>
+                            <a href="<?php echo $data['detailtUlr']($item['id_entity'], $item['name_url']) ?>" class="adtocart">
+                                <i class="fa fa-info-circle"></i>
                             </a>
                         </div>
                         <div class="panel-body text-center">

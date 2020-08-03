@@ -356,9 +356,9 @@ function get_top($data)
             <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
             <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>*/?>
             <!-- light box -->
-            <script src="<?php echo $data['media_path']; ?>js/lightbox-plus-jquery.min.js"></script>
             <script src="<?php echo $data['media_path']; ?>js/jquery.min.js"></script>
             <script src="<?php echo $data['media_path']; ?>js/jquery.validate.js"></script>
+            <script src="<?php echo $data['media_path']; ?>js/lightbox-plus-jquery.min.js"></script>
             <script src="<?php echo $data['media_path']; ?>js/additional-methods.min.js"></script>
             <script src="<?php echo $data['media_path']; ?>js/cookies.js"></script> <!-- Gem jQuery -->
         </head>

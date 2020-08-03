@@ -28,20 +28,28 @@
         <div class="row">
             <div class="col-md-6 col-sm-12 col-xs-12 left-section">
                 <div class="product-image">
+                    
+                    <?php $originalImage = $data['postImageOriginal']($data['item']->id_entity);?>
+                    <a href="<?php echo $originalImage ?>" data-lightbox="roadtrip">
+                        <img src="<?php echo $data['postImage']($data['item']->id_entity); ?>" class="img-responsive">
+                    </a>
+                    <a target="_blank" href="<?php echo $originalImage ?>"> <i class="fa fa-external-link"></i> <small>Zobraziť fotku na novej karte</small></a>
+                    <?php /*
                     <div id="myCarousel-2" class="carousel slide">
                         <ol class="carousel-indicators">
                             <li data-target="#myCarousel-2" data-slide-to="0" class="active"></li>
                         </ol>
-                        <div class="carousel-inner">
-                            <!-- Slide 1 -->
-                            <div class="item active">
-                                <img src="<?php echo $data['postImage']($data['item']->id_entity); ?>" alt="" />
-                            </div>
 
-                        </div>
+                        <div class="carousel-inner">
+                          <!-- Slide 1 -->
+                          <div class="item active">
+                          <img src="<?php echo $data['postImage']($data['item']->id_entity); ?>" alt="" />
+                          </div>
+
+                          </div>
                         <a class="left carousel-control" href="#myCarousel-2" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left"></span> </a>
                         <a class="right carousel-control" href="#myCarousel-2" data-slide="next"> <span class="glyphicon glyphicon-chevron-right"></span> </a>
-                    </div>
+                    </div>*/?>
                 </div>
             </div>
             <div class="col-md-6 col-sm-12 col-xs-12 right-section">
