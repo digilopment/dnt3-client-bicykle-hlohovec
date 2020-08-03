@@ -374,9 +374,14 @@
         padding:0px;
     }
     .eshop input,
+    .eshop input:focus,
+    .eshop select:focus,
+    .eshop .btn-info,
     .eshop select{
-        font-size: 14px;
+        font-size: 16px;
     }
+}
+    
 }
 
 @media screen and (min-width: 1200px) {
