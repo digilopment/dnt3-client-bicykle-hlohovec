@@ -1,10 +1,4 @@
 <div class="col-md-3 category-section">
-    <section class="panel search">
-        <h2 class="title-v4">Vyhľadávanie</h2>
-        <form class="search-form" action="<?php echo $this->data['plugin_data']['searchUrl'] ?>">
-            <div class="panel-body"><input type="text" placeholder="Vyhľadávanie" name="q" class="form-control" /></div>
-        </form>
-    </section>
     <section class="panel">
         <h2 class="btn-eshop-menu title-v4">Kategórie 
             <span class="pull-right" ><i class="fa fa-1x fa-bars"></i> </span>
@@ -62,5 +56,11 @@
             echo '</ul>';
             ?>
         </div>
+    </section>
+    <section class="panel search">
+        <h2 class="title-v4">Vyhľadávanie</h2>
+        <form class="search-form" action="<?php echo $this->data['plugin_data']['searchUrl'] ?>">
+            <div class="panel-body"><input type="text" placeholder="Vyhľadávanie" name="q" class="form-control" /></div>
+        </form>
     </section>
 </div>
