@@ -24,7 +24,7 @@
     </section>
 
     <section class="panel filter">
-        <div class="col-md-3">
+        <div class="col-md-3" style="padding-left: 0px;">
             <label for="sel1">Použitie bicykla:</label>
             <select id="filterType" name="type" class="form-control">
                 <?php
@@ -110,7 +110,7 @@
                         </div>
                         <div class="panel-body text-center">
                             <h4><a href="<?php echo $data['detailtUlr']($item['id_entity'], $item['name_url']) ?>" class="pro-title"> <?php echo $item['name']; ?> </a></h4>
-                            <p class="price"><?php echo $item['price']; ?></p>
+                            <p class="price"><?php echo $item['price']; ?>€</p>
                         </div>
                     </section>
                 </div>

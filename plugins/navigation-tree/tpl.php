@@ -63,6 +63,4 @@
             <div class="panel-body"><input type="text" placeholder="Vyhľadávanie" name="q" class="form-control" /></div>
         </form>
     </section>
-    
-     <?php rightColPartners($data); ?>
 </div>

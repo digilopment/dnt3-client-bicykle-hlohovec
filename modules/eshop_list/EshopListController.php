@@ -14,7 +14,6 @@ use DntLibrary\Base\PostMeta;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Settings;
 use DntLibrary\Base\Vendor;
-use mysqli;
 
 class EshopListController extends BaseController
 {
@@ -188,7 +187,7 @@ class EshopListController extends BaseController
         foreach ($this->finalItems as $key => $item) {
             $final[$key] = $item;
             $postId = $item['id_entity'];
-            $final[$key]['price'] = isset($metaData['keys'][$postId]['price']) && $metaData['keys'][$postId]['price']['show'] == 1 ? $metaData['keys'][$postId]['price']['value'] : false;
+            $final[$key]['price'] = isset($metaData['keys'][$postId]['catalogue_price']) && $metaData['keys'][$postId]['catalogue_price']['show'] == 1 ? $metaData['keys'][$postId]['catalogue_price']['value'] : false;
         }
         $this->finalItems = $final;
     }
@@ -205,7 +204,6 @@ class EshopListController extends BaseController
             }
             $this->finalItems = $final;
         }
-
 
         if ($this->aggrDecode['type']) {
             $ids = [];
@@ -311,7 +309,7 @@ class EshopListController extends BaseController
     {
         return array(
             "0" => "všetky",
-            "fully" => "MTB Fully",
+            "fully-horske" => "MTB Fully",
             "hardtaily" => "MTB Hardtaily",
             "crossove-cross-trekkingove" => "Krosové a trekingové bicykle",
             "cestne" => "Cestné bicykle",
