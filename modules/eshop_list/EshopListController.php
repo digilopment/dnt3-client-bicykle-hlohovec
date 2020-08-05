@@ -310,8 +310,8 @@ class EshopListController extends BaseController
     {
         return array(
             "0" => "všetky",
-            "fully-horske" => "MTB Fully",
-            "hardtaily" => "MTB Hardtaily",
+            "fully" => "MTB Fully",
+            "hardtaily-horske" => "MTB Hardtaily",
             "crossove-cross-trekkingove" => "Krosové a trekingové bicykle",
             "cestne" => "Cestné bicykle",
             "gravel" => "Gravel",
