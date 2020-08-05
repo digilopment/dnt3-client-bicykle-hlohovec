@@ -4,6 +4,7 @@ namespace DntView\Layout\Modul\Plugin;
 
 use DntLibrary\App\Categories;
 use DntLibrary\App\Plugin;
+use DntLibrary\Base\Rest;
 
 class NavigationTreePluginControll extends Plugin
 {
@@ -21,6 +22,7 @@ class NavigationTreePluginControll extends Plugin
         $this->data['ENV'] = $this->envDriver($data, $pluginId, $pluginName);
         $this->pluginId = $pluginId;
         $this->categories = new Categories();
+        $this->rest = new Rest();
     }
 
     public function init()
@@ -43,6 +45,14 @@ class NavigationTreePluginControll extends Plugin
 
         $data['getParentElements'] = function($id) {
             return $this->categories->getParentElements($id);
+        };
+        $data['aggrBuilder'] = function() {
+            return false; //DISABLE - PO SPUSTENI PRIDAT DO Plugins.shell configu <VAR id="cache_id" value="GET{aggrBuilder}" />
+            $aggrBuilder = $this->rest->get('aggrBuilder');
+            if ($aggrBuilder) {
+                return '?aggrBuilder=' . $aggrBuilder;
+            }
+            return false;
         };
         //var_dump($this->data['ENV']->template);
         $this->layout($this->loc, $this->data['ENV']->template, $data);

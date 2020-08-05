@@ -19,9 +19,8 @@
                 } else {
                     $type = 'child';
                 }
-
                 $str = '<li class="' . $type . '">'
-                        . '<a class="class-' . $element['id_entity'] . '" href="' . $data['path'] . '' . $data['modulUrl'] . '/category/' . $element['id_entity'] . '">';
+                        . '<a class="class-' . $element['id_entity'] . '" href="' . $data['path'] . '' . $data['modulUrl'] . '/category/' . $element['id_entity'] . $data['aggrBuilder']() . '">';
 
                 if ($data['hasChild']($element['id']) && $element['id'] == $data['routeCategory']) {
                     $str .= '<i class="fa fa-angle-down"></i>';
