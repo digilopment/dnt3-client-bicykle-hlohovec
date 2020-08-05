@@ -196,6 +196,7 @@ class EshopListController extends BaseController
     {
         $final = [];
         if (isset(explode('-', $this->aggrDecode['range'])[1]) && explode('-', $this->aggrDecode['range'])[1] > 0) {
+            var_dump($this->aggrDecode['range']);
             $this->priceRange = [explode('-', $this->aggrDecode['range'])[0], explode('-', $this->aggrDecode['range'])[1]];
             foreach ($this->finalItems as $key => $item) {
                 if ($item['price'] >= $this->priceRange[0] && $item['price'] <= $this->priceRange[1]) {
@@ -275,7 +276,7 @@ class EshopListController extends BaseController
         $decoded = [
             'sort' => $this->aggrBuilder->decode()->sort ?? 'price',
             'sortType' => $this->aggrBuilder->decode()->sortType ?? 'ASC',
-            'range' => $this->aggrBuilder->decode()->range ?? '0-10000',
+            'range' => $this->aggrBuilder->decode()->range ?? '0',
             'type' => $this->aggrBuilder->decode()->type ?? false,
             'page' => $this->aggrBuilder->decode()->page ?? 1,
             'q' => $q,
