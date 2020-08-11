@@ -358,7 +358,6 @@ function get_top($data)
             <!-- light box -->
             <script src="<?php echo $data['media_path']; ?>js/jquery.min.js"></script>
             <script src="<?php echo $data['media_path']; ?>js/jquery.validate.js"></script>
-            <script src="<?php echo $data['media_path']; ?>js/lightbox-plus-jquery.min.js"></script>
             <script src="<?php echo $data['media_path']; ?>js/additional-methods.min.js"></script>
             <script src="<?php echo $data['media_path']; ?>js/cookies.js"></script> <!-- Gem jQuery -->
         </head>
@@ -384,6 +383,9 @@ function get_top($data)
         <script src="<?php echo $data['media_path']; ?>js/main.js"></script> <!-- Gem jQuery -->
         <!-- JS Customization -->
         <script src="<?php echo $data['media_path']; ?>js/custom.js"></script>
+        
+        <script src="<?php echo $data['media_path']; ?>js/lightbox-plus-jquery.min.js"></script>
+                                
         <!-- JS Page Level -->
         <script src="<?php echo $data['media_path']; ?>js/app.js"></script>
         <script src="<?php echo $data['media_path']; ?>js/fancy-box.js"></script>
@@ -712,6 +714,11 @@ function get_footer($data)
                             </a>
                         </li>
                     <?php } ?>
+                        <li>
+                            <a href="<?php echo Rest::getModulUrl("business_conditions"); ?>" target="_blank">
+                                Obchodné podmienky
+                            </a>
+                        </li>
                 </ul>
             </div>
             <!--/end container-->
@@ -816,6 +823,11 @@ function col_right($data)
             <ul class="col-right logos">
                 <li>
                     <a href="<?php echo Rest::getModulUrl("contact"); ?>"><span class="btn-u"><?php echo Multylanguage::translate($data, "kontakt", "translate"); ?></span></a>
+                </li>
+            </ul>
+            <ul class="col-right logos">
+                <li>
+                    <a href="<?php echo Rest::getModulUrl("business_conditions"); ?>"><span class="btn-u">Obchodné podmienky</span></a>
                 </li>
             </ul>
         </div>

@@ -97,6 +97,10 @@
                                         required: true,
                                         minlength: 1
                                     },
+                                    suhlas: {
+                                        required: true,
+                                        minlength: 1
+                                    }
                                 },
                                 messages: {
                                     meno: "<?php echo $this->data['plugin_data']['translate']('field_word_err'); ?>",
@@ -105,6 +109,7 @@
                                     predmet: "<?php echo $this->data['plugin_data']['translate']('field_word_err'); ?>",
                                     email: "<?php echo $this->data['plugin_data']['translate']('field_word_err'); ?>",
                                     sprava: "<?php echo $this->data['plugin_data']['translate']('field_word_err'); ?>",
+                                    suhlas: "<?php echo $this->data['plugin_data']['translate']('field_word_err'); ?>"
                                 },
                                 submitHandler: function (form) {
                                     $.ajax({
@@ -146,7 +151,7 @@
                             <div class="row sky-space-20">
                                 <div class="col-md-7 col-md-offset-0">
                                     <div>
-                                        
+
                                         <?php if ($this->data['plugin_data']['dynamicRequest']) { ?>
                                             <input type="text" name="predmet" value="<?php echo $this->data['plugin_data']['requestSubject'] ?>" id="predmet" class="form-control">
                                         <?php } else { ?>
@@ -201,6 +206,16 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="suhlas">
+                                    <span class="text-description">
+                                        <?php print($this->data['plugin_data']['article']['content'])?>
+                                    </span>
+                                </label>
+                            </div>
+
                             <br>
                             <button type="submit" name="sent_msg" value="1" class="btn-u"><?php echo $this->data['plugin_data']['translate']('odoslat_btn'); ?></button>
                         </fieldset>

@@ -28,28 +28,28 @@
         <div class="row">
             <div class="col-md-6 col-sm-12 col-xs-12 left-section">
                 <div class="product-image">
-                    
-                    <?php $originalImage = $data['postImageOriginal']($data['item']->id_entity);?>
+
+                    <?php $originalImage = $data['postImageOriginal']($data['item']->id_entity); ?>
                     <a href="<?php echo $originalImage ?>" data-lightbox="roadtrip">
                         <img src="<?php echo $data['postImage']($data['item']->id_entity); ?>" class="img-responsive">
                     </a>
                     <a target="_blank" href="<?php echo $originalImage ?>"> <i class="fa fa-external-link"></i> <small>Zobraziť fotku na novej karte</small></a>
                     <?php /*
-                    <div id="myCarousel-2" class="carousel slide">
-                        <ol class="carousel-indicators">
-                            <li data-target="#myCarousel-2" data-slide-to="0" class="active"></li>
-                        </ol>
+                      <div id="myCarousel-2" class="carousel slide">
+                      <ol class="carousel-indicators">
+                      <li data-target="#myCarousel-2" data-slide-to="0" class="active"></li>
+                      </ol>
 
-                        <div class="carousel-inner">
-                          <!-- Slide 1 -->
-                          <div class="item active">
-                          <img src="<?php echo $data['postImage']($data['item']->id_entity); ?>" alt="" />
-                          </div>
+                      <div class="carousel-inner">
+                      <!-- Slide 1 -->
+                      <div class="item active">
+                      <img src="<?php echo $data['postImage']($data['item']->id_entity); ?>" alt="" />
+                      </div>
 
-                          </div>
-                        <a class="left carousel-control" href="#myCarousel-2" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left"></span> </a>
-                        <a class="right carousel-control" href="#myCarousel-2" data-slide="next"> <span class="glyphicon glyphicon-chevron-right"></span> </a>
-                    </div>*/?>
+                      </div>
+                      <a class="left carousel-control" href="#myCarousel-2" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left"></span> </a>
+                      <a class="right carousel-control" href="#myCarousel-2" data-slide="next"> <span class="glyphicon glyphicon-chevron-right"></span> </a>
+                      </div> */ ?>
                 </div>
             </div>
             <div class="col-md-6 col-sm-12 col-xs-12 right-section">
@@ -102,7 +102,10 @@
                             <div class="params">
                                 <table>
                                     <?php
-                                    $variants = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $data['postMeta']($data['item']->id_entity, 'variants')), true);
+                                    $str = $data['postMeta']($data['item']->id_entity, 'variants');
+                                    $str = str_replace('")"', ')"', $str);
+                                    $str = str_replace('""}]', '"}]', $str);
+                                    $variants = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $str), true);
                                     if (is_array($variants)) {
                                         foreach ($variants as $key => $variant) {
                                             if (isset($variant['variant'])) {
@@ -116,6 +119,21 @@
                                             echo '<tr><td>' . $data['item']->name . '</td></tr>';
                                         }
                                     }
+                                    /* $variants = json_decode($data['postMeta']($data['item']->id_entity, 'variants'));
+                                      var_dump($variants);
+                                      if (is_array($variants)) {
+                                      foreach ($variants as $key => $variant) {
+                                      if (isset($variant['variant'])) {
+                                      echo '<tr><td>' . $variant['variant'] . '</td></tr>';
+                                      }
+                                      }
+                                      } else {
+                                      if ($data['postMeta']($data['item']->id_entity, 'variant')) {
+                                      echo '<tr><td>' . $data['postMeta']($data['item']->id_entity, 'variant') . '</td></tr>';
+                                      } else {
+                                      echo '<tr><td>' . $data['item']->name . '</td></tr>';
+                                      }
+                                      } */
                                     ?>
                                 </table>
                             </div>

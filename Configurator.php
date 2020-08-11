@@ -7,7 +7,7 @@ use DntLibrary\Base\Vendor;
 
 class Configurator extends Modul
 {
-    
+
     public function modulesRegistrator()
     {
         $this->getSitemap();
@@ -51,6 +51,9 @@ class Configurator extends Modul
             'eshop_list' => array_merge(
                     array(), $this->getSitemapModules('eshop_list')
             ),
+            'business_conditions' => array_merge(
+                    array(), $this->getSitemapModules('business_conditions')
+            ),
         );
         return $modulesRegistrator;
     }
@@ -84,6 +87,9 @@ class Configurator extends Modul
             ),
             'eshop_list' => array(
                 'service_name' => 'Zoznam produktov',
+            ),
+            'business_conditions' => array(
+                'service_name' => 'Obchodné podmienky',
             ),
         );
     }
