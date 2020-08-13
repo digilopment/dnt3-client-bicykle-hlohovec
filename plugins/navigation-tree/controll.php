@@ -14,6 +14,22 @@
     .prod-cat .nav.nav-parent-131 {
         display: block;
     }
+    
+    @media screen and (max-width: 991px) {
+        .eshop .nav>li>a.class-96,
+        .eshop .nav>li>a.class-132,
+        .eshop .nav>li>a.class-110,
+        .eshop .nav>li>a.class-149,
+        .eshop .nav>li>a.class-171,
+        .eshop .nav>li>a.class-118{
+            text-transform: uppercase;
+            font-weight: bold;
+            color: #da0809;
+            font-size: 16px;
+            border-bottom: 0px;
+        }
+    }
+    
 </style>
 <script>
     $(document).ready(function () {

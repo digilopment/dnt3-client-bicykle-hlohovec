@@ -126,6 +126,7 @@
     .bussinessController .bussiness.nav-tabs>li.active>a:hover {
         border: 1px solid #ddd;
         border-bottom: 1px solid #ddd;
+        color: #da0809;
     }
     .bussinessController .bussiness.nav-tabs {
         border-bottom: 0px solid #ddd;
@@ -140,12 +141,15 @@
     .bussinessController ul.links{
         margin-top: 50px;
         margin-left: 15px;
+        width: 100% !important;
     }
     .bussinessController ul.links,
     .bussinessController ul.links li{
         list-style: none;
         padding: 5px;
-        font-size: 13px;
+        font-size: 14px;
+        float: left;
+        width: 50%;
     }
     .bussinessController ul.links li i,
     .bussinessController ul.links li a{

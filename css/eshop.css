@@ -166,7 +166,7 @@
 .eshop li.parent{
     font-weight:bold;
     font-size: 16px;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
 }
 
 .eshop .left-columnt ul.navigation-tree li.selected>a,
