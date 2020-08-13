@@ -210,7 +210,7 @@
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" name="suhlas">
-                                    <span class="text-description">
+                                    <span class="text-description" style="max-width: 91%;display: block;text-align: justify;">
                                         <?php print($this->data['plugin_data']['article']['content'])?>
                                     </span>
                                 </label>
