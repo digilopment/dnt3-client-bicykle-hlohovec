@@ -384,7 +384,7 @@ function get_top($data)
         <!-- JS Customization -->
         <script src="<?php echo $data['media_path']; ?>js/custom.js"></script>
         
-        <script src="<?php echo $data['media_path']; ?>js/lightbox-plus-jquery.min.js"></script>
+        <script src="<?php echo $data['media_path']; ?>js/lightbox-plus-jquery.min.js?v2"></script>
                                 
         <!-- JS Page Level -->
         <script src="<?php echo $data['media_path']; ?>js/app.js"></script>
