@@ -1,7 +1,7 @@
 <div class="col-md-3 category-section">
     <section class="panel">
         <h2 class="btn-eshop-menu title-v4">Kategórie 
-            <span class="pull-right" ><i class="fa fa-1x fa-bars"></i> </span>
+            <span class="pull-right" ><a id="showCat" href="#" class="fa fa-1x fa-bars"></a> </span>
             <div class="btn-group show-all-cats">
                 <button title="Zobraziť všetky sekcie v zozname" type="button" class="btn btn-default">
                     <i class="fa fa-eye"></i>
@@ -20,7 +20,7 @@
                     $type = 'child';
                 }
                 $str = '<li class="' . $type . '">'
-                        . '<a class="class-' . $element['id_entity'] . '" href="' . $data['path'] . '' . $data['modulUrl'] . '/category/' . $element['id_entity'] . $data['aggrBuilder']() . '">';
+                        . '<a id="cat' . $element['id_entity'] . '" class="class-' . $element['id_entity'] . '" href="' . $data['path'] . '' . $data['modulUrl'] . '/category/' . $element['id_entity'] . $data['aggrBuilder']() . '">';
 
                 if ($data['hasChild']($element['id']) && $element['id'] == $data['routeCategory']) {
                     $str .= '<i class="fa fa-angle-down"></i>';

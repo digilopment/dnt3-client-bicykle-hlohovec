@@ -36,6 +36,7 @@
 .eshop .prod-cat li a.active {
     background: none;
     color: #da0809;
+    font-weight: bold;
 }
 .eshop .pro-lab {
     margin-right: 20px;

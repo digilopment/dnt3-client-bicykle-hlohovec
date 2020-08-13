@@ -16,6 +16,7 @@
     }
     
     @media screen and (max-width: 991px) {
+        .eshop .nav>li>a.active,
         .eshop .nav>li>a.class-96,
         .eshop .nav>li>a.class-132,
         .eshop .nav>li>a.class-110,
@@ -25,8 +26,11 @@
             text-transform: uppercase;
             font-weight: bold;
             color: #da0809;
-            font-size: 16px;
             border-bottom: 0px;
+        }
+        
+        .eshop .nav>li>a.active{
+            font-size: 16px;
         }
     }
     
@@ -46,6 +50,8 @@
                 $(".show-all-cats").addClass('isShow');
             }
         });
+        $("#showCat").attr('href','#cat<?php echo $this->data['plugin_data']['routeCategory'];?>');
+        
         var activeClass = '<?php echo $this->data['plugin_data']['routeCategory'];?>';
         if(!activeClass){
             activeClass = 131;
