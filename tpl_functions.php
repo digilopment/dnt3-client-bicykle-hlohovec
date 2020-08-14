@@ -1120,7 +1120,7 @@ function get_slider($data)
     $multylanguage = new MultyLanguage;
     $article = new ArticleView;
     $db = new DB;
-    $query = "SELECT * FROM dnt_posts WHERE type = 'post' AND cat_id = '" . AdminContent::getCatId("sliders") . "' AND vendor_id = '" . Vendor::getId() . "' AND `show` > 0";
+    $query = "SELECT * FROM dnt_posts WHERE type = 'post' AND cat_id = '" . AdminContent::getCatId("sliders") . "' AND vendor_id = '" . Vendor::getId() . "' AND `show` > 0 order by `order` asc, id desc";
     if ($db->num_rows($query) > 0) {
         ?>
         <!--<style>
