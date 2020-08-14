@@ -23,7 +23,7 @@
         </div>
     </section>
 
-    <section class="panel filter">
+    <section class="panel filter col-xs-12">
         <div class="col-md-3" style="padding-left: 0px;">
             <label for="sel1">Použitie bicykla:</label>
             <select id="filterType" name="type" class="form-control">

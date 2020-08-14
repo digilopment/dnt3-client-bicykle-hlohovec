@@ -3,6 +3,9 @@
     border: none;
     box-shadow: none;
 }
+.eshop .panel.filter {
+    z-index: 5;
+}
 .eshop .panel-heading {
     border-color: #eff2f7;
     font-size: 16px;
@@ -96,6 +99,9 @@
 }
 .eshop .product-list .panel{
     min-height: 390px;
+}
+.eshop .product-list .panel-body{
+    min-height: 100px;
 }
 .eshop .pro-img-details {
     margin-left: -15px;
