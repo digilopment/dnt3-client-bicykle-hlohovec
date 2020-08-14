@@ -1168,6 +1168,7 @@ function get_slider($data)
 
 function get_paralax($image, $name)
 {
+    if($image){
     ?>
     <style>
         .microslider-wrapper{
@@ -1183,7 +1184,11 @@ function get_paralax($image, $name)
         </div>
     </div>
     <img src="<?php echo $image; ?>" class="microslider-wrapper-img-paralax img-responsive">
-<?php } ?>
+<?php }else{
+    echo '<br/>';
+}
+    }
+?>
 <?php
 
 function get_video_embed($data, $videoId = false)
