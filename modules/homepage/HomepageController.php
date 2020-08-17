@@ -27,6 +27,7 @@ class HomepageController extends BaseController
             'menu_items' => true,
             'translates' => true,
             'meta_settings' => true,
+            'post_meta' => true,
         ];
         $this->frontendData->configure($config);
         $this->data = $this->frontendData->get();
