@@ -55,6 +55,18 @@
       <VAR id="tpl" value="content" />
       <VAR id="template" value="tpl" />
    </PLUGIN>
+   
+   <PLUGIN name="related_products">
+      <VAR id="id" value="related_products" />
+      <VAR id="layout" value="MAIN-CONTENT" />
+      <VAR id="level" value="local" />
+      <VAR id="cache" value="10M" />
+      <VAR id="cache_id" value="POST_ID" />
+      <VAR id="compress" value="1" />
+      <VAR id="type" value="mdl" />
+      <VAR id="tpl" value="related_products" />
+      <VAR id="template" value="tpl" />
+   </PLUGIN>
 
    <PLUGIN name="bottom">
       <VAR id="id" value="bottom" />

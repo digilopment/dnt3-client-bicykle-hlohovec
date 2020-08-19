@@ -285,7 +285,7 @@ class EshopListController extends BaseController
         $this->aggrDecode = $decoded;
     }
 
-    protected function posts()
+    public function posts()
     {
         $this->posts->init();
         $this->postFilter();
@@ -295,7 +295,7 @@ class EshopListController extends BaseController
         $this->paginatedItems();
     }
 
-    protected function init()
+    public function init()
     {
         $this->setAggrParams();
         $this->data();

@@ -398,3 +398,100 @@
         display: inline;
     }
 }
+
+/** RELATED **/
+.section-title.btn.btn-primary,
+.section-title.btn.btn-primary:hover{
+    cursor: initial;
+    margin-bottom: 25px;
+}
+.slide-content{
+    display: inherit;
+    overflow-y: hidden;
+}
+.slide-content .related-products {
+    overflow-x: scroll;
+    white-space: nowrap;
+    padding: 0;
+    margin: 0;
+}
+.slide-content .related-products ul {
+    padding: 0 0 0 0px;
+    margin-bottom: 0;
+}
+.slide-content .related-products ul li {
+    display: inline-block;
+    margin: 0;
+    vertical-align: top;
+    width: 260px;
+    margin: 0 8px 20px 0;
+    height: 330px;
+    position: relative;
+}
+.slide-content .related-products ul li:last-child{
+    margin: 0 15px 0 0;
+}
+.slide-content .related-products ul li img{
+    width: 250px;
+    height: auto;
+    border-radius: 0px;
+    overflow-y: hidden;
+}
+.slide-content .related-products ul li .thumb_info{
+    color: #fff;
+    height: 110px;
+    position: absolute;
+    left: 0px;
+    display: block;
+    background: #fff;
+    width: 100%;
+    bottom: 0px;
+    white-space: normal;
+}
+.slide-content .related-products ul li .thumb_info .name {
+    position: relative;
+    bottom: auto;
+    margin: 0px;
+    color: #404040;
+    font-size: 15px;
+    text-align: left;
+    padding: 5px 0px;
+    padding-bottom: 20px;
+    height: 60px;
+}
+.slide-content .related-products ul li .thumb_info .thumb_slider_icon{
+    top: -2px;
+    left: 160px;
+}
+.slide-content .related-products ul li .thumb_info .price{
+    font-size: 13px;
+    font-weight: bold;
+    background-color: #da0809;
+    margin: 0px auto;
+    text-align: center;
+    color: #fff;
+    padding: 15px 0px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: block;
+    position: relative;
+}
+@media screen and (min-width: 991px) {
+
+
+    .slide-content .related-products {
+        overflow: hidden;
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+    .slide-content .related-products ul li {
+        display: block;
+        float: left;
+    }
+}
+@media screen and (max-width: 991px) {
+    .product-list.reletaed{
+        padding:0px
+    }
+}
