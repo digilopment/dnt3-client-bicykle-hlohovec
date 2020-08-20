@@ -97,7 +97,7 @@ class VideoEmbedController extends BaseController
             $data['video_file'] = $this->image->getFileImage($data['article']['service_id']);
             $this->modulConfigurator($data, 'video_embed');
         } else {
-            //$this->dnt->redirect(WWW_PATH . '404');
+            $this->dnt->redirect(WWW_PATH . '404');
         }
     }
 
