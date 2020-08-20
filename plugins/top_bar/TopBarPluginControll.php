@@ -3,9 +3,11 @@
 namespace DntView\Layout\Modul\Plugin;
 
 use DntLibrary\App\Plugin;
+use DntLibrary\Base\MultyLanguage;
 use DntLibrary\Base\Settings;
+use DntLibrary\Base\Webhook;
 
-class LogoVideoPluginControll extends Plugin
+class TopBarPluginControll extends Plugin
 {
 
     protected $loc = __FILE__;
@@ -18,13 +20,17 @@ class LogoVideoPluginControll extends Plugin
         $this->data = $data;
         $this->pluginId = $pluginId;
         $this->settings = new Settings();
+        $this->webhook = new Webhook();
+        $this->multilanguage = new MultyLanguage();
     }
 
     public function run()
     {
         $data = $this->data;
-        $data['logo_firmy'] = $this->settings->getImage($data['meta_settings']['keys']['logo_firmy']['value']);
-        $data['video_id'] = 15021;
+        $data['search_url'] = WWW_PATH . $this->webhook->getSitemapModules('eshop_list')[0] . '/products/search';
+        $data['translate'] = function ($key) use($data) {
+            return $this->multilanguage->translate($data, $key, 'translate');
+        };
         $this->layout($this->loc, 'tpl', $data);
     }
 

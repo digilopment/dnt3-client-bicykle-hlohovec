@@ -1,45 +1,42 @@
-<?php
-
-use DntLibrary\Base\Vendor;
-
-$layout = Vendor::getLayout();
-get_top($data);
-?>
-<body data-spy="scroll" data-target=".navbar" class="header-fixed header-fixed-space-v2 pages-id">
-
-    <?php
-    color_conf($data);
-    if ($data['meta_settings']['keys']['ga_key']['show'] == 1) {
-        $ga_key = $data['meta_settings']['keys']['ga_key']['value'];
-        ?>
-        <script>
-            (function (i, s, o, g, r, a, m) {
-                i['GoogleAnalyticsObject'] = r;
-                i[r] = i[r] || function () {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
-                a = s.createElement(o),
-                        m = s.getElementsByTagName(o)[0];
-                a.async = 1;
-                a.src = g;
-                m.parentNode.insertBefore(a, m)
-            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-
-            ga('create', '<?php echo $ga_key; ?>', 'auto');
-            ga('send', 'pageview');
-        </script>
+<!DOCTYPE html>
+<!--[if IE 9]> 
+<html lang="sk" class="ie9">
+   <![endif]-->
+<!--[if !IE]><!--> 
+<html lang="<?php print($data['meta_settings']['keys']['language']['value']); ?>">
+    <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title><?php echo $data['title']; ?></title>
         <?php
-    }
-    if ($data['meta_settings']['keys']['pixel_retargeting']['show'] == 1) {
+        foreach ($data['meta'] as $meta) {
+            echo $meta;
+        }
         ?>
-        <noscript>
-        <img height="1" width="1" border="0" alt="" style="display:none" src="<?php echo $data['meta_settings']['keys']['pixel_retargeting']['value']; ?>" />
-        </noscript>
-    <?php } ?>
-
-    <div class="wrapper">
-        <!--=== Header v8 ===-->
-        <div class="header-v8 header-sticky">
-            <?php get_top_lista($data); ?>
-            <?php get_nav_menu($data, 303); ?>
-        </div>
+        <meta name="author" content="digilopment">
+        <meta name="robots" content="index,follow" />
+        <meta name="viewport" content="width=device-width" />
+        <?php
+        $favicon = $this->data['plugin_data']['favicon'];
+        ?>
+        <!-- Favicone Icon -->
+        <link rel="" type="img/x-icon" href="<?php echo $favicon; ?>" />
+        <link rel="" type="img/png" href="<?php echo $favicon; ?>" />
+        <link rel="icon" type="image/vnd.microsoft.icon" href="<?php echo $favicon; ?>" />
+        <!-- Web Fonts -->
+        <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Roboto:400,300,700'>
+        <!-- CSS Customization -->
+        <link rel="stylesheet" href="<?php echo $data['media_path']; ?>css/bundle.css">
+        <link rel="stylesheet" href="<?php echo $data['media_path']; ?>css/custom.css?<?php echo rand(10, 1000) ?>">
+        <link rel="stylesheet" href="<?php echo $data['media_path']; ?>css/red.css?<?php echo rand(10, 1000) ?>">
+        <link rel="stylesheet" href="<?php echo $data['media_path']; ?>css/eshop.css?<?php echo rand(10, 1000) ?>">
+        <!-- Custom Fonts -->
+        <?php /* <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+          <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+          <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'> */ ?>
+        <!-- light box -->
+        <script src="<?php echo $data['media_path']; ?>js/jquery.min.js"></script>
+        <script src="<?php echo $data['media_path']; ?>js/jquery.validate.js"></script>
+        <script src="<?php echo $data['media_path']; ?>js/additional-methods.min.js"></script>
+        <script src="<?php echo $data['media_path']; ?>js/cookies.js"></script> <!-- Gem jQuery -->
+    </head>

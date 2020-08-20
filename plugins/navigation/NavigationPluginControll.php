@@ -5,12 +5,10 @@ namespace DntView\Layout\Modul\Plugin;
 use DntLibrary\App\Plugin;
 use DntLibrary\Base\Settings;
 
-class LogoVideoPluginControll extends Plugin
+class NavigationPluginControll extends Plugin
 {
 
     protected $loc = __FILE__;
-    protected $data;
-    protected $pluginId;
 
     public function __construct($data, $pluginId)
     {
@@ -24,7 +22,9 @@ class LogoVideoPluginControll extends Plugin
     {
         $data = $this->data;
         $data['logo_firmy'] = $this->settings->getImage($data['meta_settings']['keys']['logo_firmy']['value']);
-        $data['video_id'] = 15021;
+        $data['logo_firmy_2'] = $this->settings->getImage($data['meta_settings']['keys']['logo_firmy_2']['value']);
+        $data['logo_firmy_3'] = $this->settings->getImage($data['meta_settings']['keys']['logo_firmy_3']['value']);
+        $data['plugin_id'] = $this->pluginId;
         $this->layout($this->loc, 'tpl', $data);
     }
 

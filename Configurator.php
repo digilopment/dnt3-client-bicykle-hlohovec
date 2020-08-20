@@ -15,9 +15,6 @@ class Configurator extends Modul
             'singl_page' => array_merge(
                     array(), $this->getSitemapModules('singl_page')
             ),
-            'search' => array_merge(
-                    array(), $this->getSitemapModules('search')
-            ),
             'clean' => array_merge(
                     array(), $this->getSitemapModules('clean')
             ),
@@ -63,9 +60,6 @@ class Configurator extends Modul
         return array(
             'singl_page' => array(
                 'service_name' => 'Singl Page',
-            ),
-            'search' => array(
-                'service_name' => 'Vyhľadávanie',
             ),
             'clean' => array(
                 'service_name' => 'Clean',

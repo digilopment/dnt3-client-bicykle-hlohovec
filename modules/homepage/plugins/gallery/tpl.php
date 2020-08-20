@@ -13,7 +13,9 @@ if ($this->data['plugin_data']['hasItems']) {
                 $img = Image::getFileImage($item, true, Image::SMALL);
                 ?>
                 <div class="col-sm-4" style="margin-top: 10px;">
-                    <a data-lightbox="gallery" href="<?php echo Image::getFileImage($item); ?>" target="_blank" class=""><img src="<?php echo $img; ?>" class="img-responsive"></a>
+                    <a data-lightbox="gallery" href="<?php echo Image::getFileImage($item); ?>" target="_blank" class="">
+                        <img src="<?php echo $img; ?>" class="img-responsive" alt="Image gallery">
+                    </a>
                 </div>
     <?php } ?>
         </div>

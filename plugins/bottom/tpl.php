@@ -1,20 +1,42 @@
-<?php
+<!-- JS Global Compulsory -->
+<script src="<?php echo $data['media_path']; ?>js/jquery-migrate.min.js"></script>
+<script src="<?php echo $data['media_path']; ?>js/bootstrap.min.js"></script>
+<!-- JS Implementing Plugins -->
+<script src="<?php echo $data['media_path']; ?>js/back-to-top.js"></script>
+<!--<script src="<?php echo $data['media_path']; ?>js/smoothScroll.js"></script>-->
 
-use DntLibrary\Base\Vendor;
+<script src="<?php echo $data['media_path']; ?>js/waypoints.min.js"></script>
+<script src="<?php echo $data['media_path']; ?>js/jquery.counterup.min.js"></script>
+<script src="<?php echo $data['media_path']; ?>js/jquery.fancybox.pack.js"></script>
+<script src="<?php echo $data['media_path']; ?>js/owl.carousel.js"></script>
+<script src="<?php echo $data['media_path']; ?>js/masterslider.js"></script>
+<script src="<?php echo $data['media_path']; ?>js/jquery.easing.min.js"></script>
+<script src="<?php echo $data['media_path']; ?>js/modernizr.js"></script>
+<script src="<?php echo $data['media_path']; ?>js/main.js"></script> <!-- Gem jQuery -->
+<!-- JS Customization -->
+<script src="<?php echo $data['media_path']; ?>js/custom.js"></script>
 
-get_footer($data);
-?>
-</div> <!-- end wrapper -->
+<script src="<?php echo $data['media_path']; ?>js/lightbox-plus-jquery.min.js?v2"></script>
 
-<?php if (ENABLE_COOKIES_STRIP) { ?>
-    <script type="text/javascript">
-        function hideStripCookies(thisCookie, thisTime) {
-            document.getElementById(thisCookie).style.display = "none";
-            setCookie(thisCookie, 1, thisTime);
-        }
-        if (getCookie("the_cookies3") != 1) {
-            document.write('<section class="container col-md-12 row"><div id="the_cookies3" class="strip_cookies text-center"><p>Aby sme Vám zaistili lepší užívateľský komfort a prispôsobili naše služby Vašim potrebám, ukladá TV Markíza na Vašom počítači, tablete alebo smartfóne súbory cookies, a to predovšetkým pre uchovanie Vášho užívateľského nastavenia, poskytovanie obsahu na mieru, obstarávanie anonymných štatistík a zacielenie obchodných oznámení. Niektoré získané informácie TV Markíza zdieľa s inými spoločnosťami (anonymné štatistiky). Niektoré informácie sú aj priamo spracovávané ďalšími spoločnosťami (personalizácia zobrazovanej reklamy) bez zásahu TV Markíza.<br>Podrobnosti o podmienkach používania súborov cookies nájdete <a class="cookies-viac" href="//osobneudaje.markiza.sk/pravidla-pouzivania-cookies" target="_blank">tu</a>. <a class="clear-cookies" href="#" onclick="hideStripCookies(\'the_cookies3\', \'525600\')"><button class="btn btn-primary">Rozumiem</button></a></p></div></section>');
-        }
-    </script>
-<?php } ?>
-<?php get_bottom($data); ?>
+<!-- JS Page Level -->
+<script src="<?php echo $data['media_path']; ?>js/app.js"></script>
+<script src="<?php echo $data['media_path']; ?>js/fancy-box.js"></script>
+<script src="<?php echo $data['media_path']; ?>js/owl-carousel.js"></script>
+<script src="<?php echo $data['media_path']; ?>js/master-slider-showcase1.js"></script>
+<script src="<?php echo $data['media_path']; ?>js/style-switcher.js"></script>
+<script src="https://www.google.com/recaptcha/api.js"></script>
+<script type="text/javascript">
+    $('.carousel').carousel({
+        pause: true,
+        interval: false
+    });
+    jQuery(document).ready(function () {
+        App.init();
+        App.initCounter();
+        FancyBox.initFancybox();
+        OwlCarousel.initOwlCarousel();
+        OwlCarousel.initOwlCarousel2();
+        StyleSwitcher.initStyleSwitcher();
+        MasterSliderShowcase1.initMasterSliderShowcase1();
+    });
+</script>

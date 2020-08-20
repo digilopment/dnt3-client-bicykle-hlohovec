@@ -14,7 +14,7 @@ if ($this->data['plugin_data']['hasItems']) {
                     ?>
                     <div class="blog-grid masonry-box-in col-3">
                         <h3><a href="<?php echo Url::getPostUrl($row['name_url']) ?>">
-        <?php echo $row['name']; ?></a>
+                                <?php echo $row['name']; ?></a>
                         </h3>
                         <hr>
                         <p><?php echo $row['perex']; ?></p>
