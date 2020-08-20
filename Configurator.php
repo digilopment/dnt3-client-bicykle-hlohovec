@@ -45,8 +45,8 @@ class Configurator extends Modul
             'product_detail' => array_merge(
                     array(), array('{alphabet}/product/{digit}/{eny}')
             ),
-            'eshop_list' => array_merge(
-                    array(), $this->getSitemapModules('eshop_list')
+            'product_list' => array_merge(
+                    array(), $this->getSitemapModules('product_list')
             ),
             'business_conditions' => array_merge(
                     array(), $this->getSitemapModules('business_conditions')
@@ -79,7 +79,7 @@ class Configurator extends Modul
             'product_detail' => array(
                 'service_name' => 'Detail Produktu',
             ),
-            'eshop_list' => array(
+            'product_list' => array(
                 'service_name' => 'Zoznam produktov',
             ),
             'business_conditions' => array(

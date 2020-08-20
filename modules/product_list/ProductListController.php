@@ -15,7 +15,7 @@ use DntLibrary\Base\Rest;
 use DntLibrary\Base\Settings;
 use DntLibrary\Base\Vendor;
 
-class EshopListController extends BaseController
+class ProductListController extends BaseController
 {
 
     protected $rootCatId = 95;
