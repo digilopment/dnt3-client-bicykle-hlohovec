@@ -1,4 +1,3 @@
-
 <div class="blog-topbar">
     <div class="topbar-search-block">
         <div class="container">
