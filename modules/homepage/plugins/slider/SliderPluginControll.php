@@ -31,7 +31,7 @@ class SliderPluginControll extends Plugin
     protected function postsModel()
     {
         $id = (int) $this->env('post_cat_id');
-        $query = "SELECT * FROM dnt_posts WHERE type = 'post' AND cat_id = '" . $id . "' AND `show` > 0 AND `vendor_id` = '" . $this->vendor->getId() . "'";
+        $query = "SELECT * FROM dnt_posts WHERE type = 'post' AND cat_id = '" . $id . "' AND `show` > 0 AND `vendor_id` = '" . $this->vendor->getId() . "' order by `order` asc, id desc";
         if ($this->db->num_rows($query) > 0) {
             $this->postsModel = $this->db->get_results($query);
         }
