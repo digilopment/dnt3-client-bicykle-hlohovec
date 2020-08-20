@@ -1,7 +1,4 @@
-<?php
-
-use DntLibrary\Base\Settings;
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <html>
     <head>
         <title><?php echo $data['title']; ?></title>
@@ -10,10 +7,10 @@ use DntLibrary\Base\Settings;
             echo $meta;
         }
         ?>
-        <meta name="author" content="designdnt">
+        <meta name="author" content="Digilopment">
         <meta name="viewport" content="width=device-width" />
         <?php
-        $favicon = Settings::getImage($data['meta_settings']['keys']['favicon']['value']);
+        $favicon = $data['favicon'];
         ?>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!-- Chang URLs to wherever Video.js files will be hosted -->
@@ -60,28 +57,22 @@ use DntLibrary\Base\Settings;
             /*var player = videojs('video_<?php echo $data['video_id']; ?>');
              player.addClass('sex');*/
             videojs.autoSetup();
-
             videojs('video_<?php echo $data['video_id']; ?>').ready(function () {
                 console.log(this.options()); //log all of the default videojs options
-
                 // Store the video object
                 var myPlayer = this, id = myPlayer.id();
                 // Make up an aspect ratio
                 var aspectRatio = 264 / 640;
-
                 function resizeVideoJS() {
                     var width = document.getElementById(id).parentElement.offsetWidth;
                     myPlayer.width(width).height(window.innerHeight);
 
                 }
-
                 // Initialize resizeVideoJS()
                 resizeVideoJS();
                 // Then on resize call resizeVideoJS()
                 window.onresize = resizeVideoJS;
             });
-
-
         </script>
     </body>
 </html>
