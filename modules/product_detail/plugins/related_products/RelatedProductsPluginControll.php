@@ -73,31 +73,44 @@ class RelatedProductsPluginControll extends Plugin
     protected function postFilter()
     {
         $productprice = (int) ($this->data['postMeta']($this->data['post_id'], 'price'));
-        $productLimit = 4;
-        $items = $this->dnt->orderby($this->finalItems, 'price', 'ASC');
+        $productLimitLess = 3;
+        $productLimitBigg = 3;
+        $tempFinalBig = [];
+        $tempFinalLess = [];
+        $this->items = $this->dnt->orderby($this->finalItems, 'price', 'ASC');
+        foreach ($this->items as $key => $item) {
+            if ((int) $item['price'] <= $productprice && $item['id_entity'] != $this->data['post_id']) {
+                $tempFinalLess[$key] = $item;
+            }
+            if ((int) $item['price'] >= $productprice && $item['id_entity'] != $this->data['post_id']) {
+                $tempFinalBig[$key] = $item;
+            }
+        }
+
+        //LESS
         $finalLess = [];
         $i = 1;
-        foreach ($items as $key => $item) {
-            if ($item['price'] < $productprice) {
-                if ($i <= $productLimit) {
-                    $finalLess[$key] = $item;
-                    $i++;
-                }
+        $this->tempFinalLess = $this->dnt->orderby($tempFinalLess, 'price', 'DESC');
+        foreach ($this->tempFinalLess as $key => $item) {
+            if ($i <= $productLimitLess) {
+                $finalLess[$key] = $item;
+                $i++;
             }
         }
 
+        //BIG
         $finalBig = [];
         $j = 1;
-        foreach ($items as $key => $item) {
-            if ($item['price'] > $productprice) {
-                if ($j <= $productLimit) {
-                    $finalBig[$key] = $item;
-                    $j++;
-                }
+        $this->tempFinalBig = $this->dnt->orderby($tempFinalBig, 'price', 'ASC');
+        foreach ($this->tempFinalBig as $key => $item) {
+            if ($j <= $productLimitBigg) {
+                $finalBig[$key] = $item;
+                $j++;
             }
         }
-
+        
         $this->finalItems = array_merge($finalLess, $finalBig);
+        $this->finalItems = $this->dnt->orderby($this->finalItems, 'price', 'ASC');
     }
 
     public function init()
