@@ -70,7 +70,7 @@
                             Produkt máme fyzicky v predajni
                         </div>
                     <?php } ?>
-                    <?php if ($data['postMeta']($data['item']->id_entity, 'isInStock')) { ?>
+                    <?php if ($data['postMetaBool']($data['item']->id_entity, 'isInStock')) { ?>
                         <div class="alert alert-success">
                             <strong><i class="fa fa-shopping-cart "></i> Informácia o dostupnosti na sklade:</strong>
                             Produkt máme fyzicky na sklade (do 96 hodín v predajni)
