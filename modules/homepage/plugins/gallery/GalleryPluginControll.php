@@ -3,7 +3,7 @@
 namespace DntView\Layout\Modul\Plugin;
 
 use DntLibrary\App\Plugin;
-use DntLibrary\Base\Rest;
+use DntLibrary\Base\Image;
 
 class GalleryPluginControll extends Plugin
 {
@@ -11,22 +11,27 @@ class GalleryPluginControll extends Plugin
     protected $loc = __FILE__;
     protected $data;
     protected $pluginId;
+    protected $items = false;
 
     public function __construct($data, $pluginId)
     {
         parent::__construct($data, $pluginId);
         $this->data = $data;
         $this->pluginId = $pluginId;
+        $this->image = new Image();
     }
 
     private function preparePostsQuery($data)
     {
-        $GALLERY = explode(",", $data['meta_tree']['keys']['gallery']['value']);
-        $this->hasItems = count($GALLERY);
+        $galleryIds = explode(',', $data['meta_tree']['keys']['gallery']['value']);
+        $this->hasItems = count($galleryIds);
         if ($this->hasItems > 0) {
-            $this->items = $GALLERY;
-        } else {
-            $this->items = false;
+            $final = [];
+            foreach ($galleryIds as $key => $item) {
+                $final[$key]['id'] = $item;
+                $final[$key]['image'] = $this->image->getFileImage($item, true, Image::LARGE);
+            }
+            $this->finalItems = $final;
         }
     }
 
@@ -35,7 +40,7 @@ class GalleryPluginControll extends Plugin
         $data = $this->data;
         $this->preparePostsQuery($data);
         $data['hasItems'] = $this->hasItems;
-        $data['items'] = $this->items;
+        $data['items'] = $this->finalItems;
         $this->layout($this->loc, 'tpl', $data);
     }
 

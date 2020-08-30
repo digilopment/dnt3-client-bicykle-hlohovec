@@ -28,7 +28,6 @@
         <div class="row">
             <div class="col-md-6 col-sm-12 col-xs-12 left-section">
                 <div class="product-image">
-
                     <?php $originalImage = $data['postImageOriginal']($data['item']->id_entity); ?>
                     <a href="<?php echo $originalImage ?>" data-lightbox="roadtrip">
                         <img src="<?php echo $data['postImage']($data['item']->id_entity); ?>" class="img-responsive">
@@ -50,6 +49,7 @@
                       <a class="left carousel-control" href="#myCarousel-2" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left"></span> </a>
                       <a class="right carousel-control" href="#myCarousel-2" data-slide="next"> <span class="glyphicon glyphicon-chevron-right"></span> </a>
                       </div> */ ?>
+
                 </div>
             </div>
             <div class="col-md-6 col-sm-12 col-xs-12 right-section">
@@ -57,16 +57,29 @@
                     <?php echo $data['item']->name; ?>
                     <hr/>
                 </h2>
-
-                <?php if ($data['postMeta']($data['item']->id_entity, 'price')) { ?>
+                <?php if ($data['postMetaBool']($data['item']->id_entity, 'price')) { ?>
                     <h3 class="price-container">
                         <?php echo $data['price']($data['item']->id_entity); ?>
                         <small>s DPH</small>
                     </h3>
                 <?php } ?>
-                <div class="links">
-                    <a href="<?php echo WWW_PATH; ?>kontakt?productId=<?php echo $data['item']->id_entity; ?>#form-area" class="btn btn-success"><i class="fa fa-external-link"></i> Spýtať sa na produkt</a>
-                    <a href="<?php echo $data['categoryUrl'] ?>" class="btn btn-warning"><i class="fa fa-external-link"></i> Pozrieť iné bicykle v tejto kategórii</a>
+                <div class="product-info">
+                    <?php if ($data['postMetaBool']($data['item']->id_entity, 'isInShop')) { ?>
+                        <div class="alert alert-info">
+                            <strong><i class="fa fa-shopping-cart"></i> Informácia o dostupnosti na predajni:</strong>
+                            Produkt máme fyzicky v predajni
+                        </div>
+                    <?php } ?>
+                    <?php if ($data['postMeta']($data['item']->id_entity, 'isInStock')) { ?>
+                        <div class="alert alert-success">
+                            <strong><i class="fa fa-shopping-cart "></i> Informácia o dostupnosti na sklade:</strong>
+                            Produkt máme fyzicky na sklade (do 96 hodín v predajni)
+                        </div>
+                    <?php } ?>
+                    <div class="links">
+                        <a href="<?php echo WWW_PATH; ?>kontakt?productId=<?php echo $data['item']->id_entity; ?>#form-area" class="btn btn-success"><i class="fa fa-external-link"></i> Spýtať sa na produkt</a>
+                        <a href="<?php echo $data['categoryUrl'] ?>" class="btn btn-warning"><i class="fa fa-external-link"></i> Pozrieť iné bicykle v tejto kategórii</a>
+                    </div>
                 </div>
 
 
@@ -146,3 +159,12 @@
     </div>
     <!-- end product -->
 </div>
+<script>
+    $(document).ready(function () {
+        $('.product-deatil table').removeAttr('style');
+        $('.product-deatil tr').removeAttr('style');
+        $('.product-deatil td').removeAttr('style');
+        $('.product-deatil th').removeAttr('style');
+        $('.c-headline.is-specification').removeAttr('style'); //konfiguracia pre kross
+    });
+</script>

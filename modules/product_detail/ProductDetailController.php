@@ -139,6 +139,9 @@ class ProductDetailController extends BaseController
             $data['postMeta'] = function($postId, $key) {
                 return isset($this->metaData['keys'][$postId][$key]) && $this->metaData['keys'][$postId][$key]['show'] == 1 ? $this->metaData['keys'][$postId][$key]['value'] : false;
             };
+            $data['postMetaBool'] = function($postId, $key) {
+                return isset($this->metaData['keys'][$postId][$key]) && $this->metaData['keys'][$postId][$key]['show'] == 1 ? true : false;
+            };
             $data['postImage'] = function($idEntity) {
                 return $this->image->getPostImage($idEntity, 'dnt_posts', IMAGE::MEDIUM);
             };

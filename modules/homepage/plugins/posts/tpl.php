@@ -1,9 +1,5 @@
 <?php
-
-use DntLibrary\Base\MultyLanguage;
-use DntLibrary\Base\Url;
-
-$translate['citat_viac'] = MultyLanguage::translate($data, "citat_viac", "translate");
+$translate['citat_viac'] = $this->data['plugin_data']['translate']('citat_viac');
 if ($this->data['plugin_data']['hasItems']) {
     ?>
     <div class="col-md-12 homepage">
@@ -11,21 +7,20 @@ if ($this->data['plugin_data']['hasItems']) {
             <div class="row">
                 <?php
                 foreach ($this->data['plugin_data']['items'] as $row) {
+                    $url = $this->data['plugin_data']['urlFormat']($row['name_url']);
                     ?>
                     <div class="blog-grid masonry-box-in col-3">
-                        <h3><a href="<?php echo Url::getPostUrl($row['name_url']) ?>">
-                                <?php echo $row['name']; ?></a>
-                        </h3>
+                        <h3><a href="<?php echo $url ?>"><?php echo $row['name']; ?></a></h3>
                         <hr>
                         <p><?php echo $row['perex']; ?></p>
-                        <a class="r-more" href="<?php echo Url::getPostUrl($row['name_url']) ?>"><?php echo $translate['citat_viac']; ?></a>
+                        <a class="r-more" href="<?php echo $url ?>"><?php echo $translate['citat_viac']; ?></a>
                     </div>
                     <?php
                 }
                 ?>
             </div>
         </div>
-        <!-- End Blog Grid -->
     </div>
     <?php
 }
+?>

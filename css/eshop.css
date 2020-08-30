@@ -1,4 +1,16 @@
 /*panel*/
+.eshop .card-notify-badge {
+    position: absolute;
+    left: -30px;
+    top: 0px;
+    background: #f2d900;
+    text-align: center;
+    border-radius: 30px 30px 30px 30px;
+    color: #000;
+    padding: 5px 10px;
+    font-size: 14px;
+    transform: rotate(-31deg);
+}
 .eshop .panel {
     border: none;
     box-shadow: none;
@@ -320,7 +332,9 @@
     color: #da0809;
 }
 
-
+.eshop .product .product-image{
+    position:relative;
+}
 @media screen and (max-width: 991px) {
     .eshop .btn-eshop-menu>span{
         display: block;
@@ -476,6 +490,22 @@
     height: 50px;
     display: block;
     position: relative;
+}
+
+.eshop .name hr{
+    padding: 0px;
+    margin: 0px;
+    margin-top: 15px;
+}
+.product-list.reletaed .title-v4{
+    padding-top: 30px;
+}
+
+.eshop .product-info .alert-info i{
+    color:#31708f;
+}
+.eshop .product-info .alert-success i{
+    color:#3c763d;
 }
 @media screen and (min-width: 991px) {
 

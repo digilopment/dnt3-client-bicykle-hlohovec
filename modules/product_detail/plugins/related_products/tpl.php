@@ -1,6 +1,6 @@
 <div class="col-sm-3"></div>
 <div class="col-sm-9 product-list reletaed">
-    <div class="section-title btn btn-primary">Podobné produkty</div>
+    <h3 class="title-v4 ">Podobné produkty</h3>
     <?php if (count($this->data['plugin_data']['items']) > 0) { ?>
         <div class="slide-content">
             <div class="related-products">
