@@ -1,4 +1,11 @@
 /*panel*/
+span.btn {
+    cursor: initial;
+
+}
+#cartVariants .btn{
+    display: block;
+}
 .eshop .card-notify-badge {
     position: absolute;
     left: -30px;
@@ -259,6 +266,7 @@
 }
 .eshop .links .btn i{
     color: #fff;
+    padding: 2px;
 }
 .eshop .btn:hover {
     color: #fff!important;
@@ -305,7 +313,8 @@
     width:35%;
 }
 .eshop table tr td:nth-child(even){
-    width:65%
+    width:65%;
+    text-align: right;
 }
 .eshop .show-all-cats .btn-default{
     padding: 1px;
@@ -409,7 +418,11 @@
         display: block;
     }
     .eshop .links .btn {
-        display: inline;
+        display: inline-flex;
+    }
+    .eshop .links .btn.addToCart {
+        display: block;
+        margin-right: 17px;
     }
 }
 
@@ -507,9 +520,35 @@
 .eshop .product-info .alert-success i{
     color:#3c763d;
 }
+
+/** CART TABLE **/
+.eshop table.addToCartTable{
+    font-size: 15px;
+}
+.eshop table.addToCartTable tr td.variant{
+    width: 40%;
+    text-align: left;
+    font-weight: normal;
+}
+.eshop table.addToCartTable tr td.price{
+    width: 10%;
+    text-align:center;
+    font-weight: bold;
+}
+.eshop table.addToCartTable tr td.dostupnost{
+    width: 25%;
+    text-align: center;
+}
+.eshop table.addToCartTable tr td.cart{
+    width: 25%;
+    text-align: center;
+}
+.eshop table.addToCartTable tr.title{
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
 @media screen and (min-width: 991px) {
-
-
     .slide-content .related-products {
         overflow: hidden;
         overflow-x: hidden;
@@ -523,5 +562,21 @@
 @media screen and (max-width: 991px) {
     .product-list.reletaed{
         padding:0px
+    }
+    .eshop .links .addToCartTable .btn {
+        padding: 4px;
+        color: #fff;
+        font-size: 11px;
+        margin: 9px 0px;
+        display: block;
+    }
+    .eshop .modal-body{
+        padding: 5px;
+    }
+    .eshop table.addToCartTable {
+        font-size: 11px;
+    }
+    .eshop table.addToCartTable tr td {
+        padding:2px;
     }
 }

@@ -87,7 +87,7 @@ class ContactPluginControll extends Plugin
                 'name' => $name,
                 'name_url' => $this->dnt->name_url($name),
                 'content' => $msg,
-                '`show`' => '0'
+                '`show`' => '3'
             );
             $this->db->insert('dnt_posts', $insertedData);
             $this->response = 1;

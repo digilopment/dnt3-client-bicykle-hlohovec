@@ -1,3 +1,15 @@
+<?php
+$requestUrl = function($id, $variant) use ($data) {
+    $variant = $data['dnt']->strToHex($variant);
+    return WWW_PATH . 'kontakt?productId=' . $id . '&variant=' . $variant . '#form-area';
+};
+$variants = $data['variants']($data['item']->id_entity);
+$variantPriceArr = [];
+foreach ($variants as $key => $variant) {
+    $variantPrice = $data['variantPrice']($variant['id_entity']);
+    $variantPriceArr[$variant['id_entity']] = $variantPrice;
+}
+?>
 <div class="col-sm-9 col-md-9 col-lg-9 product">
     <section class="panel tree-path">
         <div class="panel-body no-padding">
@@ -11,7 +23,7 @@
                     foreach ($this->data['plugin_data']['categoryTreeProduct'] as $catId) {
                         if ($i > 0) {
                             ?>
-                            <li class="" ><a href="<?php echo $this->data['plugin_data']['path'] . '' . $this->data['plugin_data']['modulUrl'] . '/category/' . $catId; ?>"><?php echo $this->data['plugin_data']['categoryElement']($catId)['name'] ?></a></li>
+                            <li class=""><a href="<?php echo $this->data['plugin_data']['path'] . '' . $this->data['plugin_data']['modulUrl'] . '/category/' . $catId; ?>"><?php echo $this->data['plugin_data']['categoryElement']($catId)['name'] ?></a></li>
                             <?php
                         }
                         $i++;
@@ -77,12 +89,110 @@
                         </div>
                     <?php } ?>
                     <div class="links">
-                        <a href="<?php echo WWW_PATH; ?>kontakt?productId=<?php echo $data['item']->id_entity; ?>#form-area" class="btn btn-success"><i class="fa fa-external-link"></i> Spýtať sa na produkt</a>
+                        <?php /* <a href="<?php echo $requestUrl($data['item']->id_entity); ?>" class="btn btn-success"><i class="fa fa-external-link"></i> Spýtať sa na produkt</a> */ ?>
+                        <a href="#" data-toggle="modal" data-target="#getQuestion" class="btn btn-success"><i class="fa fa-info-circle"></i>&nbsp;Spýtať sa na produkt</a>
                         <a href="<?php echo $data['categoryUrl'] ?>" class="btn btn-warning"><i class="fa fa-external-link"></i> Pozrieť iné bicykle v tejto kategórii</a>
+
+
+                        <?php /*
+                          <a href="#" data-toggle="modal" data-target="#cartVariants" class="btn btn-primary addToCart"><i class="fa fa-shopping-cart"></i> Pridaď do košíka</a>
+                         * */ ?>
+
+                        <!-- The modal -->
+                        <div class="modal" id="cartVariants" tabindex="-1" role="dialog" aria-labelledby="modalLabelLarge" aria-hidden="true">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h3 class="modal-title"><?php echo $data['item']->name; ?></h3>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p><h4>Vyberte si prosím variant</h4></p>
+                                        <table class="addToCartTable">
+                                            <?php
+                                            echo '<tr class="title">'
+                                            . '<td class="variant">Variant</td>'
+                                            . '<td class="price">Cena</td>'
+                                            . '<td class="dostupnost">Dostupnosť</td>'
+                                            . '<td class="cart">Košík</td>'
+                                            . '</tr>';
+                                            foreach ($variants as $key => $variant) {
+                                                $inStock = ($variant['isInStock']) ? '<span class="btn btn-primary">Na sklade</span>' : false;
+                                                $inShop = ($variant['isInShop']) ? '<span class="btn btn-success">V predajni</span>' : false;
+                                                $noAvailable = ($inStock == false && $inShop == false) ? '<a target="_blank" href="' . $requestUrl($variant['id_entity'], $variant['variant']) . '" class="btn btn-warning">Na dotaz</a>' : false;
+                                                echo '<tr>'
+                                                . '<td class="variant">' . $variant['variant'] . '</td>'
+                                                . '<td class="price">' . $variantPriceArr[$variant['id_entity']] . '</td>'
+                                                . '<td class="dostupnost">' . $inShop . $inStock . $noAvailable . '</td>'
+                                                . '<td class="cart">';
+                                                if ($noAvailable == false) {
+                                                    echo '<a href="#" class="btn btn-success"><i class="fa fa-shopping-cart"></i> vložiť</a>';
+                                                }
+                                                echo '</td>';
+                                                echo '</tr>';
+                                            }
+                                            ?>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Zavrieť</button>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+
+                        <!-- The modal -->
+                        <div class="modal" id="getQuestion" tabindex="-1" role="dialog" aria-labelledby="modalLabelLarge" aria-hidden="true">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h3 class="modal-title"><?php echo $data['item']->name; ?></h3>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p><h4>Vyberte si prosím variant</h4></p>
+                                        <table class="addToCartTable">
+                                            <?php
+                                            echo '<tr class="title">'
+                                            . '<td class="variant">Variant</td>'
+                                            . '<td class="price">Cena</td>'
+                                            . '<td class="dostupnost">Dostupnosť</td>'
+                                            . '<td class="cart">Spýtať sa</td>'
+                                            . '</tr>';
+                                            foreach ($variants as $key => $variant) {
+                                                $inStock = ($variant['isInStock']) ? '<span class="btn btn-primary">Na sklade</span>' : false;
+                                                $inShop = ($variant['isInShop']) ? '<span class="btn btn-success">V predajni</span>' : false;
+                                                $noAvailable = ($inStock == false && $inShop == false) ? '<a target="_blank" href="' . $requestUrl($variant['id_entity'], $variant['variant']) . '" class="btn btn-warning">Na dotaz</a>' : false;
+                                                echo '<tr>'
+                                                . '<td class="variant">' . $variant['variant'] . '</td>'
+                                                . '<td class="price">' . $variantPriceArr[$variant['id_entity']] . '</td>'
+                                                . '<td class="dostupnost">' . $inShop . $inStock . $noAvailable . '</td>'
+                                                . '<td class="cart">';
+                                                //if ($noAvailable == false) {
+                                                echo '<a target="_blank" href="' . $requestUrl($variant['id_entity'], $variant['variant']) . '" class="btn btn-success"> Spýtať sa na produkt</a>';
+                                                //}
+                                                echo '</td>';
+                                                echo '</tr>';
+                                            }
+                                            ?>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Zavrieť</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-
             </div>
             <div class="col-xs-12">
                 <div class="description description-tabs">
@@ -113,40 +223,23 @@
                         <div class="tab-pane fade" id="variants">
                             <br />
                             <div class="params">
-                                <table>
+                                <table class="addToCartTable">
                                     <?php
-                                    $str = $data['postMeta']($data['item']->id_entity, 'variants');
-                                    $str = str_replace('")"', ')"', $str);
-                                    $str = str_replace('""}]', '"}]', $str);
-                                    $variants = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $str), true);
-                                    if (is_array($variants)) {
-                                        foreach ($variants as $key => $variant) {
-                                            if (isset($variant['variant'])) {
-                                                echo '<tr><td>' . $variant['variant'] . '</td></tr>';
-                                            }
-                                        }
-                                    } else {
-                                        if ($data['postMeta']($data['item']->id_entity, 'variant')) {
-                                            echo '<tr><td>' . $data['postMeta']($data['item']->id_entity, 'variant') . '</td></tr>';
-                                        } else {
-                                            echo '<tr><td>' . $data['item']->name . '</td></tr>';
-                                        }
+                                    echo '<tr class="title">'
+                                    . '<td class="variant">Variant</td>'
+                                    . '<td class="price">Cena</td>'
+                                    . '<td class="dostupnost">Dostupnosť</td>'
+                                    . '</tr>';
+                                    foreach ($variants as $key => $variant) {
+                                        $inStock = ($variant['isInStock']) ? '<span class="btn btn-primary">Na sklade</span>' : false;
+                                        $inShop = ($variant['isInShop']) ? '<span class="btn btn-success">V predajni</span>' : false;
+                                        $noAvailable = ($inStock == false && $inShop == false) ? '<a target="_blank" href="' . $requestUrl($variant['id_entity'], $variant['variant']) . '" class="btn btn-warning">Na dotaz</a>' : false;
+                                        echo '<tr>'
+                                        . '<td class="variant">' . $variant['variant'] . '</td>'
+                                        . '<td class="price">' . $variantPriceArr[$variant['id_entity']] . '</td>'
+                                        . '<td class="dostupnost">' . $inShop . $inStock . $noAvailable . '</td>'
+                                        . '</tr>';
                                     }
-                                    /* $variants = json_decode($data['postMeta']($data['item']->id_entity, 'variants'));
-                                      var_dump($variants);
-                                      if (is_array($variants)) {
-                                      foreach ($variants as $key => $variant) {
-                                      if (isset($variant['variant'])) {
-                                      echo '<tr><td>' . $variant['variant'] . '</td></tr>';
-                                      }
-                                      }
-                                      } else {
-                                      if ($data['postMeta']($data['item']->id_entity, 'variant')) {
-                                      echo '<tr><td>' . $data['postMeta']($data['item']->id_entity, 'variant') . '</td></tr>';
-                                      } else {
-                                      echo '<tr><td>' . $data['item']->name . '</td></tr>';
-                                      }
-                                      } */
                                     ?>
                                 </table>
                             </div>
@@ -159,12 +252,13 @@
     </div>
     <!-- end product -->
 </div>
+
 <script>
     $(document).ready(function () {
-        $('.product-deatil table').removeAttr('style');
-        $('.product-deatil tr').removeAttr('style');
-        $('.product-deatil td').removeAttr('style');
-        $('.product-deatil th').removeAttr('style');
+        $('.product-deatil .description table').removeAttr('style');
+        $('.product-deatil .description tr').removeAttr('style');
+        $('.product-deatil .description td').removeAttr('style');
+        $('.product-deatil .description th').removeAttr('style');
         $('.c-headline.is-specification').removeAttr('style'); //konfiguracia pre kross
     });
 </script>

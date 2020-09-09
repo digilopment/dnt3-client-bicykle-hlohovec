@@ -26,6 +26,19 @@ class MetaServices
             '`show`' => '1',
         );
 
+        /*$insertedData[] = array(
+            '`post_id`' => $postId,
+            '`service`' => $service,
+            '`vendor_id`' => Vendor::getId(),
+            '`key`' => 'isAvailable',
+            '`value`' => $defaultContent,
+            '`content_type`' => 'bool',
+            '`cat_id`' => '2',
+            '`description`' => 'Je produkt dostupný?',
+            '`order`' => '150',
+            '`show`' => '1',
+        );*/
+        
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
@@ -45,7 +58,7 @@ class MetaServices
             '`vendor_id`' => Vendor::getId(),
             '`key`' => 'isInStock',
             '`value`' => $defaultContent,
-            '`content_type`' => 'bool',
+            '`content_type`' => 'text',
             '`cat_id`' => '2',
             '`description`' => 'Je produkt na sklade?',
             '`order`' => '300',

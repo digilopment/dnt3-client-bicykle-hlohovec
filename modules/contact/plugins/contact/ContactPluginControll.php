@@ -52,9 +52,10 @@ class ContactPluginControll extends Plugin
 
         if (isset($this->item->id_entity)) {
             $data['dynamicRequest'] = true;
-            $productUrl = WWW_PATH . 'bicykle/product/' . $this->item->id_entity . '/' . $this->item->name_url;
+            $variant = $this->dnt->hexToStr($this->rest->get('variant'));
+            $productUrl = WWW_PATH . 'bicykle/product/' . $this->item->group_id . '/' . $this->item->name_url;
             $data['requestSubject'] = 'Dostupnosť produktu ' . $this->item->name;
-            $data['requestContent'] = 'Dobrý deň, chcem sa spýtať na dostupnosť produktu s názvom ' . $this->item->name . ' na tejto adrese: ' . $productUrl . ' Ďakujem za spätnú informáciu.';
+            $data['requestContent'] = 'Dobrý deň, chcem sa spýtať na dostupnosť produktu s názvom ' . $this->item->name . ' na tejto adrese: ' . $productUrl . ' vo variante ' . $variant . '. Ďakujem za spätnú informáciu.';
         } else {
             $data['dynamicRequest'] = false;
         }

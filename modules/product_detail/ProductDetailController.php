@@ -3,9 +3,11 @@
 namespace DntView\Layout\Modul;
 
 use DntLibrary\App\BaseController;
+use DntLibrary\App\Cart;
 use DntLibrary\App\Categories;
 use DntLibrary\App\Data;
 use DntLibrary\App\Post;
+use DntLibrary\App\PostVariants;
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Image;
 use DntLibrary\Base\PostMeta;
@@ -44,9 +46,11 @@ class ProductDetailController extends BaseController
         $this->frontendData = new Data();
         $this->posts = new Post();
         $this->postMeta = new PostMeta();
+        $this->postVariants = new PostVariants();
         $this->categories = new Categories();
         $this->settings = new Settings();
         $this->image = new Image();
+        $this->cart = new Cart();
     }
 
     protected function setTitle()
@@ -123,6 +127,41 @@ class ProductDetailController extends BaseController
         $this->data = $this->frontendData->addCustomData($this->data, $this->customData());
     }
 
+    protected function variantIds($data)
+    {
+        $variantsIds = [];
+        foreach ($data['variants']($this->item->id_entity) as $item) {
+            $variantsIds[] = $item['id_entity'];
+        }
+        return $variantsIds;
+    }
+
+    protected function variantsWithMetaData($idEntity, $addDefaultPost = false)
+    {
+        $ids = [];
+        $metaData = [];
+
+        $items = $this->postVariants->getVariants($idEntity, $addDefaultPost);
+        foreach ($items as $item) {
+            $ids[] = $item['id_entity'];
+        }
+        $idsIn = join(',', $ids);
+        if ($idsIn) {
+            $metaData = $this->postMeta->getPostsMeta($idsIn);
+        }
+
+        $final = [];
+        foreach ($items as $key => $item) {
+            $final[$key] = $item;
+            $postId = $item['id_entity'];
+            $final[$key]['isInStock'] = isset($metaData['keys'][$postId]['isInStock']) && $metaData['keys'][$postId]['isInStock']['show'] == 1 ? 1 : 0;
+            $final[$key]['isInShop'] = isset($metaData['keys'][$postId]['isInShop']) && $metaData['keys'][$postId]['isInShop']['show'] == 1 ? 1 : 0;
+            $final[$key]['variant'] = isset($metaData['keys'][$postId]['variant']) && $metaData['keys'][$postId]['variant']['show'] == 1 ? $metaData['keys'][$postId]['variant']['value'] : 0;
+            $final[$key]['productId'] = isset($metaData['keys'][$postId]['productId']) && $metaData['keys'][$postId]['productId']['show'] == 1 ? $metaData['keys'][$postId]['productId']['value'] : 0;
+        }
+        return $final;
+    }
+
     public function run()
     {
         $this->init();
@@ -130,12 +169,14 @@ class ProductDetailController extends BaseController
                 $this->modulPostData->name_url == $this->webhook(1) &&
                 $this->pathIdentifier == $this->webhook(2) &&
                 isset($this->item->id_entity) && is_numeric($this->webhook(3)) &&
+                ($this->item->show == 1 || $this->item->show == 2) &&
                 $this->item->name_url == $this->webhook(4)
         ) {
             $data = $this->data;
 
             //ITEM
             $data['item'] = $this->item;
+            $data['dnt'] = $this->dnt;
             $data['postMeta'] = function($postId, $key) {
                 return isset($this->metaData['keys'][$postId][$key]) && $this->metaData['keys'][$postId][$key]['show'] == 1 ? $this->metaData['keys'][$postId][$key]['value'] : false;
             };
@@ -158,7 +199,6 @@ class ProductDetailController extends BaseController
             $data['categoryTree'] = $this->categories->getTreePath($data['routeCategory']);
             $data['categoryTreeProduct'] = $this->categories->getTreePath($this->item->post_category_id);
             $data['categories'] = $this->categories->getChildren($this->rootCatId);
-
             $data['categoryUrl'] = WWW_PATH . '' . $this->modulPostData->name_url . '/category/' . $this->item->post_category_id;
 
             $data['price'] = function($postId) use ($data) {
@@ -168,19 +208,35 @@ class ProductDetailController extends BaseController
                         return $price;
                     }
                 }
-
                 return $price . ' ' . $data['meta_settings']['keys']['vendor_currency']['value'];
+            };
+
+            $data['variantsJson'] = function($idEntity) use($data) {
+                return json_decode($this->dnt->hexToStr($data['postMeta']($idEntity, 'variants')), true);
+            };
+
+            $data['variants'] = function($idEntity) {
+                $variants = $this->variantsWithMetaData($idEntity, true);
+                return $variants;
+            };
+
+            $prices = $this->cart->price($this->variantIds($data));
+            $data['variantPrice'] = function($postId) use ($prices) {
+                if (isset($prices[$postId])) {
+                    return $prices[$postId];
+                }
+                return $prices[$this->item->group_id];
             };
 
             $data['categoryElement'] = function($id) {
                 return $this->categories->getElement($id);
             };
+
             $data['article']['service'] = $this->modul();
             $data['post_id'] = $this->item->id_entity;
-
             $this->modulConfigurator($data, $this->modul());
         } else {
-            $this->dnt->redirect(WWW_PATH . '404');
+            $this->dnt->redirect(WWW_PATH . 'bicykle');
         }
     }
 

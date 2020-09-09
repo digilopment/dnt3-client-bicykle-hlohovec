@@ -27,6 +27,9 @@ class Configurator extends Modul
             'article_view' => array_merge(
                     array(), array('{alphabet}/detail/{digit}/{eny}')
             ),
+            'add_to_cart' => array_merge(
+                    array(), array('cart/add/{digit}')
+            ),
             'article_list' => array_merge(
                     array(), $this->getSitemapModules('article_list')
             ),

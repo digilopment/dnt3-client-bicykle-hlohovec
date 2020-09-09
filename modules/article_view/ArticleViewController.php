@@ -85,6 +85,7 @@ class ArticleViewController extends BaseController
         if (
                 $this->modulPostData->name_url == $this->webhook(1) &&
                 is_numeric($this->webhook(3)) &&
+                ($this->data['article']['show'] == 1 || $this->data['article']['show'] == 2) &&
                 $this->webhook(4) == $nameUrl
         ) {
             $data = $this->data;

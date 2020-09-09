@@ -60,6 +60,7 @@
                 <option <?php echo ($data['aggrDecode']['sort'] == 'price' && $data['aggrDecode']['sortType'] == 'ASC') ? 'selected' : false; ?> value="price-ASC">od najlacnejších</option>
                 <option <?php echo ($data['aggrDecode']['sort'] == 'name' && $data['aggrDecode']['sortType'] == 'ASC') ? 'selected' : false; ?> value="name_url-ASC">podľa abecedy [A-Z]</option>
                 <option <?php echo ($data['aggrDecode']['sort'] == 'name' && $data['aggrDecode']['sortType'] == 'DESC') ? 'selected' : false; ?> value="name_url-DESC">podľa abecedy [Z-A]</option>
+                <option <?php echo ($data['aggrDecode']['sort'] == 'isInStock' && $data['aggrDecode']['sortType'] == 'DESC') ? 'selected' : false; ?> value="isInStock-DESC">podľa dostupnosti</option>
             </select>
         </div>
         <div class="col-md-3">

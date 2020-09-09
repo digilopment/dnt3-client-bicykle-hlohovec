@@ -188,6 +188,7 @@ class ProductListController extends BaseController
             $final[$key] = $item;
             $postId = $item['id_entity'];
             $final[$key]['price'] = isset($metaData['keys'][$postId]['price']) && $metaData['keys'][$postId]['price']['show'] == 1 ? $metaData['keys'][$postId]['price']['value'] : false;
+            $final[$key]['isInStock'] = isset($metaData['keys'][$postId]['isInStock']) && $metaData['keys'][$postId]['isInStock']['show'] == 1 ? $metaData['keys'][$postId]['isInStock']['value'] : false;
         }
         $this->finalItems = $final;
     }

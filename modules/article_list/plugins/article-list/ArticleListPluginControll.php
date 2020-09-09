@@ -6,6 +6,7 @@ use DntLibrary\App\Plugin;
 use DntLibrary\Base\ArticleList;
 use DntLibrary\Base\ArticleView;
 use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Image;
 
 class ArticleListPluginControll extends Plugin
@@ -26,6 +27,7 @@ class ArticleListPluginControll extends Plugin
         $this->articleView = new ArticleView();
         $this->image = new Image();
         $this->db = new DB();
+        $this->dnt = new Dnt();
         $this->pluginId = $pluginId;
     }
 
@@ -36,14 +38,20 @@ class ArticleListPluginControll extends Plugin
             $this->hasPosts = 1;
             $i = 0;
             foreach ($this->db->get_results($query) as $row) {
-                $this->finalItems[$i]['content'] = $row['content'];
-                $this->finalItems[$i]['perex'] = $row['perex'];
-                $this->finalItems[$i]['name'] = $row['name'];
-                $this->finalItems[$i]['img'] = $this->image->getPostImage($row['id'], "dnt_posts", IMAGE::SMALL);
-                $this->finalItems[$i]['url'] = $this->articleView->detailUrl($row['cat_name_url'], $row['id'], $row['name_url']);
-                $i++;
+                if ($row['show'] == 1) {
+                    $this->finalItems[$i]['content'] = $row['content'];
+                    $this->finalItems[$i]['datetime_publish'] = $row['datetime_publish'];
+                    $this->finalItems[$i]['perex'] = $row['perex'];
+                    $this->finalItems[$i]['name'] = $row['name'];
+                    $this->finalItems[$i]['img'] = $this->image->getPostImage($row['id'], "dnt_posts", IMAGE::SMALL);
+                    $this->finalItems[$i]['url'] = $this->articleView->detailUrl($row['cat_name_url'], $row['id'], $row['name_url']);
+                    $i++;
+                }
             }
         }
+        /*if (is_array($this->finalItems)) {
+            $this->finalItems = $this->dnt->orderby($this->finalItems, 'datetime_publish', 'desc');
+        }*/
     }
 
     public function init()
