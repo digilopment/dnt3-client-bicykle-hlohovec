@@ -53,6 +53,7 @@
                 ?>
             </select>
         </div>
+        <input type="hidden" id="filterQuery">
         <div class="col-md-3">
             <label for="sel1">Zoradiť:</label>
             <select id="filterSort" class="form-control">
@@ -78,14 +79,21 @@
             }
             return hex;
         }
+        
+        $('input[name="q"]').val('<?php echo $data['aggrDecode']['q']; ?>');
+        $('#filterQuery').val($('input[name="q"]').last().val());
+        
+        $('input[name="q"]').last().change(function() {
+            //alert($('input[name="q"]').last().val());
+            $('#filterQuery').val($('input[name="q"]').last().val());
+        });
 
         $("#submitFilter").click(function () {
             var domain = location.protocol + '//' + location.host + location.pathname;
-
             var filterType = $("#filterType").val();
             var filterPrice = $("#filterPrice").val();
             var filterSort = $("#filterSort").val();
-            var filterQuery = '<?php echo $data['aggrDecode']['q']; ?>';
+            var filterQuery = $("#filterQuery").val(); //'<?php echo $data['aggrDecode']['q']; ?>';
             var sort = 'sort:' + filterSort.split('-')[0] + ';';
             var sortType = 'sortType:' + filterSort.split('-')[1] + ';';
             var range = 'range:0-' + filterPrice + ';';
