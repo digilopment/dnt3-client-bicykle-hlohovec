@@ -146,7 +146,11 @@ class ProductListController extends BaseController
                 $searchStr = $this->rest->get('q');
             }
             $searhString = str_replace('-', '', $this->dnt->name_url(urldecode($searchStr)));
-            $filter = "search LIKE '%$searhString%' or id_entity IN(SELECT post_id FROM `dnt_posts_meta` WHERE `vendor_id` = " . $this->vendor->getId() . " AND value LIKE '%$searhString%')";
+            $filter = "(search LIKE '%$searhString%' ";
+            if (count($searhString) > 2) {
+                $filter .= "or id_entity IN(SELECT post_id FROM `dnt_posts_meta` WHERE `vendor_id` = " . $this->vendor->getId() . " AND value LIKE '%$searhString%')";
+            }
+            $filter .= "or id_entity = '$searhString') ";
             $this->filterUrl = $this->webhook(2) . '/' . $this->webhook(3) . '/?q=' . $searhString;
         } elseif ($this->webhook(2) == 'products' && $this->webhook(3)) {
             $productsIds = explode('-', $this->webhook(3));

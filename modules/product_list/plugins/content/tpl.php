@@ -44,7 +44,7 @@
                 <option value="0">bez ohraničenia</option>
                 <?php
                 foreach ($data['priceRange'] as $val => $name) {
-                    if ($val == explode('-', $data['aggrDecode']['range'])[1]) {
+                    if (isset(explode('-', $data['aggrDecode']['range'])[1]) && $val == explode('-', $data['aggrDecode']['range'])[1]) {
                         echo '<option selected value="' . $val . '">' . $name . '</option>';
                     } else {
                         echo '<option value="' . $val . '">' . $name . '</option>';
@@ -85,13 +85,14 @@
             var filterType = $("#filterType").val();
             var filterPrice = $("#filterPrice").val();
             var filterSort = $("#filterSort").val();
+            var filterQuery = '<?php echo $data['aggrDecode']['q']; ?>';
             var sort = 'sort:' + filterSort.split('-')[0] + ';';
             var sortType = 'sortType:' + filterSort.split('-')[1] + ';';
             var range = 'range:0-' + filterPrice + ';';
             var type = 'type:' + filterType + ';';
             var page = 'page:1;';
-
-            var finalStr = sort + sortType + range + type + page;
+            var q = 'q:' + filterQuery + ';';
+            var finalStr = sort + sortType + range + type + page + q;
             var aggrBuilder = strToHex(finalStr);
             window.location = domain + '?aggrBuilder=' + aggrBuilder;
         });
