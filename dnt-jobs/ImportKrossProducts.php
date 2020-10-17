@@ -26,9 +26,23 @@ class ImportKrossProductsJob
         $this->db = new DB();
     }
 
+    public function checkImported()
+    {
+        $sqlIn = "SELECT post_id FROM `dnt_posts_meta` WHERE `value` LIKE '%kross%' AND `vendor_id` = '" . self::VENDOR_ID . "'";
+        $query = "SELECT name_url FROM `dnt_posts` WHERE `vendor_id` = '" . self::VENDOR_ID . "' AND `type` = 'product' AND `id_entity` IN(" . $sqlIn . ")";
+        $final = [];
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
+                $final[] = $row['name_url'];
+            }
+        }
+        return $final;
+    }
+
     protected function deleteProducts()
     {
-        $query = "SELECT * FROM `dnt_posts` WHERE `vendor_id` = '" . self::VENDOR_ID . "' AND type = 'product' AND `content` LIKE '%-<!--params-->%'";
+        $sqlIn = "SELECT post_id FROM `dnt_posts_meta` WHERE `value` LIKE '%kross%' AND `vendor_id` = '" . self::VENDOR_ID . "'";
+        $query = "SELECT * FROM `dnt_posts` WHERE `vendor_id` = '" . self::VENDOR_ID . "' AND `type` = 'product' AND `id_entity` IN(" . $sqlIn . ")";
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
                 $post_id = $row['id_entity'];
@@ -42,7 +56,7 @@ class ImportKrossProductsJob
                 $imageId = $row['img'];
                 $imageName = $this->image->getFileImage($imageId, false);
                 $fileName = "../dnt-view/data/uploads/" . $imageName;
-                if($imageName){
+                if ($imageName) {
                     $this->dnt->deleteFile($fileName);
                 }
                 //DELETE FROM DB
@@ -112,7 +126,7 @@ class ImportKrossProductsJob
             return 185;
         } elseif ($this->comp('KROSS', $item, 'manufacturer') && $this->comp('Bikes > MTB WOMAN', $item, 'categorytext')) {
             return 196;
-        }elseif ($this->comp('KROSS', $item, 'manufacturer') && $this->comp('Bikes > ROAD FEMI LINE', $item, 'categorytext')) {
+        } elseif ($this->comp('KROSS', $item, 'manufacturer') && $this->comp('Bikes > ROAD FEMI LINE', $item, 'categorytext')) {
             return 188;
         }
         //ELEKTRO
@@ -120,7 +134,7 @@ class ImportKrossProductsJob
             return 178;
         } elseif ($this->comp('KROSS', $item, 'manufacturer') && $this->comp('Bikes > EBIKE TRAIL', $item, 'categorytext')) {
             return 179;
-        }elseif ($this->comp('KROSS', $item, 'manufacturer') && $this->comp('Bikes > EBIKE TREKKING', $item, 'categorytext')) {
+        } elseif ($this->comp('KROSS', $item, 'manufacturer') && $this->comp('Bikes > EBIKE TREKKING', $item, 'categorytext')) {
             return 176;
         }
     }
@@ -135,57 +149,85 @@ class ImportKrossProductsJob
         }
     }
 
+    protected function customPrice($name, $price)
+    {
+        $json = json_decode(file_get_contents('http://bike4you.digilopment.com/import/kross/changedPrice.json'));
+        foreach ($json->items as $item) {
+            if ($this->dnt->in_string($item->name_url, $name)) {
+                return $item->price;
+            }
+        }
+        return $price;
+    }
+
     protected function import()
     {
-        $i = 0;
-        foreach (json_decode(file_get_contents(self::IMPORT_SERVICE)) as $item) {
-            $params = false;
-            if (isset($item->params)) {
-                $params = '<div class="params"><table>';
-                foreach ($item->params as $param) {
-                    $params .= '<tr><td class="key">' . $param->name . '</td><td class="value">' . $param->val. '</td></tr>';
+        $i = $j = 1;
+        $importedProducts = $this->checkImported();
+
+        $data = json_decode(file_get_contents(self::IMPORT_SERVICE));
+        $countItems = count((array) $data) + 1;
+        foreach ($data as $item) {
+            if (!in_array($this->dnt->name_url($item->name), $importedProducts)) {
+                $params = false;
+                if ($i <= 3) {
+                    if (isset($item->params)) {
+                        $params = '<div class="params"><table>';
+                        foreach ($item->params as $param) {
+                            $params .= '<tr><td class="key">' . $param->name . '</td><td class="value">' . $param->val . '</td></tr>';
+                        }
+                        $params .= '</table></div>';
+                    }
+
+                    //$item->image = false;
+                    $postData = [
+                        'name' => $item->name,
+                        'vendor_id' => self::VENDOR_ID,
+                        'content' => $item->description . '<!--params-->' . $params,
+                        'perex' => $item->categorytext . ' ' . $item->category . ' ' . $item->name,
+                        'service' => 'product_detail',
+                        'type' => 'product',
+                        'show' => '1',
+                        'cat_id' => self::CAT_ID, //zatriedenie do eshop product
+                        'image' => $item->image,
+                        'post_category_id' => $this->setFinalCat($item),
+                    ];
+
+                    //$item->price = '';
+                    //$item->catalogue_price = '';
+                    //$item->purchase_price = '';
+                    $metaData = [
+                        'price' => $this->customPrice($this->dnt->name_url($item->name), $item->price), //$item->price,
+                        'catalogue_price' => $item->catalogue_price,
+                        'purchase_price' => $item->purchase_price,
+                        'variant' => $item->variant,
+                        'dataSource' => 'kross',
+                        //'code' => $item->code,
+                        'variants' => $item->variants,
+                        'productId' => $item->id,
+                        'groupId' => $item->group,
+                        'manufacturer' => $item->manufacturer,
+                        //'year' => $item->year,
+                        'originalImage' => $item->image,
+                    ];
+                    $this->importContent->createPost($postData, $metaData);
+                    $i++;
                 }
-                $params .= '</table></div>';
+            } else {
+                $j++;
             }
-
-            //$item->image = false;
-            $postData = [
-                'name' => $item->name,
-                'vendor_id' => self::VENDOR_ID,
-                'content' => $item->description . '<!--params-->' . $params,
-                'perex' => $item->categorytext . ' ' . $item->category . ' ' . $item->name,
-                'service' => 'product_detail',
-                'type' => 'product',
-                'show' => '1',
-                'cat_id' => self::CAT_ID, //zatriedenie do eshop product
-                'image' => $item->image,
-                'post_category_id' => $this->setFinalCat($item),
-            ];
-
-            //$item->price = '';
-            //$item->catalogue_price = '';
-            //$item->purchase_price = '';
-            $metaData = [
-                'price' => $item->price,
-                'catalogue_price' => $item->catalogue_price,
-                'purchase_price' => $item->purchase_price,
-                'variant' => $item->variant,
-                'dataSource' => 'kross',
-                //'code' => $item->code,
-                'variants' => $item->variants,
-                'productId' => $item->id,
-                'groupId' => $item->group,
-                'manufacturer' => $item->manufacturer,
-                //'year' => $item->year,
-                'originalImage' => $item->image,
-            ];
-            $this->importContent->createPost($postData, $metaData);
+        }
+        if ($j == $countItems) {
+            print('all products imported');
+            exit;
+        } else {
+            echo '<meta http-equiv="refresh" content="2;" />';
         }
     }
 
     public function run()
     {
-        $this->deleteProducts();
+        //$this->deleteProducts();
         $this->import();
     }
 
