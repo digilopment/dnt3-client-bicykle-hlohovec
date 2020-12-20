@@ -17,14 +17,14 @@ class FooterPluginControll extends Plugin
         $this->data = $data;
         $this->pluginId = $pluginId;
         $this->rest = new Rest();
-        $this->multilanguage = new MultyLanguage();
+        $this->multiLanguage = new MultyLanguage();
     }
 
     public function run()
     {
         $data = $this->data;
         $data['translate'] = function ($key) use($data) {
-            return $this->multilanguage->translate($data, $key, 'translate');
+            return $this->multiLanguage->translate($data, $key, 'translate');
         };
         $data['getModulUrl'] = function ($key) {
             return $this->rest->getModulUrl($key);

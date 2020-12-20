@@ -8,14 +8,19 @@ class MetaServices
 {
 
     protected $content = '0';
-
+	
+	public function __construct()
+    {
+        $this->vendor = new Vendor();
+    }
+	
     public function init($postId, $service)
     {
         $defaultContent = $this->content;
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => "zakladne_informacie",
             '`value`' => '',
             '`content_type`' => "text",
@@ -27,7 +32,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => "pravne_zaklady",
             '`value`' => '',
             '`content_type`' => "text",
@@ -39,7 +44,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => "informacna_povinnost",
             '`value`' => '',
             '`content_type`' => "text",
@@ -51,7 +56,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => "spracovatelske_cinnosti",
             '`value`' => '',
             '`content_type`' => "text",
@@ -63,7 +68,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => "prava_osoby",
             '`value`' => '',
             '`content_type`' => "text",
@@ -75,7 +80,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => "kurierske_spolocnosti",
             '`value`' => '',
             '`content_type`' => "text",
@@ -87,7 +92,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => "zacatie_konania",
             '`value`' => '',
             '`content_type`' => "text",
@@ -99,7 +104,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => "cookies",
             '`value`' => '',
             '`content_type`' => "text",
@@ -112,7 +117,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => "obchodne_podmienky",
             '`value`' => '',
             '`content_type`' => "text",
@@ -125,7 +130,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => "reklamacny_poriadok",
             '`value`' => '',
             '`content_type`' => "text",
@@ -138,7 +143,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => "reklamacny_formular",
             '`value`' => '',
             '`content_type`' => "text",
@@ -151,7 +156,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => "formular_odstupenia",
             '`value`' => '',
             '`content_type`' => "text",
@@ -164,7 +169,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => "kontakt",
             '`value`' => '',
             '`content_type`' => "text",

@@ -13,6 +13,7 @@ class ArticleViewController extends BaseController
 
     public function __construct()
     {
+		parent::__construct();
         $this->settings = new Settings();
         $this->frontendData = new Data();
         $this->rest = new Rest();

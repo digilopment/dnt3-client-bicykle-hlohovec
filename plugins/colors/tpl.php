@@ -3,10 +3,11 @@
 use DntLibrary\Base\Dnt;
 
 $color = $data['meta_settings']['keys']['color']['value'];
-$colorRGBA = Dnt::hex2rgba($color, 0.85);
-$colorDarken4 = Dnt::darkenColor($color, 4);
-$colorDarken2 = Dnt::darkenColor($color, 2);
-$colorDarken2RGBA = Dnt::hex2rgba($color, 0.7);
+$dnt = $data['plugin_data']['dnt'];
+$colorRGBA = $dnt->hex2rgba($color, 0.85);
+$colorDarken4 = $dnt->darkenColor($color, 4);
+$colorDarken2 = $dnt->darkenColor($color, 2);
+$colorDarken2RGBA = $dnt->hex2rgba($color, 0.7);
 $reverseTextColor = "#ffffff";
 echo '<style>
     .strip_cookies {background: ' . $colorDarken2 . ';}

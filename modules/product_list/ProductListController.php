@@ -41,6 +41,7 @@ class ProductListController extends BaseController
 
     public function __construct()
     {
+		parent::__construct();
         $this->rest = new Rest();
         $this->dnt = new Dnt();
         $this->frontendData = new Data();

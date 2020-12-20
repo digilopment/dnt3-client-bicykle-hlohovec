@@ -41,6 +41,7 @@ class ProductDetailController extends BaseController
 
     public function __construct()
     {
+		parent::__construct();
         $this->rest = new Rest();
         $this->dnt = new Dnt();
         $this->frontendData = new Data();
@@ -75,7 +76,10 @@ class ProductDetailController extends BaseController
     protected function customData()
     {
         $image = $this->data['article']['img'];
-        $description = str_replace('"', '', $this->dnt->not_html($this->data['meta_tree']['dnt_posts_content']));
+		$description = '';
+		if(isset($this->data['meta_tree']['dnt_posts_content'])){
+			$description = str_replace('"', '', $this->dnt->not_html($this->data['meta_tree']['dnt_posts_content']));
+		}
         $title = $this->setTitle();
         $customData = [
             'title' => $title,

@@ -12,6 +12,7 @@ class CleanController extends BaseController
 
     public function __construct()
     {
+		parent::__construct();
         $this->rest = new Rest();
         $this->frontendData = new Data();
         $this->dnt = new Dnt();

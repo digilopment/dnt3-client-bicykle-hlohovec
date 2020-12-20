@@ -13,6 +13,7 @@ class ImageListController extends BaseController
 
     public function __construct()
     {
+		parent::__construct();
         $this->settings = new Settings();
         $this->frontendData = new \DntLibrary\App\Data;
         $this->rest = new Rest();

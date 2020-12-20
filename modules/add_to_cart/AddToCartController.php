@@ -15,6 +15,7 @@ class AddToCartController extends BaseController
 
     public function __construct()
     {
+		parent::__construct();
         $this->cart = new Cart();
         $this->rest = new Rest();
     }

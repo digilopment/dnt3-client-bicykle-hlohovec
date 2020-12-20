@@ -9,6 +9,11 @@ class MetaServices
 
     protected $content = '';
 
+	public function __construct()
+    {
+        $this->vendor = new Vendor();
+    }
+	
     public function init($postId, $service)
     {
         $defaultContent = $this->content;
@@ -16,7 +21,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => 'price',
             '`value`' => $defaultContent,
             '`content_type`' => 'text',
@@ -29,7 +34,7 @@ class MetaServices
         /*$insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => 'isAvailable',
             '`value`' => $defaultContent,
             '`content_type`' => 'bool',
@@ -42,7 +47,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => 'isInShop',
             '`value`' => $defaultContent,
             '`content_type`' => 'bool',
@@ -55,7 +60,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => 'isInStock',
             '`value`' => $defaultContent,
             '`content_type`' => 'text',
@@ -68,7 +73,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => 'year',
             '`value`' => $defaultContent,
             '`content_type`' => 'text',
@@ -81,7 +86,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => 'catalogue_price',
             '`value`' => $defaultContent,
             '`content_type`' => 'text',
@@ -94,7 +99,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => 'purchase_price',
             '`value`' => $defaultContent,
             '`content_type`' => 'text',
@@ -107,7 +112,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => 'variants',
             '`value`' => $defaultContent,
             '`content_type`' => 'json',
@@ -120,7 +125,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => 'variant',
             '`value`' => $defaultContent,
             '`content_type`' => 'text',
@@ -133,7 +138,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => 'dataSource',
             '`value`' => $defaultContent,
             '`content_type`' => 'text',
@@ -146,7 +151,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => 'code',
             '`value`' => $defaultContent,
             '`content_type`' => 'text',
@@ -159,7 +164,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => 'variants',
             '`value`' => $defaultContent,
             '`content_type`' => 'json',
@@ -172,7 +177,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => 'productId',
             '`value`' => $defaultContent,
             '`content_type`' => 'text',
@@ -185,7 +190,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => 'groupId',
             '`value`' => $defaultContent,
             '`content_type`' => 'text',
@@ -198,7 +203,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => 'manufacturer',
             '`value`' => $defaultContent,
             '`content_type`' => 'text',
@@ -211,7 +216,7 @@ class MetaServices
         $insertedData[] = array(
             '`post_id`' => $postId,
             '`service`' => $service,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`key`' => 'originalImage',
             '`value`' => $defaultContent,
             '`content_type`' => 'text',
