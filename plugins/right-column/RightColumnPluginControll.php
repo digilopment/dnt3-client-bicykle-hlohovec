@@ -42,11 +42,13 @@ class RightColumnPluginControll extends Plugin
     {
         $final = [];
         foreach ($this->postsModel as $key => $item) {
-            $final[$key] = $item;
-            $final[$key]['image'] = $this->image->getPostImage($item['id_entity'], null, Image::MEDIUM);
-            $final[$key]['is_external_url'] = ($this->dnt->is_external_url($item['name_url'])) ? 1 : 0;
-            $final[$key]['perex_not_html'] = $this->dnt->not_html($item['perex']);
-            $final[$key]['content_not_html'] = $this->dnt->not_html($item['content']);
+           if($item['show'] >= 0 && $item['show'] <= 2){
+				$final[$key] = $item;
+				$final[$key]['image'] = $this->image->getPostImage($item['id_entity'], null, Image::MEDIUM);
+				$final[$key]['is_external_url'] = ($this->dnt->is_external_url($item['name_url'])) ? 1 : 0;
+				$final[$key]['perex_not_html'] = $this->dnt->not_html($item['perex']);
+				$final[$key]['content_not_html'] = $this->dnt->not_html($item['content']);
+			}
         }
         $this->finalItems = $final;
     }
