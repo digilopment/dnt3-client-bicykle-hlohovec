@@ -56,7 +56,7 @@ class UpdateParamFromImportJob
                     . "`post_id` = '" . $post_id . "' AND "
                     . "`vendor_id` = '" . self::VENDOR_ID . "'";
         }
-		
+
         $this->db->query($updateQuery);
     }
 
@@ -78,11 +78,11 @@ class UpdateParamFromImportJob
             '`order`' => '300',
             '`show`' => $show,
         );
-		
+
         if ($this->dnt->in_string('price', $this->metaParam) || $this->dnt->in_string('variants', $this->metaParam)) {
             //DO NOTHING - NO UPDATE no-exist key
         } else {
-			echo 'INSERT<br/>';
+            echo 'INSERT<br/>';
             $this->db->insert('dnt_posts_meta', $insertedData);
         }
     }
@@ -140,33 +140,33 @@ class UpdateParamFromImportJob
                     foreach (json_decode($this->dnt->hexToStr($variants['variants']), true) as $item) {
                         $key = $item['manufacturer'] . '-' . $item['id'];
                         $part2[$key] = $item;
-						//var_dump($item);
+                        //var_dump($item);
                         //$part2['variants'] = $item['variants'];
                     }
                 }
             }
-			$items = [];
+            $items = [];
             $items = array_merge($part2, $part1);
-			/*var_dump($part1);
-			var_dump(count($part1));
-			var_dump(count($part2));
-			exit;*/
+            /* var_dump($part1);
+              var_dump(count($part1));
+              var_dump(count($part2));
+              exit; */
             $param = $this->availableParams();
             $metaParam = $this->metaParam;
             $jsonParam = $param[$this->metaParam];
             $i = 0;
 
-			//var_dump($items);
-			
+            //var_dump($items);
+
             foreach ($items as $item) {
                 //if ($item['id'] == '500088_1_2') {
                 if (isset($item['id'])) {
                     $query = "SELECT * FROM dnt_posts_meta WHERE `key` = 'productId' AND `value` = '" . $item['id'] . "' ORDER BY id ASC";
                     //echo $query . "<br/><br/>";
                     $value = $item[$jsonParam];
-					if(is_array($value)){
-						$value = $value[0];
-					}
+                    if (is_array($value)) {
+                        $value = $value[0];
+                    }
                     //var_dump($item['price']);
                     if ($this->db->num_rows($query) > 0) {
                         foreach ($this->db->get_results($query) as $meta) {
@@ -178,20 +178,20 @@ class UpdateParamFromImportJob
                             //echo $query . "<br/><br/>";
                             if ($this->db->num_rows($query) > 0) {
                                 foreach ($this->db->get_results($query) as $updateMeta) {
-									print($item['id'] . 'UPDATE<br/>');
+                                    print($item['id'] . 'UPDATE<br/>');
                                     $this->updateMeta($value, $updateMeta['id_entity'], $updateMeta['post_id']);
                                 }
                             } else {
-								print($item['id'] . 'INSERT<br/>');
+                                print($item['id'] . 'INSERT<br/>');
                                 $this->insertMeta($value, $postId);
                             }
                         }
-                    }else{
-						echo $item['id'] . ' no data<br/>';
-					}
-                }else{
-					
-				}
+                    } else {
+                        echo $item['id'] . ' no data<br/>';
+                    }
+                } else {
+                    
+                }
                 $i++;
                 //}
             }

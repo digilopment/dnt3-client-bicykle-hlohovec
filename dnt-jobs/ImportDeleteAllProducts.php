@@ -23,7 +23,7 @@ class ImportDeleteAllProductsJob
 
     protected function deleteProducts()
     {
-        $query = "SELECT * FROM `dnt_posts` WHERE `vendor_id` = '" . self::VENDOR_ID . "' AND type = 'product'";
+        $query = "SELECT * FROM `dnt_posts` WHERE `vendor_id` = '" . self::VENDOR_ID . "' AND type = 'product' OR type = 'variant'";
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
                 $post_id = $row['id_entity'];
