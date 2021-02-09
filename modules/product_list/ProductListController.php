@@ -149,9 +149,9 @@ class ProductListController extends BaseController
             $searhString = str_replace('-', '', $this->dnt->name_url(urldecode($searchStr)));
             $filter = "(search LIKE '%$searhString%' ";
             if (strlen($searhString) > 2) {
-                $filter .= "or id_entity IN(SELECT post_id FROM `dnt_posts_meta` WHERE `vendor_id` = " . $this->vendor->getId() . " AND value LIKE '%$searhString%')";
+                $filter .= "OR id_entity IN(SELECT post_id FROM `dnt_posts_meta` WHERE `vendor_id` = " . $this->vendor->getId() . " AND (value LIKE '%$searhString%' OR value LIKE '%".urldecode($searchStr)."%'))";
             }
-            $filter .= "or id_entity = '$searhString') ";
+            $filter .= " OR id_entity = '$searhString') ";
             $this->filterUrl = $this->webhook(2) . '/' . $this->webhook(3) . '/?q=' . $searhString;
         } elseif ($this->webhook(2) == 'products' && $this->webhook(3)) {
             $productsIds = explode('-', $this->webhook(3));
@@ -172,7 +172,6 @@ class ProductListController extends BaseController
                 . "vendor_id = '" . $this->vendor->getId() . "' AND "
                 . $filter
                 . "ORDER BY id ASC ";
-        
         $this->finalItems = $this->db->get_results($query);
     }
 
@@ -210,7 +209,7 @@ class ProductListController extends BaseController
             }
             $this->finalItems = $final;
         }
-
+		
         if ($this->aggrDecode['type']) {
             $ids = [];
             $final = [];

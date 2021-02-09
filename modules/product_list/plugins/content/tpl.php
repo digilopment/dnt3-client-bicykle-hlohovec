@@ -80,7 +80,7 @@
             return hex;
         }
         
-        $('input[name="q"]').val('<?php echo $data['aggrDecode']['q']; ?>');
+        $('input[name="q"]').val('<?php echo urldecode($data['aggrDecode']['q']); ?>');
         $('#filterQuery').val($('input[name="q"]').last().val());
         
         $('input[name="q"]').last().change(function() {
