@@ -25,6 +25,7 @@ class UpdatePostMetaJob
     protected function createMOCfromVOC($voc)
     {
         $MARZA = 26.7;
+        //$MARZA = 15.7; //druhe navysenie
         $VOC = $voc;
         $PRIRAZKA = (100 * $MARZA) / (100 - $MARZA);
         $MOC = $VOC + ($PRIRAZKA / 100) * $VOC;
@@ -41,7 +42,7 @@ class UpdatePostMetaJob
                 $param = $row['value'];
                 $paramUpdated = $this->createMOCfromVOC($param);
                 $updateQuery = "UPDATE `dnt_posts_meta` SET value='" . $paramUpdated . "' WHERE `key` = '" . $this->metaParam . "' AND id_entity = '" . $row['id_entity'] . "' AND vendor_id = '" . self::VENDOR_ID . "'";
-                $this->db->query($updateQuery);
+                //$this->db->query($updateQuery);
                 echo $i . ' - ' . $param . " - " . $paramUpdated . "<br/>";
                 $i++;
             }
