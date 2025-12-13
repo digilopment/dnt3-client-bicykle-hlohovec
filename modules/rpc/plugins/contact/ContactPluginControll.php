@@ -20,6 +20,13 @@ class ContactPluginControll extends Plugin
     protected $pluginId;
     protected $rest;
     protected $response = 0;
+    protected $frontend;
+    protected $mailer;
+    protected $multilanguage;
+    protected $vendor;
+    protected $dnt;
+    protected $db;
+    protected $settings;
 
     public function __construct($data, $pluginId)
     {
@@ -38,8 +45,10 @@ class ContactPluginControll extends Plugin
 
     protected function addHeaders()
     {
-        header('Content-Type: application/json');
-        header('Access-Control-Allow-Origin: *');
+        if (!headers_sent()) {
+            header('Content-Type: application/json');
+            header('Access-Control-Allow-Origin: *');
+        }
     }
 
     protected function getData()

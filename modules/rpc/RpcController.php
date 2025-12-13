@@ -9,6 +9,10 @@ use DntLibrary\Base\Rest;
 
 class RpcController extends BaseController
 {
+    protected $rest;
+    protected $frontendData;
+    protected $data;
+    protected $dnt;
 
     public function __construct()
     {
