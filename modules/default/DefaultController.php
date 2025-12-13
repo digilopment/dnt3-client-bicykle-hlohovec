@@ -8,6 +8,9 @@ use DntLibrary\Base\Settings;
 
 class DefaultController extends BaseController
 {
+    protected $settings;
+    protected $frontendData;
+    protected $data;
 
     public function __construct()
     {

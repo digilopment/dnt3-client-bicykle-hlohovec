@@ -16,18 +16,33 @@ class Configurator extends Modul
     public function modulesRegistrator()
     {
         $this->getSitemap();
+        
+        // Optimalizované: načítame všetky moduly naraz z už načítanej sitemapy
+        $services = array(
+            'singl_page' => 'singl_page',
+            'clean' => 'clean',
+            'homepage' => 'homepage',
+            'contact' => 'contact',
+            'article_list' => 'article_list',
+            'image_list' => 'image_list',
+            'product_list' => 'product_list',
+            'business_conditions' => 'business_conditions',
+        );
+        
+        $sitemapModules = $this->getSitemapModulesBatch($services);
+        
         $modulesRegistrator = array(
             'singl_page' => array_merge(
-                    array(), $this->getSitemapModules('singl_page')
+                    array(), $sitemapModules['singl_page'] ?? array()
             ),
             'clean' => array_merge(
-                    array(), $this->getSitemapModules('clean')
+                    array(), $sitemapModules['clean'] ?? array()
             ),
             'homepage' => array_merge(
-                    array(), $this->getSitemapModules('homepage')
+                    array(), $sitemapModules['homepage'] ?? array()
             ),
             'contact' => array_merge(
-                    array(), $this->getSitemapModules('contact')
+                    array(), $sitemapModules['contact'] ?? array()
             ),
             'article_view' => array_merge(
                     array(), array('{alphabet}/detail/{digit}/{eny}')
@@ -36,10 +51,10 @@ class Configurator extends Modul
                     array(), array('cart/add/{digit}')
             ),
             'article_list' => array_merge(
-                    array(), $this->getSitemapModules('article_list')
+                    array(), $sitemapModules['article_list'] ?? array()
             ),
             'image_list' => array_merge(
-                    array(), $this->getSitemapModules('image_list')
+                    array(), $sitemapModules['image_list'] ?? array()
             ),
             'auto_redirect' => array_merge(
                     array(), array('a/{digit}')
@@ -54,10 +69,10 @@ class Configurator extends Modul
                     array(), array('{alphabet}/product/{digit}/{eny}')
             ),
             'product_list' => array_merge(
-                    array(), $this->getSitemapModules('product_list')
+                    array(), $sitemapModules['product_list'] ?? array()
             ),
             'business_conditions' => array_merge(
-                    array(), $this->getSitemapModules('business_conditions')
+                    array(), $sitemapModules['business_conditions'] ?? array()
             ),
         );
         return $modulesRegistrator;
