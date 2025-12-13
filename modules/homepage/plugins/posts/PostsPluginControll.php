@@ -15,6 +15,16 @@ class PostsPluginControll extends Plugin
     protected $data;
     protected $pluginId;
 
+    protected $db;
+
+    protected $multilanguage;
+
+    protected $url;
+
+    protected $hasItems;
+
+    protected $items;
+
     public function __construct($data, $pluginId)
     {
         parent::__construct($data, $pluginId);

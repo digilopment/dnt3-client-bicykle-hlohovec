@@ -11,6 +11,12 @@ class FooterPluginControll extends Plugin
 
     protected $loc = __FILE__;
 
+    protected $pluginId;
+
+    protected $rest;
+
+    protected $multiLanguage;
+
     public function __construct($data, $pluginId)
     {
         parent::__construct($data, $pluginId);

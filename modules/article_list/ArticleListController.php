@@ -10,6 +10,15 @@ use DntLibrary\Base\Settings;
 
 class ArticleListController extends BaseController
 {
+    protected $settings;
+
+    protected $frontendData;
+
+    protected $rest;
+
+    protected $data;
+
+    protected $modulPostData;
 
     public function __construct()
     {

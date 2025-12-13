@@ -14,6 +14,12 @@ class TopBarPluginControll extends Plugin
     protected $data;
     protected $pluginId;
 
+    protected $settings;
+
+    protected $webhook;
+
+    protected $multilanguage;
+
     public function __construct($data, $pluginId)
     {
         parent::__construct($data, $pluginId);

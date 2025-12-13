@@ -10,6 +10,8 @@ class ColorsPluginControll extends Plugin
 
     protected $loc = __FILE__;
 
+    protected $dnt;
+
 	public function __construct($data, $pluginId)
     {
         parent::__construct($data, $pluginId);

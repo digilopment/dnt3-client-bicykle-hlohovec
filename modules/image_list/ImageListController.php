@@ -10,6 +10,15 @@ use DntLibrary\Base\Settings;
 
 class ImageListController extends BaseController
 {
+    protected $settings;
+
+    protected $frontendData;
+
+    protected $rest;
+
+    protected $data;
+
+    protected $modulPostData;
 
     public function __construct()
     {

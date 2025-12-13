@@ -10,6 +10,10 @@ class NavigationPluginControll extends Plugin
 
     protected $loc = __FILE__;
 
+    protected $pluginId;
+
+    protected $settings;
+
     public function __construct($data, $pluginId)
     {
         parent::__construct($data, $pluginId);

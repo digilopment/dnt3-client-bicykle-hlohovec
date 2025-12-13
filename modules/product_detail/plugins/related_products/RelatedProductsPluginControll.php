@@ -18,6 +18,24 @@ class RelatedProductsPluginControll extends Plugin
     protected $pluginId;
     protected $db;
 
+    protected $categories;
+
+    protected $vendor;
+
+    protected $postMeta;
+
+    protected $image;
+
+    protected $dnt;
+
+    protected $finalItems;
+
+    protected $items;
+
+    protected $tempFinalLess;
+
+    protected $tempFinalBig;
+
     public function __construct($data, $pluginId)
     {
         parent::__construct($data, $pluginId);

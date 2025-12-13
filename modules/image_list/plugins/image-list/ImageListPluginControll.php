@@ -17,6 +17,18 @@ class ImageListPluginControll extends Plugin
     protected $pluginId;
     protected $finalItems = [];
 
+    protected $hasPosts;
+
+    protected $articleList;
+
+    protected $articleView;
+
+    protected $dnt;
+
+    protected $image;
+
+    protected $db;
+
     public function __construct($data, $pluginId)
     {
         parent::__construct($data, $pluginId);

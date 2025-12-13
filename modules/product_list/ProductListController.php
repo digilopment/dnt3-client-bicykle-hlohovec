@@ -39,6 +39,20 @@ class ProductListController extends BaseController
     protected $modulPostData;
     protected $currencies = ['EUR', 'CZK'];
 
+    protected $frontendData;
+
+    protected $categories;
+
+    protected $db;
+
+    protected $aggrBuilder;
+
+    protected $aggrEncoded;
+
+    protected $aggrDecode;
+
+    protected $paginatedItems;
+
     public function __construct()
     {
 		parent::__construct();

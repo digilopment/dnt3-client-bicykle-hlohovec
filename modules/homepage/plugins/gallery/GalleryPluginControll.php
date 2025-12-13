@@ -13,6 +13,12 @@ class GalleryPluginControll extends Plugin
     protected $pluginId;
     protected $items = false;
 
+    protected $image;
+
+    protected $hasItems;
+
+    protected $finalItems;
+
     public function __construct($data, $pluginId)
     {
         parent::__construct($data, $pluginId);

@@ -18,6 +18,24 @@ class RightColumnPluginControll extends Plugin
     protected $data;
     protected $pluginId;
 
+    protected $rest;
+
+    protected $multilanguage;
+
+    protected $settings;
+
+    protected $db;
+
+    protected $article;
+
+    protected $image;
+
+    protected $dnt;
+
+    protected $postsModel;
+
+    protected $finalItems;
+
     public function __construct($data, $pluginId)
     {
         parent::__construct($data, $pluginId);

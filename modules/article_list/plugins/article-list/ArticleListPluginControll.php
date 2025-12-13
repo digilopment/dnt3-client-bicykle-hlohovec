@@ -17,6 +17,18 @@ class ArticleListPluginControll extends Plugin
     protected $pluginId;
     protected $finalItems = [];
 
+    protected $hasPosts;
+
+    protected $articleList;
+
+    protected $articleView;
+
+    protected $image;
+
+    protected $db;
+
+    protected $dnt;
+
     public function __construct($data, $pluginId)
     {
         parent::__construct($data, $pluginId);

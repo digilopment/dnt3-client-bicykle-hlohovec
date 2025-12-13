@@ -8,6 +8,13 @@ use DntLibrary\Base\Settings;
 
 class ContactController extends BaseController
 {
+    protected $settings;
+
+    protected $frontendData;
+
+    protected $data;
+
+    protected $modulPostData;
 
     public function __construct()
     {

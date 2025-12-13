@@ -16,6 +16,20 @@ class DoubleSliderPluginControll extends Plugin
     protected $data;
     protected $pluginId;
 
+    protected $posts;
+
+    protected $vendor;
+
+    protected $db;
+
+    protected $image;
+
+    protected $dnt;
+
+    protected $postsModel;
+
+    protected $finalItems;
+
     public function __construct($data, $pluginId)
     {
         parent::__construct($data, $pluginId);

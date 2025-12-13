@@ -15,6 +15,16 @@ class ContactPluginControll extends Plugin
     protected $loc = __FILE__;
     protected $item;
 
+    protected $multilanguage;
+
+    protected $frontend;
+
+    protected $posts;
+
+    protected $dnt;
+
+    protected $rest;
+
     public function __construct($data, $pluginId, $plugin)
     {
         $this->multilanguage = new MultyLanguage;

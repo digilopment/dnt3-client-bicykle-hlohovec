@@ -12,6 +12,21 @@ use DntLibrary\Base\Settings;
 
 class VideoEmbedController extends BaseController
 {
+    protected $settings;
+
+    protected $frontendData;
+
+    protected $rest;
+
+    protected $image;
+
+    protected $post;
+
+    protected $postObject;
+
+    protected $data;
+
+    protected $modulPostData;
 
     public function __construct()
     {

@@ -39,6 +39,16 @@ class ProductDetailController extends BaseController
     protected $pathIdentifier = 'product';
     protected $currencies = ['EUR', 'CZK'];
 
+    protected $frontendData;
+
+    protected $postVariants;
+
+    protected $categories;
+
+    protected $cart;
+
+    protected $item;
+
     public function __construct()
     {
 		parent::__construct();
@@ -236,9 +246,12 @@ class ProductDetailController extends BaseController
                 return $this->categories->getElement($id);
             };
 
-            $data['article']['service'] = $this->modul();
+            $modulService = $this->modul();
+            if ($modulService && $modulService !== false) {
+                $data['article']['service'] = $modulService;
+            }
             $data['post_id'] = $this->item->id_entity;
-            $this->modulConfigurator($data, $this->modul());
+            $this->modulConfigurator($data, $modulService);
         } else {
             $this->dnt->redirect(WWW_PATH . 'bicykle');
         }

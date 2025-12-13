@@ -14,6 +14,8 @@ class NavigationTreePluginControll extends Plugin
     protected $pluginId;
     protected $categories;
 
+    protected $rest;
+
     public function __construct($data, $pluginId, $plugin)
     {
         parent::__construct($data, $pluginId, $plugin);
