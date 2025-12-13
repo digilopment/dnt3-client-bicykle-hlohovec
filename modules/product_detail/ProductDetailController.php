@@ -178,6 +178,7 @@ class ProductDetailController extends BaseController
 
     public function run()
     {
+        $this->dnt->redirect('/');
         $this->init();
         if (
                 $this->modulPostData->name_url == $this->webhook(1) &&
