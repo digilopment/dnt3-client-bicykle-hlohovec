@@ -15,6 +15,10 @@ class UpdateParamFromImportJob
 
     protected $metaParam;
     protected $service;
+    protected DB $db;
+    protected Vendor $vendor;
+    protected Rest $rest;
+    protected Dnt $dnt;
 
     public function __construct()
     {
@@ -133,7 +137,11 @@ class UpdateParamFromImportJob
             $part1 = [];
             $part2 = [];
             foreach ($importService as $service) {
-                foreach (json_decode(file_get_contents($service), true) as $variants) {
+                $serviceData = json_decode(file_get_contents($service), true);
+                if (!is_array($serviceData)) {
+                    continue;
+                }
+                foreach ($serviceData as $variants) {
                     $key = $variants['manufacturer'] . '-' . $variants['id'];
                     $part1[$key] = $variants;
                     //var_dump($variants);
