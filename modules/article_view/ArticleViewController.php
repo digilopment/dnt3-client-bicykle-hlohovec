@@ -11,6 +11,13 @@ use DntLibrary\Base\Settings;
 class ArticleViewController extends BaseController
 {
 
+    protected Settings $settings;
+    protected Data $frontendData;
+    protected Rest $rest;
+    protected Dnt $dnt;
+    protected array $data;
+    protected ?object $modulPostData;
+
     public function __construct()
     {
 		parent::__construct();
@@ -18,6 +25,7 @@ class ArticleViewController extends BaseController
         $this->frontendData = new Data();
         $this->rest = new Rest();
         $this->dnt = new Dnt();
+        $this->modulPostData = null;
     }
 
     protected function setTitle()
