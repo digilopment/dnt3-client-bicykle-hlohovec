@@ -139,9 +139,9 @@
                         <p>Skúste si prosím vybrať inú kategóriu, alebo použiť vyhľadávač.</p>
                             <?php if ($data['aggrDecode']['type']) {?>
                             <h3>Všimli sme si, že máte aktívny filter. </h3>
-                                 <h4>V kategórii bicyklov <b><?php echo $data['categoryElement']($data['routeCategory'])['name'] ?></b> 
+                                 <h4>V kategórii bicyklov <b><?php $category = $data['categoryElement']($data['routeCategory']); echo is_array($category) && isset($category['name']) ? $category['name'] : ''; ?></b> 
                                 vyhľadávate bicykle zaradené do typu <b><?php echo $data['types'][$data['aggrDecode']['type']]?></b> .</h4>
-                            <p><i class="fa fa-info-circle" style="font-size: 20px;color: #da0809;"></i> Pre vyhľadávanie všetkých bicyklov (Použitie bicykla <b><?php echo $data['types'][$data['aggrDecode']['type']]?></b>) prejdite do kategórie <b><?php echo $data['categoryElement'](131)['name'] ?></b> v ľavom stĺpci úplne hore a použite filter <b>Použitie bicykla</b> a kliknite na <b><?php echo $data['types'][$data['aggrDecode']['type']]?></b></p>
+                            <p><i class="fa fa-info-circle" style="font-size: 20px;color: #da0809;"></i> Pre vyhľadávanie všetkých bicyklov (Použitie bicykla <b><?php echo $data['types'][$data['aggrDecode']['type']]?></b>) prejdite do kategórie <b><?php $category131 = $data['categoryElement'](131); echo is_array($category131) && isset($category131['name']) ? $category131['name'] : ''; ?></b> v ľavom stĺpci úplne hore a použite filter <b>Použitie bicykla</b> a kliknite na <b><?php echo $data['types'][$data['aggrDecode']['type']]?></b></p>
                             <?php } ?>
                     </div>
                 </section>

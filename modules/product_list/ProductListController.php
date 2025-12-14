@@ -48,6 +48,8 @@ class ProductListController extends BaseController
     protected $aggrBuilder;
 
     protected $aggrEncoded;
+    
+    protected $priceRange;
 
     protected $aggrDecode;
 
@@ -358,7 +360,7 @@ class ProductListController extends BaseController
 
     public function run()
     {
-        $this->dnt->redirect('/');
+        //$this->dnt->redirect('/');
         $this->init();
         if (
                 $this->modulPostData->name_url == $this->webhook(1) &&
@@ -390,7 +392,7 @@ class ProductListController extends BaseController
             $data['categoryTree'] = $this->categories->getTreePath($data['routeCategory']);
             $data['categories'] = $this->categories->getChildren($this->rootCatId);
             $data['categoryElement'] = function($id) {
-                return $this->categories->getElement($id);
+                return $this->categories->getElement(is_numeric($id) ? (int)$id : 0);
             };
             $data['aggrDecode'] = $this->aggrDecode;
             $data['types'] = $this->types();

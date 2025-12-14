@@ -33,7 +33,8 @@ class TopBarPluginControll extends Plugin
     public function run()
     {
         $data = $this->data;
-        $data['search_url'] = WWW_PATH . $this->webhook->getSitemapModules('product_list')[0] . '/products/search';
+        $sitemapModules = $this->webhook->getSitemapModules('product_list');
+        $data['search_url'] = WWW_PATH . (!empty($sitemapModules) && isset($sitemapModules[0]) ? $sitemapModules[0] : '') . '/products/search';
         $data['translate'] = function ($key) use($data) {
             return $this->multilanguage->translate($data, $key, 'translate');
         };

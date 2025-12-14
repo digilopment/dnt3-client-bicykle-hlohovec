@@ -9,6 +9,10 @@ use DntLibrary\Base\Rest;
 
 class CleanController extends BaseController
 {
+    protected Rest $rest;
+    protected Data $frontendData;
+    protected Dnt $dnt;
+    protected array $data;
 
     public function __construct()
     {
